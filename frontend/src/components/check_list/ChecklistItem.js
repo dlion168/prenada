@@ -1,4 +1,4 @@
-import { Text, View } from 'react-native';
+import { Text , TouchableOpacity} from 'react-native';
 import { CheckBox } from '@react-native-community/checkbox';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { StyleSheet } from 'react-native';

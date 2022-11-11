@@ -1,4 +1,8 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import HomePage from '../containers/HomePage.js';
+import Checklist from '../containers/Checklist.js';
+import Library from '../containers/Library.js';
+import BodyData from '../containers/BodyData.js';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 const Tab = createBottomTabNavigator();
 const BottomTab = () => {
@@ -37,10 +41,10 @@ const BottomTab = () => {
           labelStyle: { fontSize: 15, fontWeight: 'bold' }
         }}
       >
-        <Tab.Screen name={'Home'} component={Home} />
+        <Tab.Screen name={'Home'} component={HomePage} />
         <Tab.Screen name={'Checklist'} component={Checklist} />
         <Tab.Screen name={'Library'} component={Library} />
-        <Tab.Screen name={'Body_data'} component={Profile} />
+        <Tab.Screen name={'Body Data'} component={BodyData} />
       </Tab.Navigator>
     );
 }

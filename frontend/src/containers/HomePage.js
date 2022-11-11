@@ -1,13 +1,13 @@
-import { ScrollView } from 'react-native';
+import { ScrollView, View, Text } from 'react-native';
 import ChecklistItem from '../components/check_list/ChecklistItem.js'
-import BottomTab from '../components/BottomTabNavigator.js'
+
 const HomePage = ()=>{
     const checklist=[{"checked":false, "text":"Start taking prenatal Vitamin", "liked": false},
     {"checked":false, "text":"Start taking prenatal Vitamin", "liked": false},
     {"checked":false, "text":"Start taking prenatal Vitamin", "liked": false},
     {"checked":false, "text":"Start taking prenatal Vitamin", "liked": false}
     ]
-    return( 
+    return(
     <ScrollView>
         <View>
             <Text>Week 1 of Pregnency</Text>
@@ -19,7 +19,6 @@ const HomePage = ()=>{
         <View>
             <Text>Library</Text>
         </View>
-        <BottomTab></BottomTab>
     </ScrollView>
     )
 }
