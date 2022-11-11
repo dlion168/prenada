@@ -13,7 +13,7 @@ const BottomTab = () => {
             tabBarIcon: ({ focused, size, color }) => {
               let iconName;
               if (route.name === 'Home') {
-                iconName = 'house';
+                iconName = 'home';
                 size = focused ? 25 : 20;
               } else if (route.name === 'Checklist') {
                 iconName = 'clipboard-check';
@@ -21,7 +21,7 @@ const BottomTab = () => {
               } else if (route.name === 'Library') {
                 iconName = 'book-open';
                 size = focused ? 25 : 20;
-              } else if (route.name === 'Body_data') {
+              } else if (route.name === 'Body Data') {
                 iconName = 'user';
                 size = focused ? 25 : 20;
               }
@@ -30,16 +30,25 @@ const BottomTab = () => {
                   name={iconName}
                   size={size}
                   color={color}
+                  solid
                 />
               );
-            }
+            },
+            "tabBarActiveTintColor": "#f87171",
+            "tabBarInactiveTintColor": "#777777",
+            "tabBarLabelStyle": {
+              "fontSize": 15,
+              "fontWeight": "bold"
+            },
+            "tabBarStyle": [
+              {
+                "display": "flex"
+              },
+              null
+            ],
+            headerShown: false
           })
         }
-        tabBarOptions={{
-          activeTintColor: '#f87171',
-          inactiveTintColor: '#777777',
-          labelStyle: { fontSize: 15, fontWeight: 'bold' }
-        }}
       >
         <Tab.Screen name={'Home'} component={HomePage} />
         <Tab.Screen name={'Checklist'} component={Checklist} />
