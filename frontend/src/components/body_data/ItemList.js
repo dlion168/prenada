@@ -40,7 +40,7 @@ const ItemList = ({itemList}) => {
                         <View style={styles.item} key={idx} >
                             <Text style={styles.text} >Water</Text>
                             <View style={{ flex: 1 }} />
-                            <Text style={styles.text} >{obj.time} AM · {obj.capacity} ml</Text>
+                            <Text style={styles.text} >{obj.time} · {obj.capacity} ml</Text>
                         </View>
                     );
                 })

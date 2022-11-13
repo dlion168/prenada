@@ -2,7 +2,7 @@
 import { Text, View, StyleSheet } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import OverviewScreen from '../components/body_data/OverviewScreen';
-import SleepScreen from '../components/body_data/WaterScreen';
+import SleepScreen from '../components/body_data/SleepScreen';
 import WaterScreen from '../components/body_data/WaterScreen';
 import SymptomScreen from '../components/body_data/SymptomScreen';
 
