@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
     },
     dataRow: {
-        // alignItems: 'center',
         paddingTop: 8,
         paddingBottom: 8,
         margin: 24,
@@ -40,11 +39,16 @@ const WaterScreen = () => {
     ];
     return (
         <ScrollView style={styles.body}>
-            {/* <View style={styles.summary} ></View> */}
             <WaterSummary />
             <View style={styles.detail} >
                 {
                     waterData.map((obj, idx) => {
+                        let showList = [];
+                        obj.itemList.forEach(element => {
+                            let obj = { 'leftText': 'Water', 'rightText': `${element.time} · ${element.capacity} ml` };
+                            showList.push(obj);
+                        });
+
                         return (
                             <>
                                 <View style={styles.dataRow} key={idx} >
@@ -62,7 +66,7 @@ const WaterScreen = () => {
                                             {obj.totalCapacity} ml
                                         </Text>
                                     </View>
-                                    <ItemList itemList={obj.itemList} />
+                                    <ItemList showList={showList} />
                                 </View>
                             </>
                         );

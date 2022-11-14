@@ -31,16 +31,17 @@ const styles = StyleSheet.create({
     }
 })
 
-const ItemList = ({itemList}) => {
+const ItemList = ({ showList }) => {
     return (
         <View style={styles.itemListStyle} >
             {
-                itemList.map((obj, idx) => {
+                showList.map((obj, idx) => {
                     return (
                         <View style={styles.item} key={idx} >
-                            <Text style={styles.text} >Water</Text>
+                            <Text style={styles.text} >{obj.leftText}</Text>
                             <View style={{ flex: 1 }} />
-                            <Text style={styles.text} >{obj.time} · {obj.capacity} ml</Text>
+                            <Text style={styles.text} >{obj.rightText}</Text>
+
                         </View>
                     );
                 })

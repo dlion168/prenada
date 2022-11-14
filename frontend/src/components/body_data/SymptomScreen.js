@@ -1,55 +1,71 @@
 import * as React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, Image, StyleSheet, ScrollView } from 'react-native';
+import ItemList from './itemList';
+import SymptomSummary from './SymptomSummary';
 
 const styles = StyleSheet.create({
     body: {
-        backgroundColor: '#F9FAFB', // gray/50
+        backgroundColor: '#FFFFFF',
     },
-    block: {
-        margin: 24,
-    },
-    pad: {
+    dataRow: {
         paddingTop: 8,
         paddingBottom: 8,
+        margin: 24,
     },
-    titleRow: {
+    title: {
         display: 'flex',
         flexDirection: 'row',
         paddingTop: 8,
         paddingBottom: 8,
     },
-    title: {
-        fontWeight: 'bold',
-        fontSize: 18,
+    notReachGoal: {
+        fontWeight: 700,
+        fontSize: 16,
+        lineHeight: 1.5,
     },
-    titleMore: {
-        fontWeight: 'bold',
-        fontSize: 18,
+    reachGoal: {
+        fontWeight: 700,
+        fontSize: 16,
+        lineHeight: 1.5,
         color: '#F87171',
-    },
-    checklist: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        padding: '0px',
-
-        position: 'absolute',
-        width: '327px',
-        height: '424px',
-        left: '24px',
-        top: '128px',
     },
 })
 
 const SymptomScreen = () => {
+    const data = [
+        { 'date': 'October 26, 2022', 'itemList': [{ 'time': '10:00 AM', 'symptomName': 'Cramps' }] },
+        { 'date': 'October 25, 2022', 'itemList': [{ 'time': '09:00 AM', 'symptomName': 'Acne' }, { 'time': '09:00 PM', 'symptomName': 'Cramps' }] },
+        { 'date': 'October 24, 2022', 'itemList': [{ 'time': '09:00 AM', 'symptomName': 'Tender breasts' }] },
+    ];
     return (
-        <View style={styles.block} >
-            <View style={styles.titleRow} >
-                <Text style={styles.title} >Body Data</Text>
-                <View style={{ flex: 1 }} />
-                <Text style={styles.titleMore} >See All</Text>
+        <ScrollView style={styles.body}>
+            <SymptomSummary />
+            <View style={styles.detail} >
+                {
+                    data.map((obj, idx) => {
+                        let showList = [];
+                        obj.itemList.forEach(element => {
+                            let obj = { 'leftText': element.symptomName, 'rightText': element.time };
+                            showList.push(obj);
+                        });
+
+                        return (
+                            <>
+                                <View style={styles.dataRow} key={idx} >
+                                    <View style={styles.title} >
+                                        <Text style={styles.notReachGoal} >
+                                            {obj.date}</Text>
+                                        <View style={{ flex: 1 }} />
+                                        <Text style={styles.notReachGoal} >{obj.itemList.length} types</Text>
+                                    </View>
+                                    <ItemList showList={showList} />
+                                </View>
+                            </>
+                        );
+                    })
+                }
             </View>
-        </View>
+        </ScrollView >
     );
 }
 

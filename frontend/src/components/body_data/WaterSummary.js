@@ -24,32 +24,32 @@ const styles = StyleSheet.create({
 })
 
 const data = {
-    labels: ["January", "February", "March", "April", "May", "June"],
+    labels: ["Oct 21", "Oct 22", "Oct 23", "Oct 24", "Oct 25", "Oct 26"],
     datasets: [
         {
-            data: [20, 45, 28, 80, 99, 43],
-            color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
+            data: [200, 450, 2200, 300, 2000, 900],
+            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`, // optional
+            strokeWidth: 2 // optional
+        },
+        {
+            data: [2000, 2000, 2000, 2000, 2000, 2000],
+            color: (opacity = 1) => `rgba(129, 140, 248, ${opacity})`, // optional
             strokeWidth: 2 // optional
         }
     ],
-    legend: ["Rainy Days"] // optional
+    legend: ["Capacity", "Target"] // optional
 };
 
 const chartConfig = {
-    backgroundColor: "#e26a00",
-    backgroundGradientFrom: "#fb8c00",
-    backgroundGradientTo: "#ffa726",
+    backgroundColor: "#C7D2FE",
+    backgroundGradientFrom: "#C7D2FE",
+    backgroundGradientTo: "#C7D2FE",
     decimalPlaces: 2, // optional, defaults to 2dp
     color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-    labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+    labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
     style: {
         borderRadius: 16
     },
-    propsForDots: {
-        r: "6",
-        strokeWidth: "2",
-        stroke: "#ffa726"
-    }
 };
 
 const WaterSummary = () => {
