@@ -4,7 +4,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 const styles = StyleSheet.create({
     body: {
         alignItems: 'center',
-        backgroundColor: '#EEF2FF',
+        backgroundColor: '#f0f9ff',
         borderRadius: 10,
         margin: 24,
     },
@@ -24,7 +24,8 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         gap: 10,
-        alignItems:'flex-start'
+        alignItems:'flex-start',
+        paddingBottom:10
     },
     symItem: {
         alignItems: 'center'
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         height: 60,
         width: 60,
-        backgroundColor: 'blue',
+        backgroundColor: '#bae6fd',
         alignItems: 'flex-end',
         justifyContent: 'flex-end'
     },
