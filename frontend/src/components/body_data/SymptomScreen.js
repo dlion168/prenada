@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Text, View, Image, StyleSheet, ScrollView } from 'react-native';
-import ItemList from './itemList';
+import ItemList from './ItemList';
 import SymptomSummary from './SymptomSummary';
 
 const styles = StyleSheet.create({
