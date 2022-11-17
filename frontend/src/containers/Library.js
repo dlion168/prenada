@@ -1,32 +1,26 @@
 import { useState } from 'react';
-import { StyleSheet, View, ScrollView } from 'react-native';
-import { SearchBar } from 'react-native-elements';
-import { TopicCard } from '../components/library/TopicCard';
-
-const styles = StyleSheet.create({
-    body: {
-        backgroundColor: '#F9FAFB',
-    },
-    searchBar: {
-        backgroundColor: '#FFFFFF',
-        border: 0,
-    },
-})
+import { StyleSheet } from 'react-native';
+import { Menu } from '../components/library/Menu';
+import { Topic } from '../components/library/Topic';
 
 const Library = () => {
     const [search, setSearch] = useState('');
+    const [click, setClick] = useState(false);
+    const [topic, setTopic] = useState('');
+
+    const topicClick = (title) => {
+        setTopic(title);
+        setClick(true);
+    }
+
     return(
         <>
-            <View style={{ height: 104, backgroundColor: '#F87171' }} />
-            <ScrollView style={styles.body}>
-                <SearchBar value={search}
-                           onChangeText={(search) => {setSearch(search)}}
-                           placeholder='Search Articles, Keywords, and more' 
-                           round={true} 
-                           containerStyle={styles.searchBar}
-                           inputContainerStyle={{backgroundColor: '#F2F2F2'}} />
-                <TopicCard />
-            </ScrollView>
+            { click ? 
+                <Topic topic={topic}
+                       setClick={setClick}/*only for test*//> : 
+                <Menu search={search} 
+                      setSearch={setSearch}
+                      topicClick={topicClick} /> }
         </>
     )
 }

@@ -1,4 +1,4 @@
-import { StyleSheet, View, ScrollView, Text, ImageBackground } from 'react-native';
+import { StyleSheet, View, ScrollView, Text, ImageBackground, Pressable } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const styles = StyleSheet.create({
@@ -8,9 +8,9 @@ const styles = StyleSheet.create({
     },
     title: {
         fontWeight: 'bold',
-        fontSize: 18,
+        fontSize: 20,
     },
-    article: {
+    topic: {
         paddingRight: 10,
         paddingLeft: 10,
     },
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         width: '100%',
         borderRadius: 20
     },
-    articleTitle: {
+    topicTitle: {
         position: 'absolute',
         bottom: 20,
         left: 20,
@@ -32,54 +32,54 @@ const styles = StyleSheet.create({
     }
 })
 
-const articleData = [
+const themeData = [
     {   'theme': 'Getting Pregnant',
-        'article': [
-            {'pic': require('./lib_pic1.jpg'), 'title': 'Planning for pregnancy'},
-            {'pic': require('./lib_pic2.jpg'), 'title': 'Trying to conceive'},
+        'topic': [
+            { 'pic': require('./lib_pic1.jpg'), 'title': 'Planning for pregnancy' },
+            { 'pic': require('./lib_pic2.jpg'), 'title': 'Trying to conceive' },
     ]},
     {   'theme': 'Your Cycle',
-        'article': [
-            {'pic': require('./lib_pic1.jpg'), 'title': 'Health'},
-            {'pic': require('./lib_pic2.jpg'), 'title': 'Sex'},
+        'topic': [
+            { 'pic': require('./lib_pic1.jpg'), 'title': 'Health' },
+            { 'pic': require('./lib_pic2.jpg'), 'title': 'Sex' },
     ]},
     {   'theme': 'Health 360°',
-        'article': [
-            {'pic': require('./lib_pic1.jpg'), 'title': 'Diseases'},
-            {'pic': require('./lib_pic2.jpg'), 'title': 'Symptoms'},
+        'topic': [
+            { 'pic': require('./lib_pic1.jpg'), 'title': 'Diseases' },
+            { 'pic': require('./lib_pic2.jpg'), 'title': 'Symptoms' },
     ]},
     {   'theme': 'Pregnancy',
-        'article': [
-            {'pic': require('./lib_pic1.jpg'), 'title': 'Pregnancy health'},
-            {'pic': require('./lib_pic2.jpg'), 'title': 'Pregnancy lifestyle'},
+        'topic': [
+            { 'pic': require('./lib_pic1.jpg'), 'title': 'Pregnancy health' },
+            { 'pic': require('./lib_pic2.jpg'), 'title': 'Pregnancy lifestyle' },
     ]},
     {   'theme': 'Being a Mom',
-        'article': [
-            {'pic': require('./lib_pic1.jpg'), 'title': 'Recovering from birth'},
-            {'pic': require('./lib_pic2.jpg'), 'title': 'Adjusting to motherhood'},
+        'topic': [
+            { 'pic': require('./lib_pic1.jpg'), 'title': 'Recovering from birth' },
+            { 'pic': require('./lib_pic2.jpg'), 'title': 'Adjusting to motherhood' },
     ]},
 ];
 
-const TopicCard = () => {
+const TopicCard = ({ topicClick }) => {
     return (
         <>
-        {articleData.map((obj) => {
+        {themeData.map((obj) => {
             return (
                 <View>
                     <View style={styles.block}>
                         <Text style={styles.title}>{obj.theme}</Text>
                     </View>
                     <ScrollView horizontal={true}>
-                        {obj.article.map((art) => (
-                            <View style={styles.article}>
-                                <ImageBackground source={{uri: art.pic}} 
+                        { obj.topic.map((top) => (
+                            <Pressable style={styles.topic} onPress={() => {topicClick(top.title)}}>
+                                <ImageBackground source={{uri: top.pic}} 
                                                  style={styles.image}
                                                  imageStyle={{ borderRadius: 20 }}>
                                     <LinearGradient colors={['#00000000', '#000000']} 
                                                     style={styles.imageGradient} />
                                 </ImageBackground>
-                                <Text style={styles.articleTitle}>{art.title}</Text>
-                            </View>
+                                <Text style={styles.topicTitle}>{top.title}</Text>
+                            </Pressable>
                         ))}
                     </ScrollView>
                 </View>
