@@ -1,7 +1,8 @@
-import * as React from 'react';
+import { useState, useEffect } from 'react';
 import { Text, View, Image, StyleSheet, ScrollView } from 'react-native';
 import ItemList from './itemList';
 import WaterSummary from './WaterSummary';
+import axios from '../../api';
 
 const styles = StyleSheet.create({
     body: {
@@ -32,17 +33,30 @@ const styles = StyleSheet.create({
 })
 
 const WaterScreen = () => {
-    const waterData = [
-        { 'date': 'October 26, 2022', 'totalCapacity': 900, 'itemList': [{ 'time': '10:00 AM', 'capacity': 900 }] },
-        { 'date': 'October 25, 2022', 'totalCapacity': 2000, 'itemList': [{ 'time': '09:00 AM', 'capacity': 1100 }, { 'time': '09:00 PM', 'capacity': 900 }] },
-        { 'date': 'October 24, 2022', 'totalCapacity': 300, 'itemList': [{ 'time': '09:00 AM', 'capacity': 300 }] },
-    ];
+    const [waterDetail, setWaterDetail] = useState([]);
+    const getWaterData = async () => {
+        const {
+            data: { data, message },
+        } = await axios.get('/water', {
+            params: {
+                startDate: "20221024",
+                endDate: "20221026",
+            },
+        });
+        console.log(data)
+        setWaterDetail(data);
+    };
+
+    useEffect(() => {
+        getWaterData();
+    }, []);
+
     return (
         <ScrollView style={styles.body}>
             <WaterSummary />
             <View style={styles.detail} >
                 {
-                    waterData.map((obj, idx) => {
+                    waterDetail.map((obj, idx) => {
                         let showList = [];
                         obj.itemList.forEach(element => {
                             let obj = { 'leftText': 'Water', 'rightText': `${element.time} · ${element.capacity} ml` };
