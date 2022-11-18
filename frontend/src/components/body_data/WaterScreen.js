@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Text, View, Image, StyleSheet, ScrollView } from 'react-native';
-import ItemList from './itemList';
+import ItemList from './ItemList';
 import WaterSummary from './WaterSummary';
 import axios from '../../api';
 
