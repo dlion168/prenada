@@ -5,19 +5,24 @@ import { Topic } from '../components/library/Topic';
 
 const Library = () => {
     const [search, setSearch] = useState('');
-    const [click, setClick] = useState(false);
     const [topic, setTopic] = useState('');
+    const [article, setArticle] = useState({ topic: '', id: -1 });
 
     const topicClick = (title) => {
         setTopic(title);
-        setClick(true);
+    }
+
+    const articleClick = (topic, id) => {
+        setArticle({ topic: topic, id: id });
     }
 
     return(
         <>
-            { click ? 
+            { topic ? 
                 <Topic topic={topic}
-                       setClick={setClick}/*only for test*//> : 
+                       topicClick={topicClick}
+                       art={article}
+                       artClick={articleClick}/> : 
                 <Menu search={search} 
                       setSearch={setSearch}
                       topicClick={topicClick} /> }

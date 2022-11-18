@@ -1,6 +1,5 @@
-import { useState } from 'react';
 import { StyleSheet, Text, Image, View, ScrollView, Pressable } from 'react-native';
-import { SearchBar } from 'react-native-elements';
+import { Article } from './Article';
 
 const styles = StyleSheet.create({
     block: {
@@ -42,39 +41,45 @@ const styles = StyleSheet.create({
 
 const topicData = {
     'Planning for pregnancy': {
-        'topPic': require('./lib_pic1.jpg'),
-        'topicTheme': 'Planning for pregnancy',
+        'topPic': require('../../assets/image/Topic/5871-01_1006х755.jpg'),
         'cheveronRight': require('../../assets/icon/primary/cheveron-right.png'),
         'article': [
-            {   'pic': require('./lib_pic1.jpg'),
+            {   'id': 0,
+                'pic': require('../../assets/image/Topic/5871-01_1006х755.jpg'),
                 'tag': 'Preconception planning',
                 'summary': 'COVID and fertility: Can coronavirus \n or COVID vaccines affect your ...' },
-            {   'pic': require('./lib_pic2.jpg'),
+            {   'id': 1,
+                'pic': require('../../assets/image/Topic/Capture (12).png'),
                 'tag': 'Preconception planning',
                 'summary': 'Genetic Inheritance: What Will Your \n Baby Look Like?' },
-            {   'pic': require('./lib_pic1.jpg'),
+            {   'id': 2,
+                'pic': require('../../assets/image/Topic/4085-A woman undergoing preconception counseling.jpg'),
                 'tag': 'Preconception planning',
                 'summary': '4 Reasons to Get Preconception \n Counseling: Dr. Kenneth K. Chen...' },
-            {   'pic': require('./lib_pic2.jpg'),
+            {   'id': 3,
+                'pic': require('../../assets/image/Topic/Capture (13).png'),
                 'tag': 'Prepare your body for pregnancy',
                 'summary': 'Pelvic Floor Therapy: Pelvic Floor \n Physical Exercises and Massage...' },
         ]
     },
     'Trying to conceive': {
-        'topPic': require('./lib_pic2.jpg'),
-        'topicTheme': 'Trying to conceive',
+        'topPic': require('../../assets/image/Topic/6864-pernatal vitamins1006x755.jpg'),
         'cheveronRight': require('../../assets/icon/primary/cheveron-right.png'),
         'article': [
-            {   'pic': require('./lib_pic1.jpg'),
+            {   'id': 0,
+                'pic': require('../../assets/image/Topic/6864-pernatal vitamins1006x755.jpg'),
                 'tag': 'tag test',
                 'summary': 'summary1' },
-            {   'pic': require('./lib_pic2.jpg'),
+            {   'id': 1,
+                'pic': require('../../assets/image/Topic/6864-pernatal vitamins1006x755.jpg'),
                 'tag': 'tag test',
                 'summary': 'summary2' },
-            {   'pic': require('./lib_pic1.jpg'),
+            {   'id': 2,
+                'pic': require('../../assets/image/Topic/6864-pernatal vitamins1006x755.jpg'),
                 'tag': 'tag test',
                 'summary': 'summary3' },
-            {   'pic': require('./lib_pic2.jpg'),
+            {   'id': 3,
+                'pic': require('../../assets/image/Topic/6864-pernatal vitamins1006x755.jpg'),
                 'tag': 'tag test',
                 'summary': 'summary4' },
         ]
@@ -82,18 +87,18 @@ const topicData = {
     
 }
 
-const Topic = ({ topic, setClick/*only for test*/ }) => {
+const topicMenu = (topic, topicClick, artClick) => {
     return (
         <>
             <View style={{ height: 104, backgroundColor: '#F87171' }} />
-            <Pressable onPress={() => {setClick(false)}}><Text> go back button (only for test!) </Text></Pressable>
+            <Pressable onPress={() => {topicClick('')}}><Text> go back to menu (only for test!) </Text></Pressable>
             <ScrollView >
                 <Image source={topicData[topic].topPic} style={styles.topImg} />
                 <View style={styles.block}>
-                    <Text style={styles.title}> {topicData[topic].topicTheme} </Text>
+                    <Text style={styles.title}> {topic} </Text>
                 </View>
                 { topicData[topic].article.map((art) => (
-                    <Pressable style={styles.article}>
+                    <Pressable style={styles.article} onPress={() => {artClick(topic, art.id)}}>
                         <Image source={art.pic} style={styles.artImg} />
                         <View style={styles.artDescribe}>
                             <Text style={{ color: 'red' }}> {art.tag} </Text>
@@ -103,6 +108,17 @@ const Topic = ({ topic, setClick/*only for test*/ }) => {
                     </Pressable>
                 ))}
             </ScrollView>
+        </>
+    )
+}
+
+const Topic = ({ topic, topicClick, art, artClick }) => {
+    return (
+        <>
+            { art.topic ? 
+                <Article articleData={topicData[art.topic].article[art.id]}
+                         articleClick={artClick}/> : 
+                topicMenu(topic, topicClick, artClick) }
         </>
     )
 }
