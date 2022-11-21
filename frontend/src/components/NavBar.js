@@ -10,7 +10,10 @@ const styles = StyleSheet.create({
     body: {
         backgroundColor: '#F87171',
         height: 60,
-        padding: 8,
+        paddingLeft: 14,
+        paddingRight: 14,
+        paddingTop: 8,
+        paddingBottom: 8,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -34,25 +37,27 @@ const styles = StyleSheet.create({
 const NavBar = ({
     leftIcon='empty', leftIconOnPress=()=>{}, leftText='',
     rightIcon='empty', rightIconOnPress=()=>{}, rightText='',
-    centerText='w0', updateWeek=(week)=>{},
+    centerText='w0', weekOnChange=(week) => {},
  }) => {
     let centerBox;
     if (centerText.startsWith('w') && !isNaN(centerText.slice(1))) {
-        const [week, setWeek] = useState(Number(centerText.slice(1)));
+        let currentWeek = Number(centerText.slice(1));
+        const [week, setWeek] = useState(currentWeek);
+        weekOnChange(week);
         centerText = (week === 0) ? 'TTC' : 'Week ' + week;
         centerBox = <View style={styles.box}>
             <ActionIcon iconName={'cheveron-left-s'} onPress={() => {
                 if (week === 0) return;
                 setWeek(week - 1);
-                updateWeek(week);
             }} size={24} padding={10} opacity={0.6} />
             <Text style={styles.title}>{centerText}</Text>
             <ActionIcon iconName={'cheveron-right-s'} onPress={() => {
                 if (week === 40) return;
                 setWeek(week + 1);
-                updateWeek(week);
             }} size={24} padding={10} opacity={0.6} />
         </View>;
+        leftIcon = week === currentWeek ? 'empty' : 'reply-s';
+        leftIconOnPress = () => {setWeek(currentWeek)};
     } else {
         centerBox = <View style={styles.box}>
             <Text style={styles.title}>{centerText}</Text>
