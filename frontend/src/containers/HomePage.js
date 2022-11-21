@@ -1,6 +1,8 @@
 import { ScrollView, StyleSheet, View, Text } from 'react-native';
 import ChecklistItem from '../components/checkList/ChecklistItem.js';
-import useCheckList from '../components/checkList/hooks/useCheckList'
+import useCheckList from '../components/checkList/hooks/useCheckList';
+import { NavBar } from '../components/NavBar.js';
+
 const styles = StyleSheet.create({
     body: {
         backgroundColor: '#F9FAFB', // gray/50
@@ -45,7 +47,8 @@ const HomePage = () => {
     const { checkListData, setCheckListData, onDeleteHandler } = useCheckList()
     return (
         <ScrollView style={styles.body}>
-            <View style={{height: 104, backgroundColor: '#F87171'}}></View>
+            <NavBar centerText='w1' rightIcon='bell-s' updateWeek={(week) => {console.log(week)}}/>
+            {/* TODO: logged week is old week */}
             <View style={styles.block} >
                 <View style={styles.titleRow} >
                     <Text style={styles.title} >Week 1 of Pregnency</Text>
