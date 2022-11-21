@@ -1,4 +1,4 @@
-import { StyleSheet, Button, View, Text } from 'react-native';
+import { StyleSheet, Pressable, View, Text } from 'react-native';
 import { ActionIcon } from '../ActionIcon';
 import useCheckList from './hooks/useCheckList';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
@@ -13,6 +13,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#F9FAFB', // gray/50
         borderRadius: 10,
         overflow: 'hidden',
+        justifyContent: 'space-between',
+        paddingLeft: "5%",
+        paddingRight: "5%",
     },
     checkBoxContainer: {
         padding: 12,
@@ -24,7 +27,6 @@ const styles = StyleSheet.create({
     },
     label: {
         // flex: 1,
-        width: '68%',
         fontSize: 14,
         color: '#1F2937', // gray/800
     },
@@ -34,6 +36,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'flex-start',
     },
+
 });
 
 const ChecklistItem = ({ id, checked, text, liked }) => {
@@ -57,9 +60,9 @@ const ChecklistItem = ({ id, checked, text, liked }) => {
               width: 70,
               height: 70,
             }}>
-            <Button color="red" onPress={()=>{onDeleteHandler(id)}}>
+            <Pressable color="red" onPress={()=>{onDeleteHandler(id)}}>
                 <ActionIcon iconName={'archive-s'} size={20} />
-            </Button>
+            </Pressable>
           </View>
         );
       };
