@@ -1,5 +1,6 @@
 import { StyleSheet, Text, Image, View, ScrollView, Pressable } from 'react-native';
 import { Article } from './Article';
+import { NavBar } from '../NavBar';
 
 const styles = StyleSheet.create({
     block: {
@@ -90,7 +91,10 @@ const topicData = {
 const topicMenu = (topic, topicClick, artClick) => {
     return (
         <>
-            <View style={{ height: 104, backgroundColor: '#F87171' }} />
+            <NavBar centerText=''
+                leftText='Back' leftIcon='cheveron-left-s' leftIconOnPress={(event) => {}}
+                rightText='Saved Articles' rightIcon='bookmark-s' rightIconOnPress={(event) => {}}
+            />
             <Pressable onPress={() => {topicClick('')}}><Text> go back to menu (only for test!) </Text></Pressable>
             <ScrollView >
                 <Image source={topicData[topic].topPic} style={styles.topImg} />

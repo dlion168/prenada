@@ -16,6 +16,12 @@ const icons = {
     'cheveron-left-s': require('../assets/icon/secondary/cheveron-left.png'),
     'cheveron-right-s': require('../assets/icon/secondary/cheveron-right.png'),
     'reply-s': require('../assets/icon/secondary/reply.png'),
+    'bookmark-s': require('../assets/icon/secondary/bookmark.png'),
+    'dots-horizontal-s': require('../assets/icon/secondary/dots-horizontal.png'),
+    'check-s': require('../assets/icon/secondary/check.png'),
+    'cog-s': require('../assets/icon/secondary/cog.png'),
+    'trash-s': require('../assets/icon/secondary/trash.png'),
+    'x-s': require('../assets/icon/secondary/x.png'),
 };
 
 const ActionIcon = ({ iconName, onPress, size=20, padding=6, opacity=1.0 }) => {

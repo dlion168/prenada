@@ -5,13 +5,18 @@ import OverviewScreen from '../components/body_data/OverviewScreen';
 import SleepScreen from '../components/body_data/SleepScreen';
 import WaterScreen from '../components/body_data/WaterScreen';
 import SymptomScreen from '../components/body_data/SymptomScreen';
+import { NavBar } from '../components/NavBar';
+import { useEffect } from 'react';
 
 const Tab = createMaterialTopTabNavigator();
 
 const BodyData = () => {
     return (
         <>
-            <View style={{ height: 104, backgroundColor: '#F87171' }}></View>
+            <NavBar
+                centerText='w0' weekOnChange={(week) => {useEffect(() => {/*do something with week */})}}
+                rightIcon='cog-s' rightIconOnPress={(event) => {}}
+            />
             <Tab.Navigator
                 screenOptions={{
                     tabBarActiveTintColor: '#F87171',
