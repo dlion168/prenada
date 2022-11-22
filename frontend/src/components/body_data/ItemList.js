@@ -41,7 +41,6 @@ const ItemList = ({ showList }) => {
                             <Text style={styles.text} >{obj.leftText}</Text>
                             <View style={{ flex: 1 }} />
                             <Text style={styles.text} >{obj.rightText}</Text>
-
                         </View>
                     );
                 })
