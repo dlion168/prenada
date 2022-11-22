@@ -6,5 +6,9 @@
   "repository": "https://github.com/dlion168/prenada",
   "author": "Evan Lin",
   "license": "MIT",
-  "private": null
+  "private": null,
+  "scripts": {
+    "start": "cd frontend && yarn start",
+    "server": "cd backend && yarn server"
+  }
 }

@@ -1,5 +1,8 @@
 import { ScrollView, StyleSheet, View, Text } from 'react-native';
-import ChecklistItem from '../components/check_list/ChecklistItem.js'
+import { useState, useEffect } from 'react';
+import ChecklistItem from '../components/checkList/ChecklistItem.js';
+import useCheckList from '../components/checkList/hooks/useCheckList';
+import { NavBar } from '../components/NavBar.js';
 
 const styles = StyleSheet.create({
     body: {
@@ -42,25 +45,27 @@ const styles = StyleSheet.create({
 })
 
 const HomePage = () => {
-    const checklist = [
-        { 'checked': false, 'text': 'Start taking prenatal Vitamin', 'liked': true },
-        { 'checked': false, 'text': 'Write down the date of your last period or two', 'liked': true },
-        { 'checked': false, 'text': 'With your partner, create a family health history, including any genetic or chromosomal disorders', 'liked': false },
-        { 'checked': false, 'text': 'Quit smoking, and focus on having a healthy diet and lifestyle', 'liked': false },
-    ];
+    const { checkListData, setCheckListData, onDeleteHandler } = useCheckList()
+    const [displayWeek, setDisplayWeek] = useState(0);
     return (
         <ScrollView style={styles.body}>
-            <View style={{height: 104, backgroundColor: '#F87171'}}></View>
+            <NavBar centerText='w0' rightIcon='bell-s' weekOnChange={
+                (week) => {useEffect(() => {setDisplayWeek(week)})}
+            }/>
             <View style={styles.block} >
                 <View style={styles.titleRow} >
-                    <Text style={styles.title} >Week 1 of Pregnency</Text>
+                    <Text style={styles.title} >{
+                        displayWeek === 0 ?
+                        'Trying to conceive (TTC)' :
+                        `Week ${displayWeek} of Pregnency`}</Text>
                     <View style={{flex: 1}}/>
                     <Text style={styles.titleMore} >See All</Text>
                 </View>
-                {checklist.map((obj, idx) => { return (
-                <View style={styles.pad} >
-                    <ChecklistItem key={idx} checked={obj.checked} text={obj.text} liked={obj.liked}></ChecklistItem>
-                </View> )})}
+                {checkListData.map((obj, idx) => { return (
+                <View style={styles.pad} key={idx}>
+                    <ChecklistItem id={idx} checked={obj.checked} text={obj.text} liked={obj.liked}></ChecklistItem>
+                </View>
+                )})}
             </View>
             <View style={styles.block} >
                 <View style={styles.titleRow} >
