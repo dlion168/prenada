@@ -83,7 +83,7 @@ const ChecklistItem = ({ id, checked, text, liked }) => {
                             c[id].checked = !c[id].checked 
                             setCheckListData(c)}} size={20} />
                 </View>
-                <Text style={styles.label} numberOfLines={1}>{text}</Text>
+                <Text style={checked ? [styles.label, {textDecorationLine: 'line-through', textDecorationStyle: 'solid'}] : styles.label} numberOfLines={1}>{text}</Text>
                 <View style={styles.iconContainer} >
                     <ActionIcon iconName={liked ? 'heart-t' : 'heart-f'}
                         onPress={() => {
