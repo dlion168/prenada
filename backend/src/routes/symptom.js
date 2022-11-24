@@ -65,6 +65,43 @@ const findSymptom = async (startDate, endDate) => {
     return { data, message };
 };
 
+const getSymptomSummary = async (startDate, endDate) => {
+    const symptomList = await Symptom.find({
+        "date": {
+            $gte: strToDate(startDate),
+            $lte: strToDate(endDate)
+        }
+    });
+
+    let summary = {};
+    symptomList.map((obj) => {
+        const syms = obj.symptomName.split(',');
+        syms.forEach(element => {
+            if (element != "") {
+                if (summary[element])
+                    summary[element] += 1;
+                else
+                    summary[element] = 1;
+            }
+        });
+    });
+
+    // let data = [];
+    let message = "";
+    // try {
+    //     if (Object.keys(summary).length > 0) {
+    //         Object.keys(summary).forEach(element => {
+    //             let item = {
+    //                 'symptomName': element,
+    //                 'times': summary[element]
+    //             };
+    //             data.push(item);
+    //         });
+    //     }
+    // } catch (e) { message = "Save symptomData error: " + e; }
+    return { summary, message };
+};
+
 const router = Router();
 router.delete("/", async (_, res) => {
     res.json({ message: await deleteDB() })
@@ -84,6 +121,14 @@ router.get("/", async (req, res) => {
     const endDate = req.query.endDate;
     console.log(startDate, endDate);
     let result = await findSymptom(startDate, endDate);
+    res.status(200).send(result);
+});
+
+router.get("/summary", async (req, res) => {
+    const startDate = req.query.startDate;
+    const endDate = req.query.endDate;
+    console.log(startDate, endDate);
+    let result = await getSymptomSummary(startDate, endDate);
     res.status(200).send(result);
 });
 

@@ -70,6 +70,19 @@ const SymptomSummary = ({ addMode, handleSymptomClick, symptoms }) => {
     //     { 'symptomName': 'Tender breasts', 'times': 5 },
     //     { 'symptomName': 'Headache', 'times': 1 },
     // ];
+
+    console.log(symptoms);
+    const symptomsList = ['Cramps', 'Tender breasts', 'Headache', 'Acne'];
+    let data = [];
+    symptomsList.forEach(element => {
+        let item = { 'symptomName': element }
+        if (symptoms[element])
+            item['times'] = symptoms[element];
+        else
+            item['times'] = 0;
+        data.push(item);
+    });
+
     const imgPath = {
         'Cramps': require('../../assets/image/BodyData/Symptom/Cramps.png'),
         'Tender breasts': require('../../assets/image/BodyData/Symptom/Tender breasts.png'),
@@ -94,7 +107,7 @@ const SymptomSummary = ({ addMode, handleSymptomClick, symptoms }) => {
             </View>
             <View style={styles.symList}>
                 {
-                    symptoms.map((obj, idx) => {
+                    data.map((obj, idx) => {
                         if (addMode)
                             return (
                                 <TouchableOpacity
