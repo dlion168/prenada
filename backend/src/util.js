@@ -29,4 +29,11 @@ function strToDate(str) {
     return date;
 }
 
-export { dateToStr, strToDate };
+// Convert mongodb date to bbreviation string format eg. Oct 21
+function dateToAbbreviationStr(date) {
+    let dateStr = new Date(date).toDateString();
+    return dateStr.substring(4, 10);
+}
+
+
+export { dateToStr, strToDate, dateToAbbreviationStr };

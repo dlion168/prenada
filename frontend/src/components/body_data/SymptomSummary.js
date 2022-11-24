@@ -1,5 +1,4 @@
-import { View, Text, Image, StyleSheet } from 'react-native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
 const styles = StyleSheet.create({
     body: {
@@ -24,19 +23,30 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         gap: 10,
-        alignItems:'flex-start',
-        paddingBottom:10
+        alignItems: 'flex-start',
+        paddingBottom: 10
     },
     symItem: {
         alignItems: 'center'
+    },
+    imgContainer: {
+        display: 'flex',
+        alignItems: 'flex-end',
+        justifyContent: 'flex-end'
     },
     img: {
         borderRadius: 30,
         height: 60,
         width: 60,
         backgroundColor: '#bae6fd',
-        alignItems: 'flex-end',
-        justifyContent: 'flex-end'
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    chosenImg: {
+        borderRadius: 30,
+        height: 60,
+        width: 60,
+        backgroundColor: '#6b9ab3',
     },
     times: {
         borderRadius: 10,
@@ -48,46 +58,81 @@ const styles = StyleSheet.create({
     timesText: {
         color: '#FFFFFF',
     },
+    image: {
+        height: 45,
+        width: 45,
+    },
 })
 
-const SymptomSummary = () => {
-    const data = [
-        { 'symptomName': 'Cramps', 'times': 2 },
-        { 'symptomName': 'Tender breasts', 'times': 5 },
-        { 'symptomName': 'Headache', 'times': 1 },
-    ];
+const SymptomSummary = ({ addMode, handleSymptomClick, symptoms }) => {
+    // const data = [
+    //     { 'symptomName': 'Cramps', 'times': 2 },
+    //     { 'symptomName': 'Tender breasts', 'times': 5 },
+    //     { 'symptomName': 'Headache', 'times': 1 },
+    // ];
+    const imgPath = {
+        'Cramps': require('../../assets/image/BodyData/Symptom/Cramps.png'),
+        'Tender breasts': require('../../assets/image/BodyData/Symptom/Tender breasts.png'),
+        'Headache': require('../../assets/image/BodyData/Symptom/Headache.png'),
+        'Acne': require('../../assets/image/BodyData/Symptom/Acne.png'),
+    }
 
     return (
         <View style={styles.body}>
             <View style={styles.title}>
-                <MaterialCommunityIcons
-                    name='stethoscope'
-                    size={30}
-                    solid
+                <Image
+                    source={require('../../assets/image/BodyData/Symptom/Stethoscope.png')}
+                    style={{ height: 30, width: 30, }}
                 />
                 <View>
                     <Text style={{ fontWeight: 'bold', fontSize: 14, }} >Symptom</Text>
-                    <Text style={styles.text} >Happened this week</Text>
+                    {addMode ? <></> :
+                        <Text style={styles.text} >Happened this week</Text>
+                    }
                 </View>
                 <View style={{ flex: 1 }}></View>
             </View>
             <View style={styles.symList}>
                 {
-                    data.map((obj, idx) => {
-                        return (
-                            <View style={styles.symItem} key={idx}>
-                                <View style={styles.img}>
-                                    <View style={styles.times}>
-                                        <Text style={styles.timesText} >{obj.times}</Text>
+                    symptoms.map((obj, idx) => {
+                        if (addMode)
+                            return (
+                                <TouchableOpacity
+                                    style={styles.symItem}
+                                    key={idx}
+                                    onPress={() => handleSymptomClick(obj.symptomName)}
+                                >
+                                    <View style={obj.choose ? styles.chosenImg : styles.img} >
+                                        <Image
+                                            // source={require('../../assets/image/BodyData/Symptom/Cramps.png')}
+                                            source={imgPath[obj.symptomName]}
+                                            style={styles.image}
+                                        />
                                     </View>
+                                    <Text style={styles.text} >{obj.symptomName}</Text>
+                                </TouchableOpacity >);
+                        else
+                            return (
+                                < View style={styles.symItem} key={idx}>
+                                    <View style={styles.imgContainer} >
+                                        <View style={styles.img}>
+                                            <Image
+                                                // source={require('../../assets/image/BodyData/Symptom/Cramps.png')}
+                                                source={imgPath[obj.symptomName]}
+                                                style={styles.image}
+                                            />
+                                        </View>
+                                        <View style={styles.times}>
+                                            <Text style={styles.timesText} >{obj.times}</Text>
+                                        </View>
+                                    </View>
+                                    <Text style={styles.text} >{obj.symptomName}</Text>
                                 </View>
-                                <Text style={styles.text} >{obj.symptomName}</Text>
-                            </View>
-                        )
+                            )
                     })
                 }
             </View>
-        </View>
+        </View >
     );
 }
 export default SymptomSummary;

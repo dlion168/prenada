@@ -32,8 +32,23 @@ const styles = StyleSheet.create({
     },
 })
 
-const WaterScreen = () => {
+const WaterScreen = ({ displayWeek }) => {
+    console.log('week', displayWeek);
     const [waterDetail, setWaterDetail] = useState([]);
+
+    const init = {
+        "date": [
+            "Oct 10",
+            "Oct 24",
+            "Oct 25"
+        ],
+        "capacity": [
+            500,
+            900,
+            500
+        ]
+    }
+    const [waterSummary, setWaterSummary] = useState(init);
     const getWaterData = async () => {
         const {
             data: { data, message },
@@ -43,7 +58,6 @@ const WaterScreen = () => {
                 endDate: "20221026",
             },
         });
-        console.log(data)
         setWaterDetail(data);
     };
 
@@ -53,36 +67,37 @@ const WaterScreen = () => {
 
     return (
         <ScrollView style={styles.body}>
-            <WaterSummary />
+            <WaterSummary waterSummary={waterSummary} />
             <View style={styles.detail} >
                 {
                     waterDetail.map((obj, idx) => {
                         let showList = [];
                         obj.itemList.forEach(element => {
-                            let obj = { 'leftText': 'Water', 'rightText': `${element.time} · ${element.capacity} ml` };
+                            let obj = {
+                                'leftText': 'Water',
+                                'rightText': `${element.time} · ${element.capacity} ml`,
+                            };
                             showList.push(obj);
                         });
 
                         return (
-                            <>
-                                <View style={styles.dataRow} key={idx} >
-                                    <View style={styles.title} >
-                                        <Text style={obj.totalCapacity >= 2000 ? styles.reachGoal : styles.notReachGoal} >
-                                            {obj.date}</Text>
-                                        <View style={{ flex: 1 }} />
-                                        <Text style={obj.totalCapacity >= 2000 ? styles.reachGoal : styles.notReachGoal} >
-                                            {obj.totalCapacity >= 2000 ?
-                                                <Image
-                                                    source={require('../../assets/icon/primary/badge-check.png')}
-                                                    style={{ height: 16, width: 16 }} />
-                                                : ''}
+                            <View style={styles.dataRow} key={idx} >
+                                <View style={styles.title} >
+                                    <Text style={obj.totalCapacity >= 2000 ? styles.reachGoal : styles.notReachGoal} >
+                                        {obj.date}</Text>
+                                    <View style={{ flex: 1 }} />
+                                    <Text style={obj.totalCapacity >= 2000 ? styles.reachGoal : styles.notReachGoal} >
+                                        {obj.totalCapacity >= 2000 ?
+                                            <Image
+                                                source={require('../../assets/icon/primary/badge-check.png')}
+                                                style={{ height: 16, width: 16 }} />
+                                            : ''}
 
-                                            {obj.totalCapacity} ml
-                                        </Text>
-                                    </View>
-                                    <ItemList showList={showList} />
+                                        {obj.totalCapacity} ml
+                                    </Text>
                                 </View>
-                            </>
+                                <ItemList showList={showList} />
+                            </View>
                         );
                     })
                 }
