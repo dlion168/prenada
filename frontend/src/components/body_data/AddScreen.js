@@ -118,7 +118,6 @@ const AddScreen = () => {
     };
 
     const saveForm = async () => {
-        console.log(date.replace('/', '').replace('/', ''))
         const dateString = date.replace('/', '').replace('/', '')
         // console.log(date, weight, sleep, water, symptoms);
         const { data: { waterData, waterMessage }, } = await axios.post('/water', {

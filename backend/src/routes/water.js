@@ -2,7 +2,7 @@
 import { Router } from "express";
 import Water from "../models/Water";
 import db from '../db';
-import { dateToStr, strToDate } from '../util';
+import { dateToStr, strToDate, dateToAbbreviationStr } from '../util';
 
 db.connect();
 
@@ -68,6 +68,47 @@ const findWater = async (startDate, endDate) => {
     return { data, message };
 };
 
+const getWaterSummary = async (startDate, endDate) => {
+    const waterData = await Water.aggregate([
+        {
+            $match: {
+                "date": {
+                    $gte: strToDate(startDate),
+                    $lte: strToDate(endDate)
+                }
+            }
+        },
+        {
+            $group: {
+                _id: "$date",
+                itemList: { $push: { capacity: "$capacity" } },
+            }
+        },
+        {
+            $addFields:
+            {
+                totalCapacity: { $sum: "$itemList.capacity" }
+            }
+        },
+        {
+            $sort: { _id: 1 }
+        },
+    ]);
+
+    let date = [];
+    let capacity = [];
+    let message = "";
+    try {
+        if (waterData.length > 0) {
+            waterData.map((row) => {
+                date.push(dateToAbbreviationStr(row._id));
+                capacity.push(row.totalCapacity);
+            });
+        }
+    } catch (e) { message = "Get water data error: " + e; }
+    return { data: { date, capacity }, message };
+};
+
 const router = Router();
 router.delete("/", async (_, res) => {
     res.json({ message: await deleteDB() })
@@ -87,6 +128,14 @@ router.get("/", async (req, res) => {
     const endDate = req.query.endDate;
     console.log(startDate, endDate);
     let result = await findWater(startDate, endDate);
+    res.status(200).send(result);
+});
+
+router.get("/summary", async (req, res) => {
+    const startDate = req.query.startDate;
+    const endDate = req.query.endDate;
+    console.log(startDate, endDate);
+    let result = await getWaterSummary(startDate, endDate);
     res.status(200).send(result);
 });
 

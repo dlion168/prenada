@@ -86,7 +86,9 @@ const SymptomSummary = ({ addMode, handleSymptomClick, symptoms }) => {
                 />
                 <View>
                     <Text style={{ fontWeight: 'bold', fontSize: 14, }} >Symptom</Text>
-                    <Text style={styles.text} >Happened this week</Text>
+                    {addMode ? <></> :
+                        <Text style={styles.text} >Happened this week</Text>
+                    }
                 </View>
                 <View style={{ flex: 1 }}></View>
             </View>

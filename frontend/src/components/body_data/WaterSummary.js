@@ -20,45 +20,47 @@ const styles = StyleSheet.create({
     text: {
         color: '#6B7280',
     },
-    chart:{
+    chart: {
         paddingBottom: 20
     }
 })
 
-const data = {
-    labels: ["Oct 21", "Oct 22", "Oct 23", "Oct 24", "Oct 25", "Oct 26"],
-    datasets: [
-        {
-            data: [200, 450, 2200, 300, 2000, 900],
-            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`, // optional
-            strokeWidth: 2 // optional
+
+
+const WaterSummary = ({ waterSummary }) => {
+    const data = {
+        labels: waterSummary.date,
+        datasets: [
+            {
+                data: waterSummary.capacity,
+                color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`, // optional
+                strokeWidth: 2 // optional
+            },
+            {
+                data: [2000, 2000, 2000],
+                color: (opacity = 1) => `rgba(129, 140, 248, ${opacity})`, // optional
+                strokeWidth: 2 // optional
+            }
+        ],
+        legend: ["Capacity", "Target"] // optional
+    };
+
+    const chartConfig = {
+        backgroundColor: "#c7d2fe",
+        backgroundGradientFrom: "#c7d2fe",
+        backgroundGradientTo: "#c7d2fe",
+        decimalPlaces: 0, // optional, defaults to 2dp
+        color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+        labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+        style: {
+            borderRadius: 16
         },
-        {
-            data: [2000, 2000, 2000, 2000, 2000, 2000],
-            color: (opacity = 1) => `rgba(129, 140, 248, ${opacity})`, // optional
-            strokeWidth: 2 // optional
-        }
-    ],
-    legend: ["Capacity", "Target"] // optional
-};
+    };
 
-const chartConfig = {
-    backgroundColor: "#c7d2fe",
-    backgroundGradientFrom: "#c7d2fe",
-    backgroundGradientTo: "#c7d2fe",
-    decimalPlaces: 0, // optional, defaults to 2dp
-    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-    labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-    style: {
-        borderRadius: 16
-    },
-};
-
-const WaterSummary = () => {
     return (
         <View style={styles.body}>
             <View style={styles.title}>
-                 <Image
+                <Image
                     source={require('../../assets/image/BodyData/Potable water.png')}
                     style={{ height: 30, width: 30, }}
                 />
@@ -67,7 +69,7 @@ const WaterSummary = () => {
                     <Text style={styles.text} >Average this week</Text>
                 </View>
                 <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={{ fontWeight: 'bold', fontSize: 16, }} >1954</Text>
+                    <Text style={{ fontWeight: 'bold', fontSize: 16, }} >{waterSummary.capacity.reduce((a, b) => a + b)} </Text>
                     <Text style={styles.text} > ml</Text>
                 </View>
             </View>

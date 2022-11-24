@@ -1,21 +1,25 @@
-// import * as React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { useState, useEffect } from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import OverviewScreen from '../components/body_data/OverviewScreen';
 import SleepScreen from '../components/body_data/SleepScreen';
 import WaterScreen from '../components/body_data/WaterScreen';
 import SymptomScreen from '../components/body_data/SymptomScreen';
 import { NavBar } from '../components/NavBar';
-import { useEffect } from 'react';
 
 const Tab = createMaterialTopTabNavigator();
 
 const BodyData = () => {
+    const [displayWeek, setDisplayWeek] = useState(0);
+
     return (
         <>
             <NavBar
-                centerText='w0' weekOnChange={(week) => {useEffect(() => {/*do something with week */})}}
-                rightIcon='cog-s' rightIconOnPress={(event) => {}}
+                centerText='w0'
+                weekOnChange={(week) => {
+                    useEffect(() => { setDisplayWeek(week) })
+                }}
+                rightIcon='cog-s'
+                rightIconOnPress={(event) => { }}
             />
             <Tab.Navigator
                 screenOptions={{
@@ -23,10 +27,10 @@ const BodyData = () => {
                     tabBarInactiveTintColor: '#9CA3AF',
                     tabBarIndicatorStyle: { backgroundColor: '#F87171' }
                 }}>
-                <Tab.Screen name="Overview" component={OverviewScreen} />
-                <Tab.Screen name="Sleep" component={SleepScreen} />
-                <Tab.Screen name="Water" component={WaterScreen} />
-                <Tab.Screen name="Symptom" component={SymptomScreen} />
+                <Tab.Screen name="Overview" component={() => <OverviewScreen displayWeek={displayWeek} />} />
+                <Tab.Screen name="Sleep" component={() => <SleepScreen displayWeek={displayWeek} />} />
+                <Tab.Screen name="Water" component={() => <WaterScreen displayWeek={displayWeek} />} />
+                <Tab.Screen name="Symptom" component={() => <SymptomScreen displayWeek={displayWeek} />} />
             </Tab.Navigator>
         </>
     );
