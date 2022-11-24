@@ -1,6 +1,6 @@
 // Router-level middleware
 import { Router } from "express";
-import Water from "../models/Water";
+import Symptom from "../models/Symptom";
 import db from '../db';
 import { dateToStr, strToDate } from '../util';
 
@@ -8,30 +8,33 @@ db.connect();
 
 const deleteDB = async () => {
     try {
-        await Water.deleteMany({});
+        await Symptom.deleteMany({});
         return "Database cleared";
     } catch (e) {
         return e;
     }
 };
 
-const saveWater = async (date, time, capacity) => {
-    const oldWater = await Water.findOne({ date, time });
+const saveSymptom = async (date, time, symptomName) => {
+    const oldSymptom = await Symptom.findOne({ date, time });
     try {
-        if (oldWater) {
-            oldWater.capacity = capacity;
-            oldWater.save();
-            return { message: `Updating`, water: oldWater };
+        if (oldSymptom) {
+            oldSymptom.symptomName = symptomName;
+            oldSymptom.save();
+            return { message: `Updating`, symptom: oldSymptom };
         } else {
-            const newWater = new Water({ date, time, capacity });
-            newWater.save();
-            return { message: `Adding `, water: newWater };
+            const newSymptom = new Symptom({ date, time, symptomName });
+            newSymptom.save();
+            return { message: `Adding `, symptom: newSymptom };
         }
     } catch (e) { throw new Error("Save scoreCard error: " + e); }
 };
 
-const findWater = async (startDate, endDate) => {
-    const waterData = await Water.aggregate([
+const findSymptom = async (startDate, endDate) => {
+    const symptomData = await Symptom.aggregate([
+        {
+            $sort: { date: -1, time: -1 }
+        },
         {
             $match: {
                 "date": {
@@ -43,28 +46,22 @@ const findWater = async (startDate, endDate) => {
         {
             $group: {
                 _id: "$date",
-                itemList: { $push: { time: "$time", capacity: "$capacity" } }
+                itemList: { $push: { time: "$time", symptomName: "$symptomName" } },
             }
         },
-        {
-            $addFields:
-            {
-                totalCapacity: { $sum: "$itemList.capacity" }
-            }
-        }
     ]);
 
     let data = [];
     let message = "";
     try {
-        if (waterData.length > 0) {
-            waterData.map((row) => {
+        if (symptomData.length > 0) {
+            symptomData.map((row) => {
                 let item = row;
                 item['date'] = dateToStr(row._id);
                 data.push(item);
             });
         }
-    } catch (e) { message = "Save scoreCard error: " + e; }
+    } catch (e) { message = "Save symptomData error: " + e; }
     return { data, message };
 };
 
@@ -76,9 +73,9 @@ router.delete("/", async (_, res) => {
 router.post("/", async (req, res) => {
     let date = req.body.date;
     let time = req.body.time;
-    let capacity = req.body.capacity;
+    let symptomName = req.body.symptomName;
 
-    let result = await saveWater(date, time, capacity);
+    let result = await saveSymptom(date, time, symptomName);
     res.status(200).send(result);
 });
 
@@ -86,7 +83,7 @@ router.get("/", async (req, res) => {
     const startDate = req.query.startDate;
     const endDate = req.query.endDate;
     console.log(startDate, endDate);
-    let result = await findWater(startDate, endDate);
+    let result = await findSymptom(startDate, endDate);
     res.status(200).send(result);
 });
 
