@@ -1,6 +1,7 @@
 import { StyleSheet, View, ScrollView } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { TopicCard } from './TopicCard';
+import { NavBar } from '../NavBar';
 
 const styles = StyleSheet.create({
     body: {
@@ -15,7 +16,7 @@ const styles = StyleSheet.create({
 const Menu = ({ search, setSearch, topicClick }) => {
     return (
         <>
-            <View style={{ height: 104, backgroundColor: '#F87171' }} />
+            <NavBar centerText='Library' rightIcon='bookmark-s' />
             <ScrollView style={styles.body}>
                 <SearchBar value={search}
                            onChangeText={(search) => {setSearch(search)}}
