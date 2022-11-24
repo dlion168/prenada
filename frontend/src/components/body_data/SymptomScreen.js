@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, Image, StyleSheet, ScrollView } from 'react-native';
+import { Text, View, Image, StyleSheet, ScrollView, FlatList } from 'react-native';
 import ItemList from './ItemList';
 import SymptomSummary from './SymptomSummary';
 
@@ -37,9 +37,19 @@ const SymptomScreen = () => {
         { 'date': 'October 25, 2022', 'itemList': [{ 'time': '09:00 AM', 'symptomName': 'Acne' }, { 'time': '09:00 PM', 'symptomName': 'Cramps' }] },
         { 'date': 'October 24, 2022', 'itemList': [{ 'time': '09:00 AM', 'symptomName': 'Tender breasts' }] },
     ];
+
+    const symptoms = [
+        { 'symptomName': 'Cramps', 'times': 2 },
+        { 'symptomName': 'Tender breasts', 'times': 5 },
+        { 'symptomName': 'Headache', 'times': 1 },
+    ];
+
     return (
         <ScrollView style={styles.body}>
-            <SymptomSummary />
+            <SymptomSummary
+                addMode={false}
+                handleSymptomClick={null}
+                symptoms={symptoms} />
             <View style={styles.detail} >
                 {
                     data.map((obj, idx) => {
@@ -50,17 +60,15 @@ const SymptomScreen = () => {
                         });
 
                         return (
-                            <>
-                                <View style={styles.dataRow} key={idx} >
-                                    <View style={styles.title} >
-                                        <Text style={styles.notReachGoal} >
-                                            {obj.date}</Text>
-                                        <View style={{ flex: 1 }} />
-                                        <Text style={styles.notReachGoal} >{obj.itemList.length} types</Text>
-                                    </View>
-                                    <ItemList showList={showList} />
+                            <View style={styles.dataRow} key={idx} >
+                                <View style={styles.title} >
+                                    <Text style={styles.notReachGoal} >
+                                        {obj.date}</Text>
+                                    <View style={{ flex: 1 }} />
+                                    <Text style={styles.notReachGoal} >{obj.itemList.length} types</Text>
                                 </View>
-                            </>
+                                <ItemList showList={showList} />
+                            </View>
                         );
                     })
                 }

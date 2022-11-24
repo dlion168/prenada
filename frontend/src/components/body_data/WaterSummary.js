@@ -1,6 +1,5 @@
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { LineChart } from "react-native-chart-kit";
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const styles = StyleSheet.create({
     body: {
@@ -59,10 +58,9 @@ const WaterSummary = () => {
     return (
         <View style={styles.body}>
             <View style={styles.title}>
-                <MaterialCommunityIcons
-                    name='water-check'
-                    size={30}
-                    solid
+                 <Image
+                    source={require('../../assets/image/BodyData/Potable water.png')}
+                    style={{ height: 30, width: 30, }}
                 />
                 <View>
                     <Text style={{ fontWeight: 'bold', fontSize: 14, }} >Water</Text>

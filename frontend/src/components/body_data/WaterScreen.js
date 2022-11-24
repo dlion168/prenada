@@ -43,7 +43,6 @@ const WaterScreen = () => {
                 endDate: "20221026",
             },
         });
-        console.log(data)
         setWaterDetail(data);
     };
 
@@ -59,14 +58,16 @@ const WaterScreen = () => {
                     waterDetail.map((obj, idx) => {
                         let showList = [];
                         obj.itemList.forEach(element => {
-                            let obj = { 'leftText': 'Water', 'rightText': `${element.time} · ${element.capacity} ml` };
+                            let obj = {
+                                'leftText': 'Water',
+                                'rightText': `${element.time} · ${element.capacity} ml`,
+                            };
                             showList.push(obj);
                         });
 
                         return (
-                            <>
-                                <View style={styles.dataRow} key={idx} >
-                                    <View style={styles.title} >
+                            <View style={styles.dataRow} key={idx} >
+                                <View style={styles.title} >
                                         <Text style={obj.totalCapacity >= 2000 ? styles.reachGoal : styles.notReachGoal} >
                                             {obj.date}</Text>
                                         <View style={{ flex: 1 }} />
@@ -81,8 +82,7 @@ const WaterScreen = () => {
                                         </Text>
                                     </View>
                                     <ItemList showList={showList} />
-                                </View>
-                            </>
+                            </View>
                         );
                     })
                 }
