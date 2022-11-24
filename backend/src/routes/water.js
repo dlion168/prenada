@@ -23,7 +23,7 @@ const saveWater = async (date, time, capacity) => {
             oldWater.save();
             return { message: `Updating`, water: oldWater };
         } else {
-            const newWater = new Water({ date, time, capacity });
+            const newWater = new Water({ date: strToDate(date), time, capacity });
             newWater.save();
             return { message: `Adding `, water: newWater };
         }

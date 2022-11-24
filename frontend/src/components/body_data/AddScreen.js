@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, ScrollView, Image, Button } from 'react-native';
 import SymptomSummary from './SymptomSummary';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import axios from '../../api';
 
 const styles = StyleSheet.create({
     body: {
@@ -94,43 +95,13 @@ const styles = StyleSheet.create({
     },
 })
 
-// const initialState = {
-//     date: '09-10-2022',
-//     weight: 1,
-//     sleep: 2,
-//     water: 3,
-// };
-
-// function reducer(state, action) {
-//     switch (action.type) {
-//         case "add":
-//             return {
-//                 date: '09-10-2022',
-//                 weight: 0,
-//                 sleep: 0,
-//                 water: 0
-//             };
-//         case "setDate":
-//             return { ...state, date: action.payload };
-//         case "setWeight":
-//             console.log(action.payload)
-//             return { ...state, weight: action.payload };
-//         case "setSleep":
-//             return { ...state, sleep: action.payload };
-//         case "setWater":
-//             return { ...state, water: action.payload };
-//         default:
-//             throw new Error();
-//     }
-// }
-
 const AddScreen = () => {
     const initSymptoms = [
         { 'symptomName': 'Cramps', 'choose': false },
         { 'symptomName': 'Tender breasts', 'choose': false },
         { 'symptomName': 'Headache', 'choose': false },
     ];
-    const [date, setDate] = useState('09-10-2022');
+    const [date, setDate] = useState('2022/11/24');
     const [weight, setWeight] = useState(0);
     const [sleep, setSleep] = useState(0);
     const [water, setWater] = useState(0);
@@ -146,18 +117,27 @@ const AddScreen = () => {
         setSymptoms(newSymptoms);
     };
 
-    const saveForm = () => {
-        console.log(date, weight, sleep, water, symptoms);
-        // const {
-        //     data: { data, message },
-        // } = await axios.get('/water', {
-        //     params: {
-        //         startDate: "20221024",
-        //         endDate: "20221026",
-        //     },
-        // });
-        // console.log(data)
-        // setWaterDetail(data);
+    const saveForm = async () => {
+        console.log(date.replace('/', '').replace('/', ''))
+        const dateString = date.replace('/', '').replace('/', '')
+        // console.log(date, weight, sleep, water, symptoms);
+        const { data: { waterData, waterMessage }, } = await axios.post('/water', {
+            date: dateString,
+            time: "9:00 PM",
+            capacity: water
+        });
+
+        let symptomList = []
+        symptoms.map((obj, idx) => {
+            if (obj.choose)
+                symptomList.push(obj.symptomName);
+        });
+
+        const { data: { symptomData, symptomMessage }, } = await axios.post('/symptom', {
+            date: dateString,
+            time: "9:00 PM",
+            symptomName: symptomList.sort().join(',')
+        });
     };
 
     return (
@@ -299,7 +279,6 @@ const AddScreen = () => {
             <Button
                 style={styles.updateButton}
                 onPress={saveForm}
-                // onClick={() => dispatch({ type: "increment" })}
                 title="Update Your Day"
                 color="#F87171"
                 accessibilityLabel="Update Your Day"

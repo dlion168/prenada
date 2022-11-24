@@ -46,7 +46,6 @@ const SymptomScreen = () => {
 
     useEffect(() => {
         getSymptomData();
-        console.log(symptomDetail);
     }, []);
 
     // const symptomDetail = [

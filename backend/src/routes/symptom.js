@@ -23,7 +23,7 @@ const saveSymptom = async (date, time, symptomName) => {
             oldSymptom.save();
             return { message: `Updating`, symptom: oldSymptom };
         } else {
-            const newSymptom = new Symptom({ date, time, symptomName });
+            const newSymptom = new Symptom({ date: strToDate(date), time, symptomName });
             newSymptom.save();
             return { message: `Adding `, symptom: newSymptom };
         }

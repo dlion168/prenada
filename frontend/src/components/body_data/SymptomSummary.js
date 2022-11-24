@@ -65,7 +65,6 @@ const styles = StyleSheet.create({
 })
 
 const SymptomSummary = ({ addMode, handleSymptomClick, symptoms }) => {
-    console.log(symptoms)
     // const data = [
     //     { 'symptomName': 'Cramps', 'times': 2 },
     //     { 'symptomName': 'Tender breasts', 'times': 5 },
