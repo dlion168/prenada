@@ -51,7 +51,6 @@ const SymptomScreen = () => {
                 endDate: "20221026",
             },
         });
-        // console.log(summary.data.data);
         setSymptomSummary(summary.data.summary);
     };
 

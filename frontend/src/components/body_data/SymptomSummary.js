@@ -71,7 +71,6 @@ const SymptomSummary = ({ addMode, handleSymptomClick, symptoms }) => {
     //     { 'symptomName': 'Headache', 'times': 1 },
     // ];
 
-    console.log(symptoms);
     const symptomsList = ['Cramps', 'Tender breasts', 'Headache', 'Acne'];
     let data = [];
     symptomsList.forEach(element => {
