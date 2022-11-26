@@ -4,8 +4,6 @@ import { useCheckList } from './hooks/useCheckList';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 const styles = StyleSheet.create({
-    taskCard: {
-    },
     taskCardFlex: {
         display: 'flex',
         flexDirection: 'row',
@@ -14,11 +12,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         overflow: 'hidden',
         justifyContent: 'space-between',
-        paddingLeft: "5%",
-        paddingRight: "5%",
-    },
-    checkBoxContainer: {
-        padding: 12,
     },
     checkBox: {
         width: 20,
@@ -26,28 +19,16 @@ const styles = StyleSheet.create({
         margin: 6,
     },
     label: {
-        // flex: 1,
+        flex: 1,
         fontSize: 14,
         color: '#1F2937', // gray/800
     },
-    iconContainer: {
-        padding: 12,
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'flex-start',
+    deleteBox: {
+        backgroundColor: '#F87171',
     },
-    deleteBox:{
-        margin: 0,
-        alignContent: 'center',
-        justifyContent: 'center',
-        width: 70,
-        backgroundColor: 'red',
-        borderTopRightRadius: 10,
-        borderBottomRightRadius: 10,
-    }
 });
 
-const ChecklistItem = ({ id, checked, text, liked }) => {
+const ChecklistItem = ({ week, idx, checked, text, liked }) => {
     // let row= [];
     // let prevOpenedRow = null;
     // const closeRow = (index) => {
@@ -58,38 +39,39 @@ const ChecklistItem = ({ id, checked, text, liked }) => {
     //     prevOpenedRow = row[index];
     //   };
     const { checkListData, setCheckListData, onDeleteHandler } = useCheckList()
-    const renderRightActions = (progress, dragX) => {
-        return (
-            <TouchableOpacity style = { styles.deleteBox } onPress={()=>{onDeleteHandler(id)}}>
-                <ActionIcon iconName={'archive-s'} size={20} />
-            </TouchableOpacity>
-        );
-      };
 
     return (
         <Swipeable
-        renderRightActions={(progress, dragX) =>
-          renderRightActions(progress, dragX)
-        }
-        // onSwipeableOpen={() => closeRow(id)}
-        // ref={(ref) => (row[id] = ref)}
-        rightOpenValue={-100}>
+            renderRightActions={() =>
+                <View style={styles.deleteBox}>
+                    <ActionIcon iconName={'archive-s'} size={20} padding={18} onPress={() => onDeleteHandler(idx)} />
+                </View>
+            }
+            // onSwipeableOpen={() => closeRow(idx)}
+            // ref={(ref) => (row[idx] = ref)}
+            rightOpenValue={-100}>
             <View style={styles.taskCardFlex}>
-                <View style={styles.iconContainer} >
-                    <ActionIcon iconName={checked ? 'checkBox-t' : 'checkBox-f'}
-                        onPress={() => {
-                            let c = checkListData
-                            c[id].checked = !c[id].checked 
-                            setCheckListData(c)}} size={20} />
-                </View>
-                <Text style={checked ? [styles.label, { color: 'grey' ,textDecorationLine: 'line-through', textDecorationStyle: 'solid'}] : styles.label} numberOfLines={1}>{text}</Text>
-                <View style={styles.iconContainer} >
-                    <ActionIcon iconName={liked ? 'heart-t' : 'heart-f'}
-                        onPress={() => {
-                            let c = checkListData
-                            c[id].checked = !c[id].checked 
-                            setCheckListData(c)}} size={20} />
-                </View>
+                <ActionIcon size={20} padding={18} iconName={checked ? 'checkBox-t' : 'checkBox-f'}
+                    onPress={(event) => {
+                        const newData = [...checkListData]
+                        newData[week].data[idx].checked ^= true;
+                        setCheckListData(newData);
+                    }
+                } />
+                <Text
+                    style={checked ?
+                        [styles.label, { textDecorationLine: 'line-through', textDecorationStyle: 'solid' }] :
+                        styles.label
+                    }
+                    numberOfLines={1}
+                >{text}</Text>
+                <ActionIcon size={20} padding={18} iconName={liked ? 'heart-t' : 'heart-f'}
+                    onPress={() => {
+                        const newData = [...checkListData]
+                        newData[week].data[idx].liked ^= true;
+                        setCheckListData(newData);
+                    }
+                } />
             </View>
         </Swipeable>
     );
