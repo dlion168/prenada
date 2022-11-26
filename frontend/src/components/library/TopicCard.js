@@ -33,6 +33,17 @@ const styles = StyleSheet.create({
     }
 })
 
+const TopicCardSingle = ({ top, onPress} ) =>
+    <Pressable style={styles.topic} onPress={onPress}>
+        <ImageBackground source={{uri: top.pic}} 
+                         style={styles.image}
+                         imageStyle={{ borderRadius: 20 }}>
+            <LinearGradient colors={['#00000000', '#323333']} 
+                            style={styles.imageGradient} />
+        </ImageBackground>
+        <Text style={styles.topicTitle}>{top.title}</Text>
+    </Pressable>
+
 const TopicCard = ({ topicClick }) => {
     return (
         <>
@@ -43,17 +54,11 @@ const TopicCard = ({ topicClick }) => {
                         <Text style={styles.title}>{obj.theme}</Text>
                     </View>
                     <ScrollView horizontal={true}>
-                        { obj.topic.map((top, idx) => (
-                            <Pressable key={idx} style={styles.topic} onPress={() => {topicClick(top.title)}}>
-                                <ImageBackground source={{uri: top.pic}} 
-                                                 style={styles.image}
-                                                 imageStyle={{ borderRadius: 20 }}>
-                                    <LinearGradient colors={['#00000000', '#323333']} 
-                                                    style={styles.imageGradient} />
-                                </ImageBackground>
-                                <Text style={styles.topicTitle}>{top.title}</Text>
-                            </Pressable>
-                        ))}
+                        {obj.topic.map((top, idx) =>
+                            <TopicCardSingle key={idx}
+                                             top={top}
+                                             onPress={() => topicClick(top.title)} />
+                        )}
                     </ScrollView>
                 </View>
             )
@@ -62,4 +67,4 @@ const TopicCard = ({ topicClick }) => {
     )
 }
 
-export { TopicCard };
+export { TopicCard, TopicCardSingle };

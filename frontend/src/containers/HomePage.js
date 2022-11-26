@@ -5,6 +5,8 @@ import { useCheckList } from '../components/checkList/hooks/useCheckList';
 import AddListItem from '../components/homePage/addListItem';
 import { NavBar } from '../components/NavBar.js';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { TopicCardSingle } from '../components/library/TopicCard';
+import { themeData } from '../components/library/libraryData.js';
 
 const styles = StyleSheet.create({
     body: {
@@ -44,26 +46,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center'
-    },
-    rowFlex: {
-        display: 'flex',
-        flexDirection: 'row',
-        marginTop: 8,
-        marginBottom: 8,
-    },
-    taskCardFlex: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: '#F9FAFB', // gray/50
-        borderRadius: 10,
-        overflow: 'hidden',
-        justifyContent: 'space-between',
-    },
-    label: {
-        flex: 1,
-        fontSize: 14,
-        color: '#1F2937', // gray/800
     },
 })
 
@@ -126,9 +108,15 @@ const HomePage = ({ navigation }) => {
                             <Text style={styles.titleMore} >See All</Text>
                         </TouchableOpacity>
                     </View>
-                    <View style={styles.rowFlex} >
-
-                    </View>
+                    <ScrollView style={styles.pad} horizontal >
+                        {themeData.map((group, idx) =>
+                            <TopicCardSingle
+                                key={idx}
+                                top={group.topic[0]}
+                                onPress={() => navigation.jumpTo('Library')} /* TODO: goto topicMenu */
+                            />
+                        )}
+                    </ScrollView>
                 </View>
             </ScrollView>
         </>
