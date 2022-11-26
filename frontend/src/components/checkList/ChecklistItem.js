@@ -25,6 +25,8 @@ const styles = StyleSheet.create({
     },
     deleteBox: {
         backgroundColor: '#F87171',
+        borderBottomRightRadius: 10,
+        borderTopRightRadius: 10,
     },
 });
 
@@ -60,7 +62,7 @@ const ChecklistItem = ({ week, idx, checked, text, liked }) => {
                 } />
                 <Text
                     style={checked ?
-                        [styles.label, { textDecorationLine: 'line-through', textDecorationStyle: 'solid' }] :
+                        [styles.label, { color:'grey', textDecorationLine: 'line-through', textDecorationStyle: 'solid' }] :
                         styles.label
                     }
                     numberOfLines={1}
