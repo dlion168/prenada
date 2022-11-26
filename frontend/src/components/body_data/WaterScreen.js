@@ -65,6 +65,13 @@ const WaterScreen = ({ displayWeek }) => {
         getWaterData();
     }, []);
 
+    const deleteWaterData = async (date, time) => {
+        const {
+            data: { message, data },
+        } = await axios.delete('/water', { params: { date, time } });
+        await getWaterData();
+    };
+
     return (
         <ScrollView style={styles.body}>
             <WaterSummary waterSummary={waterSummary} />
@@ -76,6 +83,7 @@ const WaterScreen = ({ displayWeek }) => {
                             let obj = {
                                 'leftText': 'Water',
                                 'rightText': `${element.time} · ${element.capacity} ml`,
+                                'time': element.time
                             };
                             showList.push(obj);
                         });
@@ -96,7 +104,10 @@ const WaterScreen = ({ displayWeek }) => {
                                         {obj.totalCapacity} ml
                                     </Text>
                                 </View>
-                                <ItemList showList={showList} />
+                                <ItemList
+                                    showList={showList}
+                                    deleteHandler={deleteWaterData}
+                                    date={obj.date} />
                             </View>
                         );
                     })

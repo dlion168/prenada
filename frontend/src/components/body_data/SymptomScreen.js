@@ -40,7 +40,7 @@ const SymptomScreen = () => {
         const { data: { data: symptomData, symptomMessage }, } = await axios.get('/symptom', {
             params: {
                 startDate: "20221005",
-                endDate: "20221026",
+                endDate: "20221130",
             },
         });
         setSymptomDetail(symptomData);
@@ -48,7 +48,7 @@ const SymptomScreen = () => {
         const summary = await axios.get('/symptom/summary', {
             params: {
                 startDate: "20221005",
-                endDate: "20221026",
+                endDate: "20221130",
             },
         });
         setSymptomSummary(summary.data.summary);
@@ -57,6 +57,13 @@ const SymptomScreen = () => {
     useEffect(() => {
         getSymptomData();
     }, []);
+
+    const deleteSymptomData = async (date, time) => {
+        const {
+            data: { message, data },
+        } = await axios.delete('/symptom', { params: { date, time } });
+        await getSymptomData();
+    };
 
     // const symptomDetail = [
     //     { 'date': 'October 26, 2022', 'itemList': [{ 'time': '10:00 AM', 'symptomName': 'Cramps' }] },
@@ -77,7 +84,11 @@ const SymptomScreen = () => {
                     symptomDetail.map((obj, idx) => {
                         let showList = [];
                         obj.itemList.forEach(element => {
-                            let obj = { 'leftText': element.symptomName, 'rightText': element.time };
+                            let obj = {
+                                'leftText': element.symptomName,
+                                'rightText': element.time,
+                                'time': element.time
+                            };
                             showList.push(obj);
                         });
 
@@ -89,7 +100,10 @@ const SymptomScreen = () => {
                                     <View style={{ flex: 1 }} />
                                     <Text style={styles.notReachGoal} >{obj.itemList.length} types</Text>
                                 </View>
-                                <ItemList showList={showList} />
+                                <ItemList
+                                    showList={showList}
+                                    deleteHandler={deleteSymptomData}
+                                    date={obj.date} />
                             </View>
                         );
                     })

@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
+import { ActionIcon } from '../ActionIcon';
 
 const styles = StyleSheet.create({
     itemListStyle: {
@@ -28,20 +30,36 @@ const styles = StyleSheet.create({
         fontWeight: 400,
         fontSize: 14,
         color: '#6B7280',
-    }
+    },
+    deleteBox: {
+        backgroundColor: '#F87171',
+        borderTopRightRadius: 10,
+        borderBottomRightRadius: 10,
+    },
 })
 
-const ItemList = ({ showList }) => {
+const ItemList = ({ showList, deleteHandler, date }) => {
     return (
         <View style={styles.itemListStyle} >
             {
                 showList.map((obj, idx) => {
                     return (
-                        <View style={styles.item} key={idx} >
-                            <Text style={styles.text} >{obj.leftText}</Text>
-                            <View style={{ flex: 1 }} />
-                            <Text style={styles.text} >{obj.rightText}</Text>
-                        </View>
+                        <Swipeable
+                            rightOpenValue={-100}
+                            renderRightActions={() =>
+                                <View style={styles.deleteBox}>
+                                    <ActionIcon
+                                        iconName={'trash-s'}
+                                        size={20} padding={15}
+                                        onPress={() => deleteHandler(date, obj.time)} />
+                                </View>
+                            }>
+                            <View style={styles.item} key={idx} >
+                                <Text style={styles.text} >{obj.leftText}</Text>
+                                <View style={{ flex: 1 }} />
+                                <Text style={styles.text} >{obj.rightText}</Text>
+                            </View>
+                        </Swipeable>
                     );
                 })
             }

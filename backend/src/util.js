@@ -20,6 +20,30 @@ function dateToStr(date) {
     return `${month} ${dateStr.substring(8).replace(' ', ', ')}`;
 }
 
+// Convert string format(eg. October 24, 2022) to mongodb date
+function fullTextToDate(str) {
+    console.log(str)
+    const monthDict = {
+        "January": '01',
+        "February": "02",
+        "March": "03",
+        "April": "04",
+        "May": "05",
+        "June": "06",
+        "July": "07",
+        "August": "08",
+        "September": "09",
+        "October": "10",
+        "November": "11",
+        "December": "12"
+    }
+    let MM = monthDict[str.split(' ')[0]];
+    const { dd, yyyy } = str.split(' ')[1].split(',');
+    let dateObj = new Date(yyyy + MM + dd);
+    console.log(yyyy, MM, dd)
+    return dateObj;
+}
+
 // Convert date string format yyyyMMdd to Date object
 function strToDate(str) {
     const year = str.substring(0, 4);
@@ -36,4 +60,4 @@ function dateToAbbreviationStr(date) {
 }
 
 
-export { dateToStr, strToDate, dateToAbbreviationStr };
+export { dateToStr, strToDate, dateToAbbreviationStr, fullTextToDate };

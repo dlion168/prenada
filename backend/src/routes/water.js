@@ -15,6 +15,15 @@ const deleteDB = async () => {
     }
 };
 
+const deleteWater = async (date, time) => {
+    try {
+        const water = await Water.deleteOne({ date, time });
+        return { message: `Deleting`, water };
+    } catch (e) {
+        return e;
+    }
+};
+
 const saveWater = async (date, time, capacity) => {
     const oldWater = await Water.findOne({ date, time });
     try {
@@ -110,15 +119,18 @@ const getWaterSummary = async (startDate, endDate) => {
 };
 
 const router = Router();
-router.delete("/", async (_, res) => {
-    res.json({ message: await deleteDB() })
+router.delete("/", async (req, res) => {
+    let date = req.query.date;
+    let time = req.query.time;
+    console.log(date, time)
+    let result = await deleteWater(date, time);
+    res.status(200).send(result);
 });
 
 router.post("/", async (req, res) => {
     let date = req.body.date;
     let time = req.body.time;
     let capacity = req.body.capacity;
-
     let result = await saveWater(date, time, capacity);
     res.status(200).send(result);
 });
@@ -126,7 +138,6 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
     const startDate = req.query.startDate;
     const endDate = req.query.endDate;
-    console.log(startDate, endDate);
     let result = await findWater(startDate, endDate);
     res.status(200).send(result);
 });
@@ -134,7 +145,6 @@ router.get("/", async (req, res) => {
 router.get("/summary", async (req, res) => {
     const startDate = req.query.startDate;
     const endDate = req.query.endDate;
-    console.log(startDate, endDate);
     let result = await getWaterSummary(startDate, endDate);
     res.status(200).send(result);
 });
