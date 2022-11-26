@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, View, Text } from 'react-native';
+import { ScrollView, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { useState, useEffect } from 'react';
 import ChecklistItem from '../components/checkList/ChecklistItem.js';
 import useCheckList from '../components/checkList/hooks/useCheckList';
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     },
 })
 
-const HomePage = () => {
+const HomePage = ({ navigation }) => {
     const { checkListData, setCheckListData, onDeleteHandler } = useCheckList()
     const [displayWeek, setDisplayWeek] = useState(0);
     return (
@@ -59,7 +59,9 @@ const HomePage = () => {
                         'Trying to conceive (TTC)' :
                         `Week ${displayWeek} of Pregnency`}</Text>
                     <View style={{flex: 1}}/>
-                    <Text style={styles.titleMore} >See All</Text>
+                    <TouchableOpacity style={styles.titleMore} 
+                    onPress={() => navigation.jumpTo('Checklist')}
+                    >See All</TouchableOpacity>
                 </View>
                 {checkListData.map((obj, idx) => { return (
                 <View style={styles.pad} key={idx}>
@@ -71,14 +73,18 @@ const HomePage = () => {
                 <View style={styles.titleRow} >
                     <Text style={styles.title} >Body Data</Text>
                     <View style={{flex: 1}}/>
-                    <Text style={styles.titleMore} >See All</Text>
+                    <TouchableOpacity style={styles.titleMore} 
+                    onPress={() => navigation.jumpTo('Body Data')}
+                    >See All</TouchableOpacity>
                 </View>
             </View>
             <View style={styles.block} >
                 <View style={styles.titleRow} >
                     <Text style={styles.title} >Tips to you</Text>
                     <View style={{flex: 1}}/>
-                    <Text style={styles.titleMore} >See All</Text>
+                    <TouchableOpacity style={styles.titleMore} 
+                    onPress={() => navigation.jumpTo('Library')}
+                    >See All</TouchableOpacity>
                 </View>
             </View>
         </ScrollView>

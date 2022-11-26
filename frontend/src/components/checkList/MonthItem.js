@@ -1,4 +1,4 @@
-import { StyleSheet, Button, View, Text } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, View } from 'react-native';
 import useCheckList from './hooks/useCheckList';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
@@ -35,7 +35,9 @@ const styles = StyleSheet.create({
 // @param status: enum(['complete', 'past', 'current', 'future'])  
 const MonthItem = ({text, status}) => {
     return(
-        <View style={ status === 'current' ?  [styles.taskCardFlex, {backgroundColor: '#f87171'}] : styles.taskCardFlex}>
+        <TouchableOpacity style={ status === 'current' ?  [styles.taskCardFlex, {backgroundColor: '#f87171'}] : styles.taskCardFlex}
+        //TODO: onPress
+        onPress={()=>{}}>
             <Text style={status === 'future' ?  styles.label : 
             [styles.label, status === 'current' ? {color: '#ffffff'} : {color: '#f87171'}] } 
             numberOfLines={1}>{text}</Text>
@@ -43,7 +45,7 @@ const MonthItem = ({text, status}) => {
                 <FontAwesome5 name={ status === 'current' ? 'flag' : status === 'complete' ? 'circle-check' : 'chevron-right'} 
                 size={12} color={status === 'current' ? '#FFFFFF' : status === 'past' ? '#f87171' : '#1F2937'} solid />
             </View>
-        </View>
+        </TouchableOpacity>
     )
 };
 
