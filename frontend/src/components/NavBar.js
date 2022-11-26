@@ -65,7 +65,7 @@ const NavBar = ({
     }
     return (
         <View>
-            <View style={styles.topSpace} />
+            {/* <View style={styles.topSpace} /> */}
             <View style={styles.body}>
                 <View style={styles.box}>
                     <ActionIcon iconName={leftIcon} onPress={leftIconOnPress} size={24} padding={10} opacity={0.6} />
