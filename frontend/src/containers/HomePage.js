@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet, View, Text } from 'react-native';
 import { useState, useEffect } from 'react';
 import ChecklistItem from '../components/checkList/ChecklistItem.js';
-import { useCheckList } from '../components/checkList/hooks/useCheckList';
+import useCheckList from '../components/checkList/hooks/useCheckList';
 import { NavBar } from '../components/NavBar.js';
 
 const styles = StyleSheet.create({

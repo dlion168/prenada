@@ -1,6 +1,5 @@
 import { View, StyleSheet, Pressable,  ScrollView, Text} from 'react-native';
 import { SearchBar } from 'react-native-elements';
-import useCheckList from './hooks/useCheckList'
 import MonthSection from './MonthSection';
 const styles = StyleSheet.create({
     body:{
@@ -46,11 +45,9 @@ const styles = StyleSheet.create({
         border: 0,
     },
 })
-const ChecklistByTrimester = ({ search, setSearch}) => {
-    const {trimester, setTrimester} = useCheckList()
+const ChecklistByTrimester = ({ search, setSearch, trimester, setTrimester}) => {
     return (
         <>
-            <View style={{ height: 104, backgroundColor: '#F87171' }} />
             <ScrollView style={styles.body}>
                 <SearchBar value={search}
                            onChangeText={(search) => {setSearch(search)}}

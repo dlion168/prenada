@@ -1,12 +1,12 @@
-import { useState, useEffect, useContext, createContext } from "react";
-const CheckListContext = createContext({
-    checkListData: [],
-    setCheckListData: ()=>{},
-    trimester: 0,
-    setTrimester:  ()=>{},
-    onDeleteHandler: ()=>{},
-   });
-const CheckListProvider = (props) =>{
+import { useState, useEffect } from "react";
+// const CheckListContext = createContext({
+//     checkListData: [],
+//     setCheckListData: ()=>{},
+//     trimester: 0,
+//     setTrimester:  ()=>{},
+//     onDeleteHandler: ()=>{},
+//    });
+const useCheckList = () =>{
     const [checkListData, setCheckListData] = useState([{
         'intro': 'When you’re gearing up for baby, there\'s a lot to do. This handy month-by-month pregnancy checklist walks you through the key tasks for every stage of the journey, from TTC to your first month with baby.',
         'title': 'TTC Checklist', 'data':[
@@ -26,7 +26,6 @@ const CheckListProvider = (props) =>{
         { 'checked': false, 'text': 'Quit smoking, and focus on having a healthy diet and lifestyle', 'liked': false }
     ]},
     ])
-    const [trimester, setTrimester] = useState(1)
     
     const onDeleteHandler = (index) => {
         console.log(index);
@@ -34,10 +33,11 @@ const CheckListProvider = (props) =>{
         a.splice(index, 1);
         setCheckListData([...a]);
       };
-    return <CheckListContext.Provider
-        value={{ checkListData, setCheckListData, trimester, setTrimester, onDeleteHandler }}
-        {...props}
-    />
+    // return <CheckListContext.Provider
+    //     value={{ checkListData, setCheckListData, trimester, setTrimester, onDeleteHandler }}
+    //     {...props}
+    // />
+    return { checkListData, setCheckListData, onDeleteHandler }
 };
-const useCheckList = () => useContext(CheckListContext);
-export default {useCheckList, CheckListContext};
+// const useCheckList = () => useContext(CheckListContext);
+export default useCheckList; // , CheckListContext
