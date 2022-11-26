@@ -8,20 +8,21 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const styles = StyleSheet.create({
     body: {
-        backgroundColor: '#FFFFFF', // gray/50
-    },
-    block: {
-        margin: 24,
-    },
-    pad: {
+        backgroundColor: '#F9FAFB', // gray/50
         paddingTop: 8,
         paddingBottom: 8,
+        paddingLeft: 24,
+        paddingRight: 24,
+    },
+    block: {
+        marginTop: 8,
+        marginBottom: 8,
     },
     titleRow: {
         display: 'flex',
         flexDirection: 'row',
-        paddingTop: 8,
-        paddingBottom: 8,
+        marginTop: 8,
+        marginBottom: 8,
     },
     title: {
         fontWeight: 'bold',
@@ -31,27 +32,24 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 18,
         color: '#F87171',
-        display: 'flex',
     },
-    checklist: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        padding: '0px',
-
-        position: 'absolute',
-        width: '327px',
-        height: '424px',
-        left: '24px',
-        top: '128px',
+    pad: {
+        marginTop: 8,
+        marginBottom: 8,
     },
+    rowFlex: {
+        display: 'flex',
+        flexDirection: 'row',
+        marginTop: 8,
+        marginBottom: 8,
+    }
 })
 
 const HomePage = ({ navigation }) => {
     const { checkListData, setCheckListData, onDeleteHandler } = useCheckList()
     const [ displayWeek, setDisplayWeek ] = useState(0);
     return (
-        <ScrollView style={styles.body}>
+        <>
             <NavBar centerText='w0' rightIcon='bell-s' weekOnChange={
                 (week) => { useEffect(() => { setDisplayWeek(week) }) }
             } />
@@ -94,17 +92,29 @@ const HomePage = ({ navigation }) => {
                         <Text style={styles.titleMore} >See All</Text>
                     </TouchableOpacity>
                 </View>
-            </View>
-            <View style={styles.block} >
-                <View style={styles.titleRow} >
-                    <Text style={styles.title} >Tips to you</Text>
-                    <View style={{ flex: 1 }} />
-                    <TouchableOpacity onPress={() => navigation.jumpTo('Library')}>
-                        <Text style={styles.titleMore} >See All</Text>
-                    </TouchableOpacity>
+                <View style={styles.block} >
+                    <View style={styles.titleRow} >
+                        <Text style={styles.title} >Body Data</Text>
+                        <View style={{ flex: 1 }} />
+                        <TouchableOpacity onPress={() => navigation.jumpTo('Body Data')}>
+                            <Text style={styles.titleMore} >See All</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-            </View>
-        </ScrollView>
+                <View style={styles.block} >
+                    <View style={styles.titleRow} >
+                        <Text style={styles.title} >Tips to you</Text>
+                        <View style={{ flex: 1 }} />
+                        <TouchableOpacity onPress={() => navigation.jumpTo('Library')}>
+                            <Text style={styles.titleMore} >See All</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.rowFlex} >
+
+                    </View>
+                </View>
+            </ScrollView>
+        </>
     )
 }
 export default HomePage;
