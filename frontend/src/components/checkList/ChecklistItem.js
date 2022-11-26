@@ -60,7 +60,7 @@ const ChecklistItem = ({ week, idx, checked, text, liked }) => {
                 } />
                 <Text
                     style={checked ?
-                        [styles.label, { textDecorationLine: 'line-through', textDecorationStyle: 'solid' }] :
+                        [styles.label, { color:'grey', textDecorationLine: 'line-through', textDecorationStyle: 'solid' }] :
                         styles.label
                     }
                     numberOfLines={1}

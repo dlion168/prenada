@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         padding: '0px',
-
         position: 'absolute',
         width: '327px',
         height: '424px',
@@ -48,7 +47,7 @@ const styles = StyleSheet.create({
 })
 
 const HomePage = ({ navigation }) => {
-    const { checkListData, setCheckListData, onDeleteHandler } = useCheckList()
+    const { checkListData, setCheckListData } = useCheckList()
     const [ displayWeek, setDisplayWeek ] = useState(0);
     return (
         <ScrollView style={styles.body}>
