@@ -2,7 +2,9 @@ import { ScrollView, StyleSheet, View, Text, TouchableOpacity } from 'react-nati
 import { useState, useEffect } from 'react';
 import ChecklistItem from '../components/checkList/ChecklistItem.js';
 import { useCheckList } from '../components/checkList/hooks/useCheckList';
+import AddListItem from '../components/homePage/addListItem';
 import { NavBar } from '../components/NavBar.js';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const styles = StyleSheet.create({
     body: {
@@ -65,7 +67,8 @@ const HomePage = ({ navigation }) => {
                         <Text style={styles.titleMore} >See All</Text>
                     </TouchableOpacity>
                 </View>
-                {checkListData[displayWeek].data.map((obj, idx) =>
+                { (checkListData[displayWeek].data.length > 4 ? 
+                  checkListData[displayWeek].data.slice(0, 4) : checkListData[displayWeek].data).map((obj, idx) =>
                     <View style={styles.pad} key={idx}>
                         <ChecklistItem
                             id={idx}
@@ -75,6 +78,13 @@ const HomePage = ({ navigation }) => {
                         />
                     </View>
                 )}
+                <View style={[styles.pad, {display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}]}>
+                    {checkListData[displayWeek].data.length > 4 ?  
+                    <FontAwesome5 name ="ellipsis-v" size = {18} color = 'grey' solid />:<></>}
+                </View>
+                <View style={styles.pad}>
+                    <AddListItem onAddHandler={()=>{}}/>
+                </View>
             </View>
             <View style={styles.block} >
                 <View style={styles.titleRow} >
