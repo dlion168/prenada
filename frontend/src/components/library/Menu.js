@@ -16,7 +16,10 @@ const styles = StyleSheet.create({
 const Menu = ({ search, setSearch, topicClick }) => {
     return (
         <>
-            <NavBar centerText='Library' rightIcon='bookmark-s' />
+            <NavBar centerText='Library'
+                    rightIcon='bookmark-s'
+                    rightIconOnPress={(event) => {}} />
+                    {/* remember to add feature of bookmark after completing backend function */}
             <ScrollView style={styles.body}>
                 <SearchBar value={search}
                            onChangeText={(search) => {setSearch(search)}}
