@@ -7,6 +7,9 @@ import { NavBar } from '../components/NavBar.js';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { TopicCardSingle } from '../components/library/TopicCard';
 import { themeData } from '../components/library/libraryData.js';
+import axios from '../api';
+import SymptomSummary from '../components/body_data/SymptomSummary'
+import { BodyDataCard } from '../components/homePage/BodyDataCard.js';
 
 const styles = StyleSheet.create({
     body: {
@@ -49,15 +52,54 @@ const styles = StyleSheet.create({
     },
 })
 
+const updateWater = async (date, callback) => {
+    const {
+        data: { data, message },
+    } = await axios.get('/water', {
+        params: {
+            startDate: date,
+            endDate: date,
+        },
+    });
+    callback(data[0].totalCapacity);
+};
+
+const updateSymptom = async (date, callback) => {
+    const summary = await axios.get('/symptom/summary', {
+        params: {
+            startDate: date,
+            endDate: date,
+        },
+    });
+    let maxCount = 0;
+    let maxSym = ' ';
+    let numSym = 0;
+    for (const sym in summary.data.summary) {
+        const count = summary.data.summary[sym];
+        if (count > maxCount) {
+            maxCount = count;
+            maxSym = sym;
+        }
+        if (count > 1)
+            numSym++;
+    }
+    callback([maxSym, numSym]);
+};
+
 const HomePage = ({ navigation }) => {
-    const { checkListData, setCheckListData } = useCheckList()
     const [ displayWeek, setDisplayWeek ] = useState(0);
+    const { checkListData, setCheckListData } = useCheckList()
+    const [ waterTotal, setWaterTotal] = useState(0);
+    useEffect(() => updateWater('20221024', setWaterTotal), [displayWeek]); // TODO: should be refreshed when data is renewed
+    const [ symSumm, setSymSumm] = useState(['', 0]);
+    useEffect(() => updateSymptom('20221124', setSymSumm), [displayWeek]); // TODO: should be refreshed when data is renewed
     return (
         <>
             <NavBar centerText='w1' rightIcon='bell-s' weekOnChange={
-                (week) => { useEffect(() => { setDisplayWeek(week) }) }
+                (week) => { useEffect(() => setDisplayWeek(week)) }
             } />
             <ScrollView style={styles.body}>
+                {/* checklist */}
                 <View style={styles.block} >
                     <View style={styles.titleRow} >
                         <Text style={styles.title} >{
@@ -91,6 +133,7 @@ const HomePage = ({ navigation }) => {
                         <AddListItem onAddHandler={() => {}}/>
                     </View>
                 </View>
+                {/* body data */}
                 <View style={styles.block} >
                     <View style={styles.titleRow} >
                         <Text style={styles.title} >Body Data</Text>
@@ -99,7 +142,26 @@ const HomePage = ({ navigation }) => {
                             <Text style={styles.titleMore} >See All</Text>
                         </TouchableOpacity>
                     </View>
+                    <ScrollView style={styles.pad} horizontal >
+                        <BodyDataCard
+                            name='Sleep'
+                            text1={'7'} unit1={'hr'}
+                            text2={'16'} unit2={'min'}
+                            onPress={() => navigation.jumpTo('Body Data')} // TODO: goto SleepScreen
+                        />
+                        <BodyDataCard
+                            name='Water'
+                            text1={waterTotal} unit1={'ml'}
+                            onPress={() => navigation.jumpTo('Body Data')} // TODO: goto WaterScreen
+                        />
+                        <BodyDataCard
+                            name='Symptom'
+                            text1={symSumm[0]} unit1={symSumm[1] > 0 ? `+${symSumm[1] - 1}` : ''}
+                            onPress={() => navigation.jumpTo('Body Data')} // TODO: goto SymptomScreen
+                        />
+                    </ScrollView>
                 </View>
+                {/* library */}
                 <View style={styles.block} >
                     <View style={styles.titleRow} >
                         <Text style={styles.title} >Tips to you</Text>
@@ -113,7 +175,7 @@ const HomePage = ({ navigation }) => {
                             <TopicCardSingle
                                 key={idx}
                                 top={group.topic[0]}
-                                onPress={() => navigation.jumpTo('Library')} /* TODO: goto topicMenu */
+                                onPress={() => navigation.jumpTo('Library')} // TODO: goto topicMenu
                             />
                         )}
                     </ScrollView>

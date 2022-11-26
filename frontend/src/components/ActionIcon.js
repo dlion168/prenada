@@ -1,4 +1,4 @@
-import { StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { Image, TouchableOpacity } from 'react-native';
 
 // Ashu: I know this looks stupid but it's a limitation of React Native
 // https://reactnative.dev/docs/images#static-image-resources
