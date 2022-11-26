@@ -37,14 +37,15 @@ const ChecklistPerWeek = (week) =>{
         <View style = {styles.block}>
         <Text style = {styles.intro}> { intro } </Text>
         <Text style = {styles.title}> { title } </Text>
-            <FlatList 
-            data = {data}
-            renderItem = { (e, id) => { return (
-                <View style={styles.pad} key={id}>
-                    <ChecklistItem id={id} checked={e.checked} text={e.text} liked={e.liked}></ChecklistItem>
-                </View>)}}
-            keyExtractor={(item) => item.text}>
-            </FlatList>
+        <FlatList 
+        data = {data}
+        renderItem = { (e, id) => {
+            return (
+            <View style={styles.pad} key={id}>
+                <ChecklistItem id={id} week={week} checked={e.item.checked} text={e.item.text} liked={e.item.liked}></ChecklistItem>
+            </View>)}}
+        keyExtractor={(item) => item.text}>
+        </FlatList>
         </View>
     </View>
     )

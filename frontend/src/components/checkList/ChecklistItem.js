@@ -25,6 +25,8 @@ const styles = StyleSheet.create({
     },
     deleteBox: {
         backgroundColor: '#F87171',
+        borderBottomRightRadius: 10,
+        borderTopRightRadius: 10,
     },
 });
 
