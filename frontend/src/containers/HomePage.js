@@ -50,41 +50,47 @@ const HomePage = ({ navigation }) => {
     return (
         <ScrollView style={styles.body}>
             <NavBar centerText='w0' rightIcon='bell-s' weekOnChange={
-                (week) => {useEffect(() => {setDisplayWeek(week)})}
-            }/>
+                (week) => { useEffect(() => { setDisplayWeek(week) }) }
+            } />
             <View style={styles.block} >
                 <View style={styles.titleRow} >
                     <Text style={styles.title} >{
                         displayWeek === 0 ?
-                        'Trying to conceive (TTC)' :
-                        `Week ${displayWeek} of Pregnency`}</Text>
-                    <View style={{flex: 1}}/>
-                    <TouchableOpacity style={styles.titleMore} 
-                    onPress={() => navigation.jumpTo('Checklist')}
-                    >See All</TouchableOpacity>
+                            'Trying to conceive (TTC)' :
+                            `Week ${displayWeek} of Pregnency`
+                    }</Text>
+                    <View style={{ flex: 1 }} />
+                    <TouchableOpacity onPress={() => navigation.jumpTo('Checklist')}>
+                        <Text style={styles.titleMore} >See All</Text>
+                    </TouchableOpacity>
                 </View>
-                {checkListData.map((obj, idx) => { return (
-                <View style={styles.pad} key={idx}>
-                    <ChecklistItem id={idx} checked={obj.checked} text={obj.text} liked={obj.liked}></ChecklistItem>
-                </View>
-                )})}
+                {checkListData[displayWeek].data.map((obj, idx) =>
+                    <View style={styles.pad} key={idx}>
+                        <ChecklistItem
+                            id={idx}
+                            checked={obj.checked}
+                            text={obj.text}
+                            liked={obj.liked}
+                        />
+                    </View>
+                )}
             </View>
             <View style={styles.block} >
                 <View style={styles.titleRow} >
                     <Text style={styles.title} >Body Data</Text>
-                    <View style={{flex: 1}}/>
-                    <TouchableOpacity style={styles.titleMore} 
-                    onPress={() => navigation.jumpTo('Body Data')}
-                    >See All</TouchableOpacity>
+                    <View style={{ flex: 1 }} />
+                    <TouchableOpacity onPress={() => navigation.jumpTo('Body Data')}>
+                        <Text style={styles.titleMore} >See All</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
             <View style={styles.block} >
                 <View style={styles.titleRow} >
                     <Text style={styles.title} >Tips to you</Text>
-                    <View style={{flex: 1}}/>
-                    <TouchableOpacity style={styles.titleMore} 
-                    onPress={() => navigation.jumpTo('Library')}
-                    >See All</TouchableOpacity>
+                    <View style={{ flex: 1 }} />
+                    <TouchableOpacity onPress={() => navigation.jumpTo('Library')}>
+                        <Text style={styles.titleMore} >See All</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         </ScrollView>
