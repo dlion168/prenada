@@ -1,6 +1,6 @@
-import { StyleSheet, Pressable, View, Text } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
 import { ActionIcon } from '../ActionIcon';
-import useCheckList from './hooks/useCheckList';
+import { useCheckList } from './hooks/useCheckList';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 const styles = StyleSheet.create({
@@ -36,7 +36,15 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'flex-start',
     },
-
+    deleteBox:{
+        margin: 0,
+        alignContent: 'center',
+        justifyContent: 'center',
+        width: 70,
+        backgroundColor: 'red',
+        borderTopRightRadius: 10,
+        borderBottomRightRadius: 10,
+    }
 });
 
 const ChecklistItem = ({ id, checked, text, liked }) => {
@@ -52,18 +60,9 @@ const ChecklistItem = ({ id, checked, text, liked }) => {
     const { checkListData, setCheckListData, onDeleteHandler } = useCheckList()
     const renderRightActions = (progress, dragX) => {
         return (
-          <View
-            style={{
-              margin: 0,
-              alignContent: 'center',
-              justifyContent: 'center',
-              width: 70,
-              height: 70,
-            }}>
-            <Pressable color="red" onPress={()=>{onDeleteHandler(id)}}>
+            <TouchableOpacity style = { styles.deleteBox } onPress={()=>{onDeleteHandler(id)}}>
                 <ActionIcon iconName={'archive-s'} size={20} />
-            </Pressable>
-          </View>
+            </TouchableOpacity>
         );
       };
 
@@ -83,7 +82,7 @@ const ChecklistItem = ({ id, checked, text, liked }) => {
                             c[id].checked = !c[id].checked 
                             setCheckListData(c)}} size={20} />
                 </View>
-                <Text style={checked ? [styles.label, {textDecorationLine: 'line-through', textDecorationStyle: 'solid'}] : styles.label} numberOfLines={1}>{text}</Text>
+                <Text style={checked ? [styles.label, { color: 'grey' ,textDecorationLine: 'line-through', textDecorationStyle: 'solid'}] : styles.label} numberOfLines={1}>{text}</Text>
                 <View style={styles.iconContainer} >
                     <ActionIcon iconName={liked ? 'heart-t' : 'heart-f'}
                         onPress={() => {

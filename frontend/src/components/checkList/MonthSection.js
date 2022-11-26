@@ -15,19 +15,19 @@ const styles = StyleSheet.create({
     },
 })
 const checkByMonth=[
-    {'title': 'Getting Pregnant', 'elements': ['TTC Checklist'], } , 
-    {'title': 'Month 1', 'elements': [1,2,3,4].map((i)=>`Week ${i} of Pregnancy`),} , 
-    {'title': 'Month 2', 'elements': [5,6,7,8].map((i)=>`Week ${i} of Pregnancy`),} , 
-    {'title': 'Month 3', 'elements': [9,10,11,12,13].map((i)=>`Week ${i} of Pregnancy`),} , 
-    {'title': 'Month 4', 'elements': [14,15,16,17].map((i)=>`Week ${i} of Pregnancy`),} , 
-    {'title': 'Month 5', 'elements': [18,19,20,21,22].map((i)=>`Week ${i} of Pregnancy`),} , 
-    {'title': 'Month 6', 'elements': [23,24,25,26,27].map((i)=>`Week ${i} of Pregnancy`),} , 
-    {'title': 'Month 7', 'elements': [28,29,30,31].map((i)=>`Week ${i} of Pregnancy`),} , 
-    {'title': 'Month 8', 'elements': [32,33,34,35].map((i)=>`Week ${i} of Pregnancy`),} , 
-    {'title': 'Month 9', 'elements': [36,37,38,39,40].map((i)=>`Week ${i} of Pregnancy`),}
+    {'title': 'Getting Pregnant', 'elements': [0], } , 
+    {'title': 'Month 1', 'elements': [1,2,3,4],} , 
+    {'title': 'Month 2', 'elements': [5,6,7,8],} , 
+    {'title': 'Month 3', 'elements': [9,10,11,12,13],} , 
+    {'title': 'Month 4', 'elements': [14,15,16,17],} , 
+    {'title': 'Month 5', 'elements': [18,19,20,21,22],} , 
+    {'title': 'Month 6', 'elements': [23,24,25,26,27],} , 
+    {'title': 'Month 7', 'elements': [28,29,30,31],} , 
+    {'title': 'Month 8', 'elements': [32,33,34,35],} , 
+    {'title': 'Month 9', 'elements': [36,37,38,39,40],}
     ]
-const MonthSection = () =>{
-    const { trimester } = useCheckList();
+const MonthSection = ({trimester, setViewWeek}) =>{
+    //const { trimester } = useCheckList();
     const renderOneMonth = ({item})=>{
         return(
         <>
@@ -37,7 +37,8 @@ const MonthSection = () =>{
             <FlatList
             data = {item.elements}
             renderItem = {(e) => {
-                return <MonthItem text={e.item} status={'past'}></MonthItem>
+                return <MonthItem text={e.item > 0 ? `Week ${e.item} of pregnency`: 'TTC Checklist'} 
+                status={'past'} week={e.item} setViewWeek={setViewWeek}></MonthItem>
             }}
             keyExtractor={(item) => item}>
             </FlatList>

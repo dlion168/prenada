@@ -1,21 +1,19 @@
-import { useState, useEffect } from "react";
-// const CheckListContext = createContext({
-//     checkListData: [],
-//     setCheckListData: ()=>{},
-//     trimester: 0,
-//     setTrimester:  ()=>{},
-//     onDeleteHandler: ()=>{},
-//    });
-const useCheckList = () =>{
+import { useState, createContext, useContext, useEffect } from "react";
+const CheckListContext = createContext({
+    checkListData: [],
+    setCheckListData: ()=>{},
+    onDeleteHandler: ()=>{},
+   });
+const ChecklistProvider = (props) =>{
     const [checkListData, setCheckListData] = useState([{
         'intro': 'When you’re gearing up for baby, there\'s a lot to do. This handy month-by-month pregnancy checklist walks you through the key tasks for every stage of the journey, from TTC to your first month with baby.',
         'title': 'TTC Checklist', 'data':[
         { 'checked': true, 'text': 'Start taking prenatal vitamins.', 'liked': true },
-        { 'checked': true, 'text': 'Talk to relatives about your family medical history, including birth defects, miscarriages and genetic disorders', 'liked': true },
-        { 'checked': true, 'text': 'Get a preconception checkup.', 'liked': false },
-        { 'checked': true, 'text': 'Get a tetanus booster and German measles and chicken pox.', 'liked': false },
-        { 'checked': true, 'text': 'See the dentist', 'liked': false },
-        { 'checked': true, 'text': 'If you\'re self-employed, apply for a private disability policy', 'liked': false }
+        { 'checked': false, 'text': 'Talk to relatives about your family medical history, including birth defects, miscarriages and genetic disorders', 'liked': true },
+        { 'checked': false, 'text': 'Get a preconception checkup.', 'liked': false },
+        { 'checked': false, 'text': 'Get a tetanus booster and German measles and chicken pox.', 'liked': false },
+        { 'checked': false, 'text': 'See the dentist', 'liked': false },
+        { 'checked': false, 'text': 'If you\'re self-employed, apply for a private disability policy', 'liked': false }
     ]},
     {
         'intro': 'Congratulations, mama - you\'re pregnant! You\'re probably overcome with joy and maybe a little anxious, too. Don\'t stress! Here\'s what you\'ll need to tackle during your first trimester:',
@@ -33,11 +31,10 @@ const useCheckList = () =>{
         a.splice(index, 1);
         setCheckListData([...a]);
       };
-    // return <CheckListContext.Provider
-    //     value={{ checkListData, setCheckListData, trimester, setTrimester, onDeleteHandler }}
-    //     {...props}
-    // />
-    return { checkListData, setCheckListData, onDeleteHandler }
+    return <CheckListContext.Provider
+        value={{ checkListData, setCheckListData, onDeleteHandler }}
+        {...props}
+    />
 };
-// const useCheckList = () => useContext(CheckListContext);
-export default useCheckList; // , CheckListContext
+const useCheckList = () => useContext(CheckListContext);
+export { useCheckList, ChecklistProvider };

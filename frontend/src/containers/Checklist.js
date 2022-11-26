@@ -1,18 +1,25 @@
 import ChecklistByTrimester from '../components/checkList/ChecklistByTrimester';
-import { NavBar } from '../components/NavBar';
+import ChecklistPerWeek from '../components/checkList/ChecklistPerWeek';
 import { useState } from 'react';
 
-const Checklist = () => {
+const Checklist = ({navigation}) => {
     const [search, setSearch] = useState('');
-    const [trimester, setTrimester] = useState(1)
+    const [trimester, setTrimester] = useState(1);
+    const [viewWeek, setViewWeek] = useState(-1);
     return (
         <>
-            <NavBar centerText='Checklist' />
+            { (viewWeek < 0 ) ? 
             <ChecklistByTrimester 
-            search={search} 
-            setSearch={setSearch} 
-            trimester={trimester}
-            setTrimester={setTrimester}></ChecklistByTrimester>
+                search={search} 
+                setSearch={setSearch} 
+                trimester={trimester}
+                setTrimester={setTrimester}
+                navigation = {navigation}
+                setViewWeek = {setViewWeek}>
+            </ChecklistByTrimester>:
+            <ChecklistPerWeek week={viewWeek}>
+            </ChecklistPerWeek>
+            }
         </>
     )
     }

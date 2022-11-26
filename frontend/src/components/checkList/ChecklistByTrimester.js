@@ -1,5 +1,6 @@
 import { View, StyleSheet, Pressable,  ScrollView, Text} from 'react-native';
 import { SearchBar } from 'react-native-elements';
+import { NavBar } from '../NavBar';
 import MonthSection from './MonthSection';
 const styles = StyleSheet.create({
     body:{
@@ -45,9 +46,11 @@ const styles = StyleSheet.create({
         border: 0,
     },
 })
-const ChecklistByTrimester = ({ search, setSearch, trimester, setTrimester}) => {
+const ChecklistByTrimester = ({ search, setSearch, trimester, setTrimester, setViewWeek, navigation}) => {
     return (
         <>
+            <NavBar centerText='Checklist' leftIcon='cheveron-left-s' 
+            leftIconOnPress={() => {navigation.jumpTo('Home')}}/>
             <ScrollView style={styles.body}>
                 <SearchBar value={search}
                            onChangeText={(search) => {setSearch(search)}}
@@ -67,7 +70,7 @@ const ChecklistByTrimester = ({ search, setSearch, trimester, setTrimester}) => 
                         <Text style={ trimester === 3 ? [styles.trimesterBtn, {color: '#FFFFFF'}] : styles.trimesterBtn}>3rd Trimester</Text>
                     </Pressable>
                 </View>
-                <MonthSection></MonthSection>
+                <MonthSection trimester={trimester} setViewWeek={setViewWeek}></MonthSection>
             </ScrollView>
         </>
     )

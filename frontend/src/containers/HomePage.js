@@ -1,12 +1,12 @@
 import { ScrollView, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { useState, useEffect } from 'react';
 import ChecklistItem from '../components/checkList/ChecklistItem.js';
-import useCheckList from '../components/checkList/hooks/useCheckList';
+import { useCheckList } from '../components/checkList/hooks/useCheckList';
 import { NavBar } from '../components/NavBar.js';
 
 const styles = StyleSheet.create({
     body: {
-        backgroundColor: '#F9FAFB', // gray/50
+        backgroundColor: '#FFFFFF', // gray/50
     },
     block: {
         margin: 24,
@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 18,
         color: '#F87171',
+        display: 'flex',
     },
     checklist: {
         display: 'flex',
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
 
 const HomePage = ({ navigation }) => {
     const { checkListData, setCheckListData, onDeleteHandler } = useCheckList()
-    const [displayWeek, setDisplayWeek] = useState(0);
+    const [ displayWeek, setDisplayWeek ] = useState(0);
     return (
         <ScrollView style={styles.body}>
             <NavBar centerText='w0' rightIcon='bell-s' weekOnChange={
@@ -59,11 +60,13 @@ const HomePage = ({ navigation }) => {
                         'Trying to conceive (TTC)' :
                         `Week ${displayWeek} of Pregnency`}</Text>
                     <View style={{flex: 1}}/>
-                    <TouchableOpacity style={styles.titleMore} 
+                    <TouchableOpacity
                     onPress={() => navigation.jumpTo('Checklist')}
-                    >See All</TouchableOpacity>
+                    >
+                        <Text style={styles.titleMore} >See All</Text>
+                    </TouchableOpacity>
                 </View>
-                {checkListData.map((obj, idx) => { return (
+                {checkListData[displayWeek].data.map((obj, idx) => { return (
                 <View style={styles.pad} key={idx}>
                     <ChecklistItem id={idx} checked={obj.checked} text={obj.text} liked={obj.liked}></ChecklistItem>
                 </View>
@@ -73,18 +76,22 @@ const HomePage = ({ navigation }) => {
                 <View style={styles.titleRow} >
                     <Text style={styles.title} >Body Data</Text>
                     <View style={{flex: 1}}/>
-                    <TouchableOpacity style={styles.titleMore} 
+                    <TouchableOpacity
                     onPress={() => navigation.jumpTo('Body Data')}
-                    >See All</TouchableOpacity>
+                    >
+                        <Text style={styles.titleMore} >See All</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
             <View style={styles.block} >
                 <View style={styles.titleRow} >
                     <Text style={styles.title} >Tips to you</Text>
                     <View style={{flex: 1}}/>
-                    <TouchableOpacity style={styles.titleMore} 
+                    <TouchableOpacity
                     onPress={() => navigation.jumpTo('Library')}
-                    >See All</TouchableOpacity>
+                    >
+                        <Text style={styles.titleMore} >See All</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         </ScrollView>
