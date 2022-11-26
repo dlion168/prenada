@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Text, View, Image, StyleSheet, ScrollView } from 'react-native';
+import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import ItemList from './ItemList';
 import SymptomSummary from './SymptomSummary';
 import axios from '../../api';
@@ -34,14 +34,24 @@ const styles = StyleSheet.create({
 
 const SymptomScreen = () => {
     const [symptomDetail, setSymptomDetail] = useState([]);
+    const [symptomSummary, setSymptomSummary] = useState([]);
     const getSymptomData = async () => {
-        const { data: { data, message }, } = await axios.get('/symptom', {
+        //detail
+        const { data: { data: symptomData, symptomMessage }, } = await axios.get('/symptom', {
             params: {
                 startDate: "20221005",
                 endDate: "20221026",
             },
         });
-        setSymptomDetail(data);
+        setSymptomDetail(symptomData);
+        //summary
+        const summary = await axios.get('/symptom/summary', {
+            params: {
+                startDate: "20221005",
+                endDate: "20221026",
+            },
+        });
+        setSymptomSummary(summary.data.summary);
     };
 
     useEffect(() => {
@@ -54,18 +64,14 @@ const SymptomScreen = () => {
     //     { 'date': 'October 24, 2022', 'itemList': [{ 'time': '09:00 AM', 'symptomName': 'Tender breasts' }] },
     // ];
 
-    const symptoms = [
-        { 'symptomName': 'Cramps', 'times': 2 },
-        { 'symptomName': 'Tender breasts', 'times': 5 },
-        { 'symptomName': 'Headache', 'times': 1 },
-    ];
+    // const symptomSummary = { 'Cramps': 2, 'Tender breasts': 5 };
 
     return (
         <ScrollView style={styles.body}>
             <SymptomSummary
                 addMode={false}
                 handleSymptomClick={null}
-                symptoms={symptoms} />
+                symptoms={symptomSummary} />
             <View style={styles.detail} >
                 {
                     symptomDetail.map((obj, idx) => {
