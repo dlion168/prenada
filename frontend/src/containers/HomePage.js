@@ -130,7 +130,7 @@ const HomePage = ({ navigation }) => {
 
                     </View>
                 </View>
-            </View>
+            </ScrollView>
         </>
     )
 }
