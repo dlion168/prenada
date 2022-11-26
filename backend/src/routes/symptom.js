@@ -15,6 +15,15 @@ const deleteDB = async () => {
     }
 };
 
+const deleteSymptom = async (date, time) => {
+    try {
+        const symptom = await Symptom.deleteOne({ date, time });
+        return { message: `Deleting`, symptom: symptom };
+    } catch (e) {
+        return e;
+    }
+};
+
 const saveSymptom = async (date, time, symptomName) => {
     const oldSymptom = await Symptom.findOne({ date, time });
     try {
@@ -86,25 +95,17 @@ const getSymptomSummary = async (startDate, endDate) => {
         });
     });
 
-    // let data = [];
     let message = "";
-    // try {
-    //     if (Object.keys(summary).length > 0) {
-    //         Object.keys(summary).forEach(element => {
-    //             let item = {
-    //                 'symptomName': element,
-    //                 'times': summary[element]
-    //             };
-    //             data.push(item);
-    //         });
-    //     }
-    // } catch (e) { message = "Save symptomData error: " + e; }
     return { summary, message };
 };
 
 const router = Router();
-router.delete("/", async (_, res) => {
-    res.json({ message: await deleteDB() })
+router.delete("/", async (req, res) => {
+    let date = req.query.date;
+    let time = req.query.time;
+    console.log(date, time)
+    let result = await deleteSymptom(date, time);
+    res.status(200).send(result);
 });
 
 router.post("/", async (req, res) => {

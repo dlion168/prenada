@@ -132,11 +132,13 @@ const AddScreen = () => {
                 symptomList.push(obj.symptomName);
         });
 
-        const { data: { symptomData, symptomMessage }, } = await axios.post('/symptom', {
-            date: dateString,
-            time: "9:00 PM",
-            symptomName: symptomList.sort().join(',')
-        });
+        if (symptomList.length > 0) {
+            const { data: { symptomData, symptomMessage }, } = await axios.post('/symptom', {
+                date: dateString,
+                time: "9:00 PM",
+                symptomName: symptomList.sort().join(',')
+            });
+        }
     };
 
     return (
