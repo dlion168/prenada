@@ -1,7 +1,7 @@
 import { View, StyleSheet, Pressable,  ScrollView, Text} from 'react-native';
 import ChecklistByTrimester from '../components/checkList/ChecklistByTrimester';
 import { SearchBar } from 'react-native-elements';
-import useCheckList from '../components/checkList/hooks/useCheckList'
+import { useCheckList } from '../components/checkList/hooks/useCheckList'
 import MonthSection from '../components/checkList/MonthSection';
 import { NavBar } from '../components/NavBar';
 
