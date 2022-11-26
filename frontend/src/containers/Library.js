@@ -6,7 +6,7 @@ import { Topic } from '../components/library/Topic';
 const Library = () => {
     const [search, setSearch] = useState('');
     const [topic, setTopic] = useState('');
-    const [article, setArticle] = useState({ topic: '', id: -1 });
+    const [article, setArticle] = useState({ topic: '', id: '' });
 
     const topicClick = (title) => {
         setTopic(title);

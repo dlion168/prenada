@@ -84,7 +84,7 @@ const SymptomSummary = ({ addMode, handleSymptomClick, symptoms }) => {
 
     const imgPath = {
         'Cramps': require('../../assets/image/BodyData/Symptom/Cramps.png'),
-        'Tender breasts': require('../../assets/image/BodyData/Symptom/Tender breasts.png'),
+        'Tender breasts': require('../../assets/image/BodyData/Symptom/Tender Breasts.png'),
         'Headache': require('../../assets/image/BodyData/Symptom/Headache.png'),
         'Acne': require('../../assets/image/BodyData/Symptom/Acne.png'),
     }

@@ -56,10 +56,9 @@ const Article = ({ articleData, articleClick }) => {
     return (
         <>
             <NavBar centerText=''
-                leftText='Back' leftIcon='cheveron-left-s' leftIconOnPress={(event) => {}}
+                leftText='Back' leftIcon='cheveron-left-s' leftIconOnPress={(event) => {articleClick('', '')}}
                 rightText='Saved Articles' rightIcon='bookmark-s' rightIconOnPress={(event) => {}}
             />
-            <Pressable onPress={() => {articleClick('', -1)}}><Text> go back to topic (only for test!) </Text></Pressable>
             <ScrollView >
                 <View style={styles.title}>
                     <Text style={styles.summary}> {articleData.summary} </Text>
