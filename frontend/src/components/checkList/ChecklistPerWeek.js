@@ -39,10 +39,10 @@ const ChecklistPerWeek = (week) =>{
         <Text style = {styles.title}> { title } </Text>
         <FlatList 
         data = {data}
-        renderItem = { (e, id) => {
+        renderItem = { (e) => {
             return (
-            <View style={styles.pad} key={id}>
-                <ChecklistItem id={id} week={week} checked={e.item.checked} text={e.item.text} liked={e.item.liked}></ChecklistItem>
+            <View style={styles.pad} key={e.index}>
+                <ChecklistItem idx={e.index} week={week} checked={e.item.checked} text={e.item.text} liked={e.item.liked}></ChecklistItem>
             </View>)}}
         keyExtractor={(item) => item.text}>
         </FlatList>

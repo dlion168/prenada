@@ -30,10 +30,9 @@ const ChecklistProvider = (props) => {
         },
     ])
 
-    const onDeleteHandler = (index) => {
-        console.log(index);
+    const onDeleteHandler = (week, idx) => {
         let a = checkListData;
-        a.splice(index, 1);
+        a[week].data.splice(idx, 1);
         setCheckListData([...a]);
     };
     return <CheckListContext.Provider

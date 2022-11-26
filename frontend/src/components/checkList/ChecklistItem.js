@@ -1,6 +1,7 @@
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
 import { ActionIcon } from '../ActionIcon';
 import { useCheckList } from './hooks/useCheckList';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 const styles = StyleSheet.create({
@@ -46,7 +47,8 @@ const ChecklistItem = ({ week, idx, checked, text, liked }) => {
         <Swipeable
             renderRightActions={() =>
                 <View style={styles.deleteBox}>
-                    <ActionIcon iconName={'archive-s'} size={20} padding={18} onPress={() => onDeleteHandler(idx)} />
+                    <ActionIcon iconName={'archive-s'} size={20} padding={18} onPress={() => onDeleteHandler(week, idx)} />
+                    {/* <FontAwesome5 size={20} name='trash-alt' solid/> */}
                 </View>
             }
             // onSwipeableOpen={() => closeRow(idx)}
