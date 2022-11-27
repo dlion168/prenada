@@ -80,7 +80,7 @@ const updateSymptom = async (date, callback) => {
             maxCount = count;
             maxSym = sym;
         }
-        if (count > 1)
+        if (count > 0)
             numSym++;
     }
     callback([maxSym, numSym]);
@@ -143,12 +143,12 @@ const HomePage = ({ navigation }) => {
                         </TouchableOpacity>
                     </View>
                     <ScrollView style={styles.pad} horizontal >
-                        <BodyDataCard
+                        {/* <BodyDataCard
                             name='Sleep'
                             text1={'7'} unit1={'hr'}
                             text2={'16'} unit2={'min'}
                             onPress={() => navigation.jumpTo('Body Data')} // TODO: goto SleepScreen
-                        />
+                        /> */}
                         <BodyDataCard
                             name='Water'
                             text1={waterTotal} unit1={'ml'}
