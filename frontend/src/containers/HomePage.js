@@ -90,7 +90,7 @@ const HomePage = ({ navigation }) => {
     const [ displayWeek, setDisplayWeek ] = useState(0);
     const { checkListData, setCheckListData } = useCheckList()
     const [ waterTotal, setWaterTotal] = useState(0);
-    useEffect(() => updateWater('20221024', setWaterTotal), [displayWeek]); // TODO: should be refreshed when data is renewed
+    useEffect(() => updateWater('20221124', setWaterTotal), [displayWeek]); // TODO: should be refreshed when data is renewed
     const [ symSumm, setSymSumm] = useState(['', 0]);
     useEffect(() => updateSymptom('20221124', setSymSumm), [displayWeek]); // TODO: should be refreshed when data is renewed
     return (
