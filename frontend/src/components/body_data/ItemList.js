@@ -53,7 +53,8 @@ const ItemList = ({ showList, deleteHandler, date }) => {
                                         size={20} padding={15}
                                         onPress={() => deleteHandler(date, obj.time)} />
                                 </View>
-                            }>
+                            }
+                            key={idx}>
                             <View style={styles.item} key={idx} >
                                 <Text style={styles.text} >{obj.leftText}</Text>
                                 <View style={{ flex: 1 }} />

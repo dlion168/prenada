@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
 })
 
 const WaterScreen = ({ displayWeek }) => {
-    console.log('week', displayWeek);
     const [waterDetail, setWaterDetail] = useState([]);
 
     const init = {
@@ -49,13 +48,25 @@ const WaterScreen = ({ displayWeek }) => {
         ]
     }
     const [waterSummary, setWaterSummary] = useState(init);
+    const convertToDateString = (date) => {
+        const yyyy = date.getFullYear();
+        const MM = (date.getMonth() + 1).toString().padStart(2, '0');
+        const dd = date.getDate().toString().padStart(2, '0');
+        return yyyy + MM + dd;
+    }
+
     const getWaterData = async () => {
+        let startDate = new Date("2022/10/24");
+        let endDate = new Date("2022/10/30");
+        startDate.setDate(startDate.getDate() + displayWeek * 7);
+        endDate.setDate(startDate.getDate() + displayWeek * 7);
+
         const {
             data: { data, message },
         } = await axios.get('/water', {
             params: {
-                startDate: "20221024",
-                endDate: "20221026",
+                startDate: convertToDateString(startDate),
+                endDate: convertToDateString(endDate),
             },
         });
         setWaterDetail(data);

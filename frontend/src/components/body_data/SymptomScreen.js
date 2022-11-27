@@ -32,23 +32,34 @@ const styles = StyleSheet.create({
     },
 })
 
-const SymptomScreen = () => {
+const SymptomScreen = ({ displayWeek }) => {
     const [symptomDetail, setSymptomDetail] = useState([]);
     const [symptomSummary, setSymptomSummary] = useState([]);
+    let startDate = new Date("2022/10/24");
+    let endDate = new Date("2022/10/30");
+    startDate.setDate(startDate.getDate() + displayWeek * 7);
+    endDate.setDate(startDate.getDate() + displayWeek * 7);
+
+    const convertToDateString = (date) => {
+        const yyyy = date.getFullYear();
+        const MM = (date.getMonth() + 1).toString().padStart(2, '0');
+        const dd = date.getDate().toString().padStart(2, '0');
+        return yyyy + MM + dd;
+    }
     const getSymptomData = async () => {
         //detail
         const { data: { data: symptomData, symptomMessage }, } = await axios.get('/symptom', {
             params: {
-                startDate: "20221005",
-                endDate: "20221130",
+                startDate: convertToDateString(startDate),
+                endDate: convertToDateString(endDate),
             },
         });
         setSymptomDetail(symptomData);
         //summary
         const summary = await axios.get('/symptom/summary', {
             params: {
-                startDate: "20221005",
-                endDate: "20221130",
+                startDate: convertToDateString(startDate),
+                endDate: convertToDateString(endDate),
             },
         });
         setSymptomSummary(summary.data.summary);

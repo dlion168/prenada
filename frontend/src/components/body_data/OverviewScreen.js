@@ -1,42 +1,93 @@
-import * as React from 'react';
-import { StyleSheet, ScrollView } from 'react-native';
-import { FAB } from 'react-native-elements';
-import SleepSummary from './SleepSummary';
+import { useState, useEffect } from 'react';
+import { StyleSheet, ScrollView, TouchableOpacity, View, Text } from 'react-native';
+// import { FAB } from 'react-native-elements';
+// import SleepSummary from './SleepSummary';
 import WaterSummary from './WaterSummary';
 import SymptomSummary from './SymptomSummary';
 import AddScreen from './AddScreen';
+import axios from '../../api';
 
 const styles = StyleSheet.create({
     body: {
         backgroundColor: '#FFFFFF', // gray/50
+    },
+    touchButton: {
+        alignItems: 'center',
     },
     addButton: {
         fontSize: 30,
         width: 60,
         height: 60,
         borderRadius: 30,
+        backgroundColor: "#F87171",
         position: 'absolute',
         bottom: 10,
         right: 10,
+        textAlign: 'center',
+        justifyContent: 'center',
+    },
+    text: {
+        color: "#FFFFFF",
+        fontSize: 40,
+        fontWeight: 30,
     }
 })
 
 const OverviewScreen = () => {
-    return (
-        <>
-            {/* <ScrollView style={styles.body}>
-                <SleepSummary />
-                <WaterSummary />
-                <SymptomSummary />
-            </ScrollView>
-            <FAB
-                style={styles.addButton}
-                title="+"
-                placement="right"
-                color="#F87171" /> */}
-            <AddScreen />
-        </>
-    );
+    const init = {
+        "date": [
+            "Oct 10",
+            "Oct 24",
+            "Oct 25"
+        ],
+        "capacity": [
+            500,
+            900,
+            500
+        ]
+    }
+    const [waterSummary, setWaterSummary] = useState(init);
+    const [addMode, setAddMode] = useState(false);
+    const [symptomSummary, setSymptomSummary] = useState([]);
+    const getSymptomData = async () => {
+        const summary = await axios.get('/symptom/summary', {
+            params: {
+                startDate: "20221005",
+                endDate: "20221130",
+            },
+        });
+        setSymptomSummary(summary.data.summary);
+    };
+    useEffect(() => {
+        getSymptomData();
+    }, []);
+
+
+    if (addMode)
+        return (<AddScreen setAddMode={setAddMode} />);
+    else
+        return (
+            <>
+                <ScrollView style={styles.body}>
+                    {/* <SleepSummary /> */}
+                    <WaterSummary waterSummary={waterSummary} />
+                    <SymptomSummary
+                        addMode={false}
+                        handleSymptomClick={null}
+                        symptoms={symptomSummary} />
+                </ScrollView>
+                <TouchableOpacity
+                    style={styles.touchButton}
+                    onPress={() => { setAddMode(true) }}
+                >
+                    <View
+                        style={styles.addButton}
+                    >
+                        <Text style={styles.text} >+</Text>
+                    </View>
+                </TouchableOpacity>
+            </>
+        );
 }
 
 export default OverviewScreen;

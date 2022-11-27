@@ -81,7 +81,8 @@ const styles = StyleSheet.create({
     updateButton: {
         borderRadius: 20,
         height: 40,
-        paddingBottom: 10
+        margin: 10,
+        paddingBottom: 10,
     },
     inputView: {
         display: 'flex',
@@ -95,7 +96,7 @@ const styles = StyleSheet.create({
     },
 })
 
-const AddScreen = () => {
+const AddScreen = ({ setAddMode }) => {
     const initSymptoms = [
         { 'symptomName': 'Cramps', 'choose': false },
         { 'symptomName': 'Tender breasts', 'choose': false },
@@ -120,9 +121,13 @@ const AddScreen = () => {
     const saveForm = async () => {
         const dateString = date.replace('/', '').replace('/', '')
         // console.log(date, weight, sleep, water, symptoms);
+        const currentTime = new Date();
+        const hour = (currentTime.getHours() % 12).toString().padStart(2, '0');
+        const minute = currentTime.getMinutes().toString().padStart(2, '0');
+        const afternoon = currentTime.getHours() > 12 ? "PM" : "AM";
         const { data: { waterData, waterMessage }, } = await axios.post('/water', {
             date: dateString,
-            time: "9:00 PM",
+            time: `${hour}:${minute} ${afternoon}`,
             capacity: water
         });
 
@@ -139,6 +144,7 @@ const AddScreen = () => {
                 symptomName: symptomList.sort().join(',')
             });
         }
+        setAddMode(false);
     };
 
     return (
@@ -283,6 +289,13 @@ const AddScreen = () => {
                 title="Update Your Day"
                 color="#F87171"
                 accessibilityLabel="Update Your Day"
+            />
+            <Button
+                style={styles.updateButton}
+                onPress={() => { setAddMode(false) }}
+                title="Go Back To Overview"
+                color="#c2c7cc"
+                accessibilityLabel="Go Back To Overview"
             />
         </ScrollView>
     );

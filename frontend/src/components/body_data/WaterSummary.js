@@ -1,5 +1,6 @@
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { LineChart } from "react-native-chart-kit";
+import { Dimensions } from 'react-native';
 
 const styles = StyleSheet.create({
     body: {
@@ -28,6 +29,7 @@ const styles = StyleSheet.create({
 
 
 const WaterSummary = ({ waterSummary }) => {
+    const windowWidth = Dimensions.get('window').width;
     const data = {
         labels: waterSummary.date,
         datasets: [
@@ -76,7 +78,7 @@ const WaterSummary = ({ waterSummary }) => {
             <View style={styles.chart}>
                 <LineChart
                     data={data}
-                    width={700}
+                    width={windowWidth * 0.7}
                     height={220}
                     chartConfig={chartConfig}
                 />

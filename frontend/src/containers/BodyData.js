@@ -28,7 +28,7 @@ const BodyData = () => {
                     tabBarIndicatorStyle: { backgroundColor: '#F87171' }
                 }}>
                 <Tab.Screen name="Overview" component={() => <OverviewScreen displayWeek={displayWeek} />} />
-                <Tab.Screen name="Sleep" component={() => <SleepScreen displayWeek={displayWeek} />} />
+                {/* <Tab.Screen name="Sleep" component={() => <SleepScreen displayWeek={displayWeek} />} /> */}
                 <Tab.Screen name="Water" component={() => <WaterScreen displayWeek={displayWeek} />} />
                 <Tab.Screen name="Symptom" component={() => <SymptomScreen displayWeek={displayWeek} />} />
             </Tab.Navigator>
