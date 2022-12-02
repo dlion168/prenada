@@ -12,8 +12,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
     tag: {
-        height: 30,
-        width: 200,
+        padding: 5,
         marginTop: 20,
         borderWidth: 2,
         borderColor: '#F87171',

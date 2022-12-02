@@ -7,6 +7,7 @@ const Library = () => {
     const [search, setSearch] = useState('');
     const [topic, setTopic] = useState('');
     const [article, setArticle] = useState({ topic: '', id: '' });
+    const [savedHidden, setSavedHidden] = useState(true);
 
     const topicClick = (title) => {
         setTopic(title);
@@ -22,10 +23,14 @@ const Library = () => {
                 <Topic topic={topic}
                        topicClick={topicClick}
                        art={article}
-                       artClick={articleClick}/> : 
+                       artClick={articleClick}
+                       savedHidden={savedHidden}
+                       setSavedHidden={setSavedHidden} /> : 
                 <Menu search={search} 
                       setSearch={setSearch}
-                      topicClick={topicClick} /> }
+                      topicClick={topicClick}
+                      savedHidden={savedHidden}
+                      setSavedHidden={setSavedHidden} /> }
         </>
     )
 }

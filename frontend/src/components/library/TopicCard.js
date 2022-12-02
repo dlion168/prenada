@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     }
 })
 
-const TopicCardSingle = ({ top, onPress} ) =>
+const TopicCardSingle = ({ top, onPress }) =>
     <Pressable style={styles.topic} onPress={onPress}>
         <ImageBackground source={{uri: top.pic}} 
                          style={styles.image}

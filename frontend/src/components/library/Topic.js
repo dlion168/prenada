@@ -2,6 +2,7 @@ import { StyleSheet, Text, Image, View, ScrollView, Pressable } from 'react-nati
 import { Article } from './Article';
 import { NavBar } from '../NavBar';
 import { topicData } from './libraryData';
+import { Saved, toggleSubview } from './Saved';
 
 const styles = StyleSheet.create({
     block: {
@@ -9,8 +10,8 @@ const styles = StyleSheet.create({
         marginTop: 30,
     },
     topImg: {
-        height: 400, 
-        width: 400,
+        height: 245, 
+        width: 327,
         borderRadius: 20,
         alignSelf: 'center',
     },
@@ -30,8 +31,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
     },
     artImg: {
-        height: 100, 
-        width: 100,
+        height: 75, 
+        width: 75,
         borderRadius: 20,
     },
     cheveron: {
@@ -41,12 +42,12 @@ const styles = StyleSheet.create({
     },
 })
 
-const topicMenu = (topic, topicClick, artClick) => {
+const TopicMenu = ({ topic, topicClick, artClick, savedHidden, setSavedHidden }) => {
     return (
         <>
             <NavBar centerText=''
                 leftText='Back' leftIcon='cheveron-left-s' leftIconOnPress={(event) => {topicClick('')}}
-                rightText='Saved Articles' rightIcon='bookmark-s' rightIconOnPress={(event) => {}}
+                rightText='Saved Articles' rightIcon='bookmark-s' rightIconOnPress={(event) => {toggleSubview(savedHidden, setSavedHidden)}}
             />
             <ScrollView >
                 <Image source={topicData[topic].topPic} style={styles.topImg} />
@@ -64,18 +65,26 @@ const topicMenu = (topic, topicClick, artClick) => {
                     </Pressable>
                 ))}
             </ScrollView>
+            <Saved toggleSubview={toggleSubview}
+                   savedHidden={savedHidden}
+                   setSavedHidden={setSavedHidden}/>
         </>
     )
 }
 
-const Topic = ({ topic, topicClick, art, artClick }) => {
+const Topic = ({ topic, topicClick, art, artClick, savedHidden, setSavedHidden }) => {
     return (
         <>
             { art.topic ? 
                 <Article articleData={topicData[art.topic].article[parseInt(art.id.split('-')[2], 10)]}
-                         articleClick={artClick}/> : 
-                topicMenu(topic, topicClick, artClick) }
-                {console.log(parseInt(art.id.split('-')[2], 10))}
+                         articleClick={artClick} /> : 
+                <TopicMenu topic={topic}
+                           topicClick={topicClick}
+                           artClick={artClick}
+                           savedHidden={savedHidden}
+                           setSavedHidden={setSavedHidden} />
+            }
+            {console.log(parseInt(art.id.split('-')[2], 10))}
         </>
     )
 }
