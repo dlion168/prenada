@@ -1,9 +1,9 @@
 import { Router } from "express";
 import Theme from "../models/Theme";
-import Topic from '../models/Topic';
+import Article from '../models/Article';
 import db from '../db';
 import themeData from '../../themeData.json';
-import topicData from '../../topicData.json';
+import articleData from '../../articleData.json';
 
 db.connect();
 
@@ -23,22 +23,22 @@ const getThemeData = async () => {
   
 }
 
-const getTopicData = async (topicName) => {
-  // let ext = await Topic.findOne({ topic: topicName });
-  let ext = {}; // reset data everytime, this will be removed after all done
+const getArticleData = async (topicName) => {
+  // let ext = await Article.findOne({ topic: topicName });
+  let ext = []; // reset data everytime, this will be removed after all done
   try {
-    if (Object.keys(ext).length === 0) {
-      console.log('Reset topicData');
-      await Topic.deleteMany({});
-      await Topic.insertMany(topicData);
+    if (ext.length === 0) {
+      console.log('Reset articleData');
+      await Article.deleteMany({});
+      await Article.insertMany(articleData);
     }
-    
-    ext = await Topic.findOne({ topic: topicName });
+
+    ext = await Article.find({ topic: topicName });
     if (Object.keys(ext).length === 0)
-      return { message: 'Cannot find target topicData', TopicData: {} }
-    return { message: 'Get topicData successfully', 
-             TopicData: ext }
-  } catch(err) {throw new Error("Get or Reset topicData error: " + err);}
+      return { message: 'Cannot find target articleData', ArticleData: [] }
+    return { message: 'Get articleData successfully', 
+             ArticleData: ext }
+  } catch(err) {throw new Error("Get or Reset articleData error: " + err);}
   
 }
 
@@ -48,7 +48,7 @@ router.get('/', async (req, res) => {
   res.status(200).send(result);
 })
 router.get('/topic', async (req, res) => {
-  let result = await getTopicData(req.query.topicName);
+  let result = await getArticleData(req.query.topicName);
   res.status(200).send(result);
 })
 

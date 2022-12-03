@@ -83,7 +83,7 @@ const TopicCard = ({ topicClick }) => {
                         {obj.topic.map((top, idx) =>
                             <TopicCardSingle key={idx}
                                              top={top}
-                                             onPress={() => topicClick(top.title)} />
+                                             onPress={() => topicClick(top)} />
                         )}
                     </ScrollView>
                 </View>

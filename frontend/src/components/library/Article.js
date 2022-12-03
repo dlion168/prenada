@@ -51,18 +51,18 @@ const styles = StyleSheet.create({
     },
 })
 
-const Article = ({ articleData, articleClick }) => {
+const Article = ({ article, articleClick }) => {
     return (
         <>
             <NavBar centerText=''
-                leftText='Back' leftIcon='cheveron-left-s' leftIconOnPress={(event) => {articleClick('', -1)}}
+                leftText='Back' leftIcon='cheveron-left-s' leftIconOnPress={(event) => {articleClick({})}}
                 rightText='Saved Articles' rightIcon='bookmark-s' rightIconOnPress={(event) => {}}
             />
             <ScrollView >
                 <View style={styles.title}>
-                    <Text style={styles.summary}> {articleData.summary} </Text>
+                    <Text style={styles.summary}> {article.title} </Text>
                     <View style={styles.tag}>
-                        <Text style={styles.tagText}> {articleData.tag} </Text>
+                        <Text style={styles.tagText}> {article.tag} </Text>
                     </View>
                 </View>
                 <View style={styles.reviewer}>
@@ -73,7 +73,7 @@ const Article = ({ articleData, articleClick }) => {
                         <Text> the European Board & College of Obstetrics and Gynaecology </Text>
                     </View>
                 </View>
-                <Image source={require(`../../assets/image/Topic/${articleData.pic}`)} style={styles.articleImg} />
+                <Image source={require(`../../assets/image/Topic/${article.pic}`)} style={styles.articleImg} />
                 <Text> article content... </Text>
             </ScrollView>
         </>

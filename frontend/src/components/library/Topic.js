@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     },
 })
 
-const TopicMenu = ({ topicData, topic, topicClick, artClick, savedHidden, setSavedHidden }) => {
+const TopicMenu = ({ articleData, topic, topicClick, articleClick, savedHidden, setSavedHidden }) => {
     const cheveronRight = require('../../assets/icon/primary/cheveron-right.png');
 
     const getImgSrc = (pic) => {
@@ -59,16 +59,16 @@ const TopicMenu = ({ topicData, topic, topicClick, artClick, savedHidden, setSav
                 rightText='Saved Articles' rightIcon='bookmark-s' rightIconOnPress={(event) => {toggleSubview(savedHidden, setSavedHidden)}}
             />
             <ScrollView >
-                <Image source={getImgSrc(topicData.topicPic)} style={styles.topImg} />
+                <Image source={getImgSrc(topic.pic)} style={styles.topImg} />
                 <View style={styles.block}>
-                    <Text style={styles.title}> {topicData.topic} </Text>
+                    <Text style={styles.title}> {topic.title} </Text>
                 </View>
-                { topicData.article.map((art, idx) => (
-                    <Pressable key={idx} style={styles.article} onPress={() => {artClick(topic, art.id)}}>
+                { articleData.map((art, idx) => (
+                    <Pressable key={idx} style={styles.article} onPress={() => {articleClick(art)}}>
                         <Image source={getImgSrc(art.pic)} style={styles.artImg} />
                         <View style={styles.artDescribe}>
                             <Text style={{ color: 'red' }}> {art.tag} </Text>
-                            <Text numberOfLines={2} > {art.summary} </Text>
+                            <Text numberOfLines={2} > {art.title} </Text>
                         </View>
                         <Image source={cheveronRight} style={styles.cheveron} />
                     </Pressable>
@@ -81,36 +81,43 @@ const TopicMenu = ({ topicData, topic, topicClick, artClick, savedHidden, setSav
     )
 }
 
-const Topic = ({ topic, topicClick, art, artClick, savedHidden, setSavedHidden }) => {
-    const [topicData, setTopicData] = useState([]);
+const Topic = ({ topic, topicClick, article, articleClick, savedHidden, setSavedHidden }) => {
+    const [articleData, setArticleData] = useState([]);
     
-    const getTopicData = async () => {
+    const getArticleData = async () => {
         const {
-            data: { message, TopicData },
+            data: { message, ArticleData },
         } = await axios.get('/library/topic', {
-            params: { topicName: topic }
+            params: { topicName: topic.title }
         });
-        console.log(message, TopicData);
-        setTopicData(TopicData);
+        console.log(message, ArticleData);
+        setArticleData(ArticleData);
     }
 
     useEffect(() => {
-        getTopicData();
+        getArticleData();
     }, [])
-    
+    console.log('topic', topic)
+    console.log('article', article)
+    console.log('articleData', articleData)
     return (
         <>
-            { art.topic.length > 0 ? 
-                <Article articleData={topicData.article[art.id]}
-                         articleClick={artClick} /> : 
-                topicData.length === 0 ?
-                    <View>
-                        <Text style={{ padding: 50, fontSize: 20, alignSelf: 'center' }}> Loading Data... </Text>
-                    </View> :
-                    <TopicMenu topicData={topicData}
+            { Object.keys(article).length > 0 ? 
+                <Article article={article}
+                         articleClick={articleClick} /> : 
+                articleData.length === 0 ?
+                    <>
+                        <NavBar centerText=''
+                                leftText='Back' leftIcon='cheveron-left-s' leftIconOnPress={(event) => {topicClick('')}}
+                                rightText='Saved Articles' rightIcon='bookmark-s' rightIconOnPress={(event) => {}} />
+                        <View>
+                            <Text style={{ padding: 50, fontSize: 20, alignSelf: 'center' }}> Loading Data... </Text>
+                        </View>
+                    </> :
+                    <TopicMenu articleData={articleData}
                                topic={topic}
                                topicClick={topicClick}
-                               artClick={artClick}
+                               articleClick={articleClick}
                                savedHidden={savedHidden}
                                setSavedHidden={setSavedHidden} />
             }

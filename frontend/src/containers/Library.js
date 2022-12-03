@@ -4,25 +4,25 @@ import { Topic } from '../components/library/Topic';
 
 const Library = () => {
     const [search, setSearch] = useState('');
-    const [topic, setTopic] = useState('');
-    const [article, setArticle] = useState({ topic: '', id: -1 });
+    const [topic, setTopic] = useState({}); // { pic: , title: }
+    const [article, setArticle] = useState({}); // { topic: , title:, ...}
     const [savedHidden, setSavedHidden] = useState(true);
 
-    const topicClick = (title) => {
-        setTopic(title);
+    const topicClick = (top) => {
+        setTopic(top);
     }
 
-    const articleClick = (topic, id) => {
-        setArticle({ topic: topic, id: id });
+    const articleClick = (article) => {
+        setArticle(article);
     }
 
     return(
         <>
-            { topic ? 
+            { Object.keys(topic).length > 0 ? 
                 <Topic topic={topic}
                        topicClick={topicClick}
-                       art={article}
-                       artClick={articleClick}
+                       article={article}
+                       articleClick={articleClick}
                        savedHidden={savedHidden}
                        setSavedHidden={setSavedHidden} /> : 
                 <Menu search={search} 
