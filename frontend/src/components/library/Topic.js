@@ -1,8 +1,9 @@
 import { StyleSheet, Text, Image, View, ScrollView, Pressable } from 'react-native';
+import { useState, useEffect } from 'react';
 import { Article } from './Article';
 import { NavBar } from '../NavBar';
-import { topicData } from './libraryData';
 import { Saved, toggleSubview } from './Saved';
+import axios from '../../api';
 
 const styles = StyleSheet.create({
     block: {
@@ -42,7 +43,15 @@ const styles = StyleSheet.create({
     },
 })
 
-const TopicMenu = ({ topic, topicClick, artClick, savedHidden, setSavedHidden }) => {
+const TopicMenu = ({ topicData, topic, topicClick, artClick, savedHidden, setSavedHidden }) => {
+    const cheveronRight = require('../../assets/icon/primary/cheveron-right.png');
+
+    const getImgSrc = (pic) => {
+        return pic.split('/').length > 1 ? 
+            require(`../../assets/image/Topic/${pic.split('/')[3].split('.')[0]}.${pic.split('/')[3].split('.')[2]}`) :
+            require(`../../assets/image/Topic/${pic}`)
+    }
+    // return (<></>)
     return (
         <>
             <NavBar centerText=''
@@ -50,18 +59,18 @@ const TopicMenu = ({ topic, topicClick, artClick, savedHidden, setSavedHidden })
                 rightText='Saved Articles' rightIcon='bookmark-s' rightIconOnPress={(event) => {toggleSubview(savedHidden, setSavedHidden)}}
             />
             <ScrollView >
-                <Image source={topicData[topic].topPic} style={styles.topImg} />
+                <Image source={getImgSrc(topicData.topicPic)} style={styles.topImg} />
                 <View style={styles.block}>
-                    <Text style={styles.title}> {topic} </Text>
+                    <Text style={styles.title}> {topicData.topic} </Text>
                 </View>
-                { topicData[topic].article.map((art, idx) => (
+                { topicData.article.map((art, idx) => (
                     <Pressable key={idx} style={styles.article} onPress={() => {artClick(topic, art.id)}}>
-                        <Image source={art.pic} style={styles.artImg} />
+                        <Image source={getImgSrc(art.pic)} style={styles.artImg} />
                         <View style={styles.artDescribe}>
                             <Text style={{ color: 'red' }}> {art.tag} </Text>
                             <Text numberOfLines={2} > {art.summary} </Text>
                         </View>
-                        <Image source={topicData[topic].cheveronRight} style={styles.cheveron} />
+                        <Image source={cheveronRight} style={styles.cheveron} />
                     </Pressable>
                 ))}
             </ScrollView>
@@ -73,18 +82,38 @@ const TopicMenu = ({ topic, topicClick, artClick, savedHidden, setSavedHidden })
 }
 
 const Topic = ({ topic, topicClick, art, artClick, savedHidden, setSavedHidden }) => {
+    const [topicData, setTopicData] = useState([]);
+    
+    const getTopicData = async () => {
+        const {
+            data: { message, TopicData },
+        } = await axios.get('/library/topic', {
+            params: { topicName: topic }
+        });
+        console.log(message, TopicData);
+        setTopicData(TopicData);
+    }
+
+    useEffect(() => {
+        getTopicData();
+    }, [])
+    
     return (
         <>
-            { art.topic ? 
-                <Article articleData={topicData[art.topic].article[parseInt(art.id.split('-')[2], 10)]}
+            { art.topic.length > 0 ? 
+                <Article articleData={topicData.article[art.id]}
                          articleClick={artClick} /> : 
-                <TopicMenu topic={topic}
-                           topicClick={topicClick}
-                           artClick={artClick}
-                           savedHidden={savedHidden}
-                           setSavedHidden={setSavedHidden} />
+                topicData.length === 0 ?
+                    <View>
+                        <Text style={{ padding: 50, fontSize: 20, alignSelf: 'center' }}> Loading Data... </Text>
+                    </View> :
+                    <TopicMenu topicData={topicData}
+                               topic={topic}
+                               topicClick={topicClick}
+                               artClick={artClick}
+                               savedHidden={savedHidden}
+                               setSavedHidden={setSavedHidden} />
             }
-            {console.log(parseInt(art.id.split('-')[2], 10))}
         </>
     )
 }

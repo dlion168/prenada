@@ -1,4 +1,4 @@
-import { StyleSheet, Text, Image, View, ScrollView, Pressable } from 'react-native';
+import { StyleSheet, Text, Image, View, ScrollView } from 'react-native';
 import { NavBar } from '../NavBar';
 
 const styles = StyleSheet.create({
@@ -55,7 +55,7 @@ const Article = ({ articleData, articleClick }) => {
     return (
         <>
             <NavBar centerText=''
-                leftText='Back' leftIcon='cheveron-left-s' leftIconOnPress={(event) => {articleClick('', '')}}
+                leftText='Back' leftIcon='cheveron-left-s' leftIconOnPress={(event) => {articleClick('', -1)}}
                 rightText='Saved Articles' rightIcon='bookmark-s' rightIconOnPress={(event) => {}}
             />
             <ScrollView >
@@ -73,7 +73,7 @@ const Article = ({ articleData, articleClick }) => {
                         <Text> the European Board & College of Obstetrics and Gynaecology </Text>
                     </View>
                 </View>
-                <Image source={articleData.pic} style={styles.articleImg} />
+                <Image source={require(`../../assets/image/Topic/${articleData.pic}`)} style={styles.articleImg} />
                 <Text> article content... </Text>
             </ScrollView>
         </>

@@ -6,7 +6,7 @@ import AddListItem from '../components/homePage/addListItem';
 import { NavBar } from '../components/NavBar.js';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { TopicCardSingle } from '../components/library/TopicCard';
-import { themeData } from '../components/library/libraryData.js';
+// import { themeData } from '../components/library/libraryData.js';
 import axios from '../api';
 import SymptomSummary from '../components/body_data/SymptomSummary'
 import { BodyDataCard } from '../components/homePage/BodyDataCard.js';
@@ -93,6 +93,22 @@ const HomePage = ({ navigation }) => {
     useEffect(() => updateWater('20221124', setWaterTotal), [displayWeek]); // TODO: should be refreshed when data is renewed
     const [ symSumm, setSymSumm] = useState(['', 0]);
     useEffect(() => updateSymptom('20221124', setSymSumm), [displayWeek]); // TODO: should be refreshed when data is renewed
+    
+    /*----themeData has been moved to database----*/
+    const [theme, setTheme] = useState([]);
+    const getThemeData = async () => {
+        const {
+            data: { message, themeData },
+        } = await axios.get('/library', {
+            params: {}
+        });
+        console.log(message, themeData);
+        setTheme(themeData);
+    }
+    useEffect(() => {
+        getThemeData();
+    }, [])
+    /*--------------------------------------------*/
     return (
         <>
             <NavBar centerText='w1' rightIcon='bell-s' weekOnChange={
@@ -171,7 +187,7 @@ const HomePage = ({ navigation }) => {
                         </TouchableOpacity>
                     </View>
                     <ScrollView style={styles.pad} horizontal >
-                        {themeData.map((group, idx) =>
+                        {theme.map((group, idx) =>
                             <TopicCardSingle
                                 key={idx}
                                 top={group.topic[0]}
