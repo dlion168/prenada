@@ -5,9 +5,10 @@ const Schema = mongoose.Schema;
 const ArticleSchema = new Schema({
   topic: String,
   title: String,
-  id: Number,
+  id: String,
   pic: String,
   tag: String,
+  bookmark: Boolean
 });
 
 const Article = mongoose.model('Article', ArticleSchema);

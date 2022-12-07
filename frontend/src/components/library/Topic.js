@@ -2,7 +2,7 @@ import { StyleSheet, Text, Image, View, ScrollView, Pressable } from 'react-nati
 import { useState, useEffect } from 'react';
 import { Article } from './Article';
 import { NavBar } from '../NavBar';
-import { Saved, toggleSubview } from './Saved';
+import { Bookmark, toggleSubview } from './Bookmark';
 import axios from '../../api';
 
 const styles = StyleSheet.create({
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     },
 })
 
-const TopicMenu = ({ articleData, topic, topicClick, articleClick, savedHidden, setSavedHidden }) => {
+const TopicMenu = ({ articleData, topic, topicClick, articleClick, bookmarkView, setBookmarkView }) => {
     const cheveronRight = require('../../assets/icon/primary/cheveron-right.png');
 
     const getImgSrc = (pic) => {
@@ -56,7 +56,7 @@ const TopicMenu = ({ articleData, topic, topicClick, articleClick, savedHidden, 
         <>
             <NavBar centerText=''
                 leftText='Back' leftIcon='cheveron-left-s' leftIconOnPress={(event) => {topicClick('')}}
-                rightText='Saved Articles' rightIcon='bookmark-s' rightIconOnPress={(event) => {toggleSubview(savedHidden, setSavedHidden)}}
+                rightText='Saved Articles' rightIcon='bookmark-s' rightIconOnPress={(event) => {toggleSubview(bookmarkView, setBookmarkView)}}
             />
             <ScrollView >
                 <Image source={getImgSrc(topic.pic)} style={styles.topImg} />
@@ -74,14 +74,14 @@ const TopicMenu = ({ articleData, topic, topicClick, articleClick, savedHidden, 
                     </Pressable>
                 ))}
             </ScrollView>
-            <Saved toggleSubview={toggleSubview}
-                   savedHidden={savedHidden}
-                   setSavedHidden={setSavedHidden}/>
+            <Bookmark toggleSubview={toggleSubview}
+                   bookmarkView={bookmarkView}
+                   msetBookmarkList={setBookmarkView}/>
         </>
     )
 }
 
-const Topic = ({ topic, topicClick, article, articleClick, savedHidden, setSavedHidden }) => {
+const Topic = ({ topic, topicClick, article, articleClick, bookmarkView, setBookmarkView }) => {
     const [articleData, setArticleData] = useState([]);
     
     const getArticleData = async () => {
@@ -111,15 +111,15 @@ const Topic = ({ topic, topicClick, article, articleClick, savedHidden, setSaved
                                 leftText='Back' leftIcon='cheveron-left-s' leftIconOnPress={(event) => {topicClick('')}}
                                 rightText='Saved Articles' rightIcon='bookmark-s' rightIconOnPress={(event) => {}} />
                         <View>
-                            <Text style={{ padding: 50, fontSize: 20, alignSelf: 'center' }}> Loading Data... </Text>
+                            <Text style={{ padding: 50, fontSize: 20, alignSelf: 'center' }}> Loading... </Text>
                         </View>
                     </> :
                     <TopicMenu articleData={articleData}
                                topic={topic}
                                topicClick={topicClick}
                                articleClick={articleClick}
-                               savedHidden={savedHidden}
-                               setSavedHidden={setSavedHidden} />
+                               bookmarkView={bookmarkView}
+                               setBookmarkView={setBookmarkView} />
             }
         </>
     )

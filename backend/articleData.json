@@ -2,57 +2,65 @@
   { 
     "topic": "Planning for pregnancy",
     "title": "COVID and fertility: Can coronavirus \n or COVID vaccines affect your ...",
-    "id": 0,
+    "id": "0-0-0",
     "pic": "5871-01_1006х755.jpg",
-    "tag": "Preconception planning"
+    "tag": "Preconception planning",
+    "bookmark": true
   },
   { 
     "topic": "Planning for pregnancy",
     "title": "Genetic Inheritance: What Will Your \n Baby Look Like?",
-    "id": 1,
+    "id": "0-0-1",
     "pic": "Capture (12).png",
-    "tag": "Preconception planning"
+    "tag": "Preconception planning",
+    "bookmark": true
   },
   { 
     "topic": "Planning for pregnancy",
     "title": "4 Reasons to Get Preconception \n Counseling: Dr. Kenneth K. Chen...",
-    "id": 2,
+    "id": "0-0-2",
     "pic": "4085-A woman undergoing preconception counseling.jpg",
-    "tag": "Preconception planning"
+    "tag": "Preconception planning",
+    "bookmark": false
   },
   { 
     "topic": "Planning for pregnancy",
     "title": "Pelvic Floor Therapy: Pelvic Floor \n Physical Exercises and Massage...",
-    "id": 3,
+    "id": "0-0-3",
     "pic": "Capture (13).png",
-    "tag": "Prepare your body for pregnancy"
+    "tag": "Prepare your body for pregnancy",
+    "bookmark": false
   },
   { 
     "topic": "Trying to conceive",
     "title": "summary1",
-    "id": 0,
+    "id": "0-1-0",
     "pic": "6864-pernatal vitamins1006x755.jpg",
-    "tag": "tag test"
+    "tag": "tag test",
+    "bookmark": false
   },
   { 
     "topic": "Trying to conceive",
     "title": "summary2",
-    "id": 1,
+    "id": "0-1-1",
     "pic": "6864-pernatal vitamins1006x755.jpg",
-    "tag": "tag test"
+    "tag": "tag test",
+    "bookmark": false
   },
   { 
     "topic": "Trying to conceive",
     "title": "summary3",
-    "id": 2,
+    "id": "0-1-2",
     "pic": "6864-pernatal vitamins1006x755.jpg",
-    "tag": "tag test"
+    "tag": "tag test",
+    "bookmark": false
   },
   { 
     "topic": "Trying to conceive",
     "title": "summary4",
-    "id": 3,
+    "id": "0-1-3",
     "pic": "6864-pernatal vitamins1006x755.jpg",
-    "tag": "tag test"
+    "tag": "tag test",
+    "bookmark": false
   }
 ] 

@@ -4,9 +4,9 @@ import { Topic } from '../components/library/Topic';
 
 const Library = () => {
     const [search, setSearch] = useState('');
-    const [topic, setTopic] = useState({}); // { pic: , title: }
+    const [topic, setTopic] = useState({}); // { pic: , title:, ... }
     const [article, setArticle] = useState({}); // { topic: , title:, ...}
-    const [savedHidden, setSavedHidden] = useState(true);
+    const [bookmarkView, setBookmarkView] = useState(true);
 
     const topicClick = (top) => {
         setTopic(top);
@@ -23,13 +23,13 @@ const Library = () => {
                        topicClick={topicClick}
                        article={article}
                        articleClick={articleClick}
-                       savedHidden={savedHidden}
-                       setSavedHidden={setSavedHidden} /> : 
+                       bookmarkView={bookmarkView}
+                       setBookmarkView={setBookmarkView} /> : 
                 <Menu search={search} 
                       setSearch={setSearch}
                       topicClick={topicClick}
-                      savedHidden={savedHidden}
-                      setSavedHidden={setSavedHidden} /> }
+                      bookmarkView={bookmarkView}
+                      setBookmarkView={setBookmarkView} /> }
         </>
     )
 }
