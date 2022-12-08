@@ -69,7 +69,23 @@ const cancelIcon = require('../../assets/icon/primary/x.png');
 const bookmark_t = require('../../assets/icon/primary/bookmark.png');
 const bookmark_f = require('../../assets/icon/Interactive/bookmark-true.png');
 
-const toggleSubview = async (bookmarkView, setBookmarkView, updateBM = [], setUpdateBM = () => {}, setBookmark = () => {}) => {    
+const getBookmark = async (setBookmark, setUpdateBM) => {
+  const {
+      data: { message, BM },
+  } = await axios.get('/library/bookmark', {
+      params: {}
+  });
+  console.log(message, BM);
+  setBookmark(BM);
+
+  let newUpdateBM = [];
+  BM.forEach(bm => {
+    newUpdateBM.push({ id: bm.id, status: true });
+  });
+  setUpdateBM(newUpdateBM);
+}
+
+const toggleSubview = async (bookmarkView, setBookmarkView, updateBM, setBookmark, setUpdateBM = () => {}) => {    
   // pop up animation
   let toValue = 400;
   if(bookmarkView) {
@@ -86,9 +102,7 @@ const toggleSubview = async (bookmarkView, setBookmarkView, updateBM = [], setUp
   ).start();
   setBookmarkView(!bookmarkView);
 
-  // refresh bookmark data
-    /*-----------TODO-----------*/
-  // send updated bookmark list to backend
+  // close window: send updated bookmark list to backend
   if (updateBM.length !== 0) {
     console.log('updateBM', updateBM)
     const {
@@ -97,13 +111,9 @@ const toggleSubview = async (bookmarkView, setBookmarkView, updateBM = [], setUp
       params: { updateBM: updateBM }
     });
     console.log(message, BM);
-    setBookmark(BM);
-
-    let newUpdateBM = [];
-    BM.forEach(bm => {
-      newUpdateBM.push({ id: bm.id, status: true });
-    });
-    setUpdateBM(newUpdateBM);
+  }
+  else {  // open window: refresh bookmark data
+    await getBookmark(setBookmark, setUpdateBM);
   }
   return { message: "empty bookmark list", BM: [] }
 }
@@ -143,28 +153,11 @@ const ArticleSingle = ({ art, updateBM, setUpdateBM }) => {
   )
 }
 
-const Bookmark = ({ toggleSubview, bookmarkView, setBookmarkView }) => {
-  const [bookmark, setBookmark] = useState([]); // [...article]
+const Bookmark = ({ bookmarkView, setBookmarkView, bookmark, setBookmark }) => {
   const [updateBM, setUpdateBM] = useState([]); // [...{ id, status }]
 
-  const getBookmark = async () => {
-    const {
-        data: { message, BM },
-    } = await axios.get('/library/bookmark', {
-        params: {}
-    });
-    console.log(message, BM);
-    setBookmark(BM);
-
-    let newUpdateBM = [];
-    BM.forEach(bm => {
-      newUpdateBM.push({ id: bm.id, status: true });
-    });
-    setUpdateBM(newUpdateBM);
-  }
-
   useEffect(() => {
-    getBookmark();
+    getBookmark(setBookmark, setUpdateBM);
   }, [])
   
   return (
@@ -175,8 +168,8 @@ const Bookmark = ({ toggleSubview, bookmarkView, setBookmarkView }) => {
         <TouchableOpacity onPress={() => {toggleSubview(bookmarkView,  
                                                         setBookmarkView,
                                                         updateBM,
-                                                        setUpdateBM,
-                                                        setBookmark)}}>
+                                                        setBookmark,
+                                                        setUpdateBM)}}>
           <Image source={cancelIcon} style={{ height: 20, width: 20 }} />
         </TouchableOpacity>
       </View>
@@ -185,11 +178,12 @@ const Bookmark = ({ toggleSubview, bookmarkView, setBookmarkView }) => {
           <ArticleSingle key={idx}
                          art={art}
                          updateBM={updateBM}
-                         setUpdateBM={setUpdateBM} />
+                         setUpdateBM={setUpdateBM}
+                         getBookmark={getBookmark} />
         ))}
       </View>
     </Animated.View>
   )
 }
 
-export { Bookmark, toggleSubview, toggleUpdateBM };
+export { Bookmark, toggleSubview };

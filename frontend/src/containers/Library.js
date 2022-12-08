@@ -6,7 +6,10 @@ const Library = () => {
     const [search, setSearch] = useState('');
     const [topic, setTopic] = useState({}); // { pic: , title:, ... }
     const [article, setArticle] = useState({}); // { topic: , title:, ...}
+    
     const [bookmarkView, setBookmarkView] = useState(true);
+    const [bookmark, setBookmark] = useState([]); // [...article]
+    
 
     const topicClick = (top) => {
         setTopic(top);
@@ -24,12 +27,16 @@ const Library = () => {
                        article={article}
                        articleClick={articleClick}
                        bookmarkView={bookmarkView}
-                       setBookmarkView={setBookmarkView} /> : 
+                       setBookmarkView={setBookmarkView}
+                       bookmark={bookmark}
+                       setBookmark={setBookmark} /> : 
                 <Menu search={search} 
                       setSearch={setSearch}
                       topicClick={topicClick}
                       bookmarkView={bookmarkView}
-                      setBookmarkView={setBookmarkView} /> }
+                      setBookmarkView={setBookmarkView}
+                      bookmark={bookmark}
+                      setBookmark={setBookmark} /> }
         </>
     )
 }

@@ -14,12 +14,12 @@ const styles = StyleSheet.create({
     },
 })
 
-const Menu = ({ search, setSearch, topicClick, bookmarkView, setBookmarkView }) => {
+const Menu = ({ search, setSearch, topicClick, bookmarkView, setBookmarkView, bookmark, setBookmark }) => {
     return (
         <>
             <NavBar centerText='Library'
                     rightIcon='bookmark-s'
-                    rightIconOnPress={(event) => {toggleSubview(bookmarkView, setBookmarkView)}} />
+                    rightIconOnPress={(event) => {toggleSubview(bookmarkView, setBookmarkView, [], setBookmark)}} />
                     {/* remember to add feature of bookmark after completing backend function */}
             <ScrollView style={styles.body}>
                 <SearchBar value={search}
@@ -30,9 +30,10 @@ const Menu = ({ search, setSearch, topicClick, bookmarkView, setBookmarkView }) 
                            inputContainerStyle={{backgroundColor: '#F9FAFB'}} />
                 <TopicCard topicClick={topicClick}/>
             </ScrollView>
-            <Bookmark toggleSubview={toggleSubview}
-                   bookmarkView={bookmarkView}
-                   setBookmarkView={setBookmarkView}/>
+            <Bookmark bookmarkView={bookmarkView}
+                      setBookmarkView={setBookmarkView}
+                      bookmark={bookmark}
+                      setBookmark={setBookmark} />
         </>
     )
 }

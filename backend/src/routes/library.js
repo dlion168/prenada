@@ -65,9 +65,9 @@ const postBookmark = async (updateBM) => {
         }
       });
     });
-    const bookmark = await Article.find({ bookmark: true });
+    // const bookmark = await Article.find({ bookmark: true });
     return { message: 'Post the bookmark list successfully', 
-             BM: bookmark }
+             BM: [] }
   } catch(err) {throw new Error("Post bookmarks error: " + err);}
 }
 

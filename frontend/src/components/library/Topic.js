@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     },
 })
 
-const TopicMenu = ({ articleData, topic, topicClick, articleClick, bookmarkView, setBookmarkView }) => {
+const TopicMenu = ({ articleData, topic, topicClick, articleClick, bookmarkView, setBookmarkView, bookmark, setBookmark }) => {
     const cheveronRight = require('../../assets/icon/primary/cheveron-right.png');
 
     const getImgSrc = (pic) => {
@@ -56,7 +56,8 @@ const TopicMenu = ({ articleData, topic, topicClick, articleClick, bookmarkView,
         <>
             <NavBar centerText=''
                 leftText='Back' leftIcon='cheveron-left-s' leftIconOnPress={(event) => {topicClick('')}}
-                rightText='Saved Articles' rightIcon='bookmark-s' rightIconOnPress={(event) => {toggleSubview(bookmarkView, setBookmarkView)}}
+                rightText='Saved Articles' rightIcon='bookmark-s' rightIconOnPress={(event) => {
+                    toggleSubview(bookmarkView, setBookmarkView, [], bookmark, setBookmark)}}
             />
             <ScrollView >
                 <Image source={getImgSrc(topic.pic)} style={styles.topImg} />
@@ -74,14 +75,15 @@ const TopicMenu = ({ articleData, topic, topicClick, articleClick, bookmarkView,
                     </Pressable>
                 ))}
             </ScrollView>
-            <Bookmark toggleSubview={toggleSubview}
-                   bookmarkView={bookmarkView}
-                   msetBookmarkList={setBookmarkView}/>
+            <Bookmark bookmarkView={bookmarkView}
+                      setBookmarkView={setBookmarkView}
+                      bookmark={bookmark}
+                      setBookmark={setBookmark} />
         </>
     )
 }
 
-const Topic = ({ topic, topicClick, article, articleClick, bookmarkView, setBookmarkView }) => {
+const Topic = ({ topic, topicClick, article, articleClick, bookmarkView, setBookmarkView, bookmark, setBookmark }) => {
     const [articleData, setArticleData] = useState([]);
     
     const getArticleData = async () => {
@@ -119,7 +121,9 @@ const Topic = ({ topic, topicClick, article, articleClick, bookmarkView, setBook
                                topicClick={topicClick}
                                articleClick={articleClick}
                                bookmarkView={bookmarkView}
-                               setBookmarkView={setBookmarkView} />
+                               setBookmarkView={setBookmarkView}
+                               bookmark={bookmark}
+                               setBookmark={setBookmark} />
             }
         </>
     )
