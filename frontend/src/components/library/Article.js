@@ -1,5 +1,8 @@
+import { useEffect, useState } from 'react';
 import { StyleSheet, Text, Image, View, ScrollView } from 'react-native';
 import { NavBar } from '../NavBar';
+import { saveArticle } from './Bookmark';
+import { getArtStatus } from './Bookmark';
 
 const styles = StyleSheet.create({
     title: {
@@ -51,12 +54,21 @@ const styles = StyleSheet.create({
     },
 })
 
+
+
 const Article = ({ article, articleClick }) => {
+    const [status, setStatus] = useState(false);
+    useEffect(() => {
+        getArtStatus(article.id, setStatus);
+    }, [])
+
     return (
         <>
             <NavBar centerText=''
-                leftText='Back' leftIcon='cheveron-left-s' leftIconOnPress={(event) => {articleClick({})}}
-                rightText='Saved Articles' rightIcon='bookmark-s' rightIconOnPress={(event) => {}}
+                leftText='Back' leftIcon='cheveron-left-s' leftIconOnPress={(event) => {articleClick({});}}
+                rightText={status ? 'Saved!' : 'Save'} rightIcon={status ? 'bookmark-f' : 'bookmark-t'} rightIconOnPress={(event) => {
+                    saveArticle(article.id, !status);
+                    setStatus(!status);}}
             />
             <ScrollView >
                 <View style={styles.title}>

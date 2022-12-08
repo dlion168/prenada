@@ -66,9 +66,32 @@ const postBookmark = async (updateBM) => {
       });
     });
     // const bookmark = await Article.find({ bookmark: true });
-    return { message: 'Post the bookmark list successfully', 
-             BM: [] }
+    return { message: 'Post the bookmark list successfully' };
   } catch(err) {throw new Error("Post bookmarks error: " + err);}
+}
+
+const postArtBM = async (id, status) => {
+  try {
+    Article.findOne({ id: id }, (err, doc) => {
+      if (err) 
+        throw new Error("find articles error when postArtBM: " + err);
+      if (doc) {
+        doc.bookmark = status;
+        doc.save();
+      }
+    });
+    return { message: 'Post article bookmark successfully' };
+  } catch(err) {throw new Error("Post article bookmark error: " + err);}
+}
+
+const getArtStatus = async (id) => {
+  try {
+    const data = await Article.findOne({ id: id });
+    if (data)
+      return { message: 'Get article Status successfully', artStatus: data.bookmark }
+    else
+      return { message: 'Cannot find the article', artStatus: false }
+  } catch(err) {throw new Error("Get article Status error: " + err);}
 }
 
 const router = Router();
@@ -87,6 +110,15 @@ router.get('/bookmark', async (req, res) => {
 router.post('/bookmark', async (req, res) => {
   console.log('updateBM', req.query.updateBM)
   let result = await postBookmark(req.query.updateBM);
+  res.status(200).send(result);
+})
+router.post('/bookmark/article', async (req, res) => {
+  let result = await postArtBM(req.query.id, req.query.status);
+  res.status(200).send(result);
+})
+router.get('/bookmark/article/single', async (req, res) => {
+  let result = await getArtStatus(req.query.id);
+  console.log('result', result)
   res.status(200).send(result);
 })
 

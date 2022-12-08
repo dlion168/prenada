@@ -57,7 +57,7 @@ const TopicMenu = ({ articleData, topic, topicClick, articleClick, bookmarkView,
             <NavBar centerText=''
                 leftText='Back' leftIcon='cheveron-left-s' leftIconOnPress={(event) => {topicClick('')}}
                 rightText='Saved Articles' rightIcon='bookmark-s' rightIconOnPress={(event) => {
-                    toggleSubview(bookmarkView, setBookmarkView, [], bookmark, setBookmark)}}
+                    toggleSubview(bookmarkView, setBookmarkView, [], setBookmark);}}
             />
             <ScrollView >
                 <Image source={getImgSrc(topic.pic)} style={styles.topImg} />
@@ -99,9 +99,9 @@ const Topic = ({ topic, topicClick, article, articleClick, bookmarkView, setBook
     useEffect(() => {
         getArticleData();
     }, [])
-    console.log('topic', topic)
-    console.log('article', article)
-    console.log('articleData', articleData)
+    // console.log('topic', topic)
+    // console.log('article', article)
+    // console.log('articleData', articleData)
     return (
         <>
             { Object.keys(article).length > 0 ? 

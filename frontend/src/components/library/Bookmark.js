@@ -106,11 +106,11 @@ const toggleSubview = async (bookmarkView, setBookmarkView, updateBM, setBookmar
   if (updateBM.length !== 0) {
     console.log('updateBM', updateBM)
     const {
-      data: { message, BM },
+      data: { message },
     } = await axios.post('/library/bookmark', {}, {
       params: { updateBM: updateBM }
     });
-    console.log(message, BM);
+    console.log(message);
   }
   else {  // open window: refresh bookmark data
     await getBookmark(setBookmark, setUpdateBM);
@@ -118,7 +118,7 @@ const toggleSubview = async (bookmarkView, setBookmarkView, updateBM, setBookmar
   return { message: "empty bookmark list", BM: [] }
 }
 
-const toggleUpdateBM = (list, setList, id) => {
+const toggleUpdateBM = (list, setList, id, status, setStatus) => {
   let newList = list;
   let bmID = newList.findIndex(bm => bm.id === id);
   if (bmID > -1)
@@ -126,6 +126,26 @@ const toggleUpdateBM = (list, setList, id) => {
   else
     newUpdateBM.push({ id: id, status: true })
   setList(newList);
+  setStatus(!status);
+}
+
+const saveArticle = async (id, status) => {
+  const {
+    data: { message },
+  } = await axios.post('/library/bookmark/article', {}, {
+    params: { id: id, status: status }
+  });
+  console.log(message);
+}
+
+const getArtStatus = async (id, setStatus) => {
+  const {
+      data: { message, artStatus },
+  } = await axios.get('/library/bookmark/article/single', {
+      params: { id: id }
+  });
+  console.log(message, '\nartStatus', artStatus);
+  setStatus(artStatus);
 }
 
 const ArticleSingle = ({ art, updateBM, setUpdateBM }) => {
@@ -134,12 +154,17 @@ const ArticleSingle = ({ art, updateBM, setUpdateBM }) => {
         require(`../../assets/image/Topic/${pic.split('/')[3].split('.')[0]}.${pic.split('/')[3].split('.')[2]}`) :
         require(`../../assets/image/Topic/${pic}`)
   }
+  const [status, setStatus] = useState(art.bookmark);
+  useEffect(() => {
+    setStatus(art.bookmark);
+  }, []);
   
   return (
     <View style={styles.topic}>
       <View style={styles.bookmarkBlock}>
-        <TouchableOpacity style={{ display: 'flex' }} onPress={() => {toggleUpdateBM(updateBM, setUpdateBM, art.id)}}>
-          <Image source={bookmark_t} style={styles.bookmark} />
+        <TouchableOpacity style={{ display: 'flex' }} onPress={() => {
+          toggleUpdateBM(updateBM, setUpdateBM, art.id, status, setStatus)}}>
+          <Image source={status ? bookmark_t : bookmark_f} style={styles.bookmark} />
         </TouchableOpacity>
       </View>
       <ImageBackground source={getImgSrc(art.pic)} 
@@ -186,4 +211,4 @@ const Bookmark = ({ bookmarkView, setBookmarkView, bookmark, setBookmark }) => {
   )
 }
 
-export { Bookmark, toggleSubview };
+export { Bookmark, toggleSubview, saveArticle, getArtStatus };
