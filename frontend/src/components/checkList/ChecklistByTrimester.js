@@ -49,8 +49,7 @@ const styles = StyleSheet.create({
 const ChecklistByTrimester = ({ search, setSearch, trimester, setTrimester, setViewWeek, navigation}) => {
     return (
         <>
-            <NavBar centerText='Checklist' leftIcon='cheveron-left-s' 
-            leftIconOnPress={() => {navigation.jumpTo('Home')}}/>
+            <NavBar centerText='Checklist'/>
             <ScrollView style={styles.body}>
                 <SearchBar value={search}
                            onChangeText={(search) => {setSearch(search)}}

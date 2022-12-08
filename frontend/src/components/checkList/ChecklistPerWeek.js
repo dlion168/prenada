@@ -32,8 +32,7 @@ const ChecklistPerWeek = (week) =>{
     const { intro, title, data } = checkListData[week]
     return(
     <View style = {styles.bg}>
-        <NavBar centerText='Checklist' leftIcon='cheveron-left-s' 
-            leftIconOnPress={() => {navigation.jumpTo('Home')}}/>
+        <NavBar centerText='Checklist'/>
         <View style = {styles.block}>
         <Text style = {styles.intro}> { intro } </Text>
         <Text style = {styles.title}> { title } </Text>

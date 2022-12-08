@@ -37,7 +37,7 @@ const AddListItem = ({onAddHandler}) => {
             <View style={styles.iconContainer} >
                 <FontAwesome5 name='plus' color='#f87171' size={18}/>
             </View>
-            <Text style={styles.label} numberOfLines={1}> Add a Checklist </Text>
+            <Text style={styles.label} numberOfLines={1}>Create Your Own Checklist</Text>
             <View style={styles.iconContainer} >
                 <FontAwesome5 name='chevron-right' color='grey' size={18}/>
             </View>

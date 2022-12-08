@@ -10,6 +10,7 @@ import { TopicCardSingle } from '../components/library/TopicCard';
 import axios from '../api';
 import SymptomSummary from '../components/body_data/SymptomSummary'
 import { BodyDataCard } from '../components/homePage/BodyDataCard.js';
+import AddModal from '../components/checkList/AddModal.js';
 
 const styles = StyleSheet.create({
     body: {
@@ -90,6 +91,7 @@ const HomePage = ({ navigation }) => {
     const [ displayWeek, setDisplayWeek ] = useState(0);
     const { checkListData, setCheckListData } = useCheckList()
     const [ waterTotal, setWaterTotal] = useState(0);
+    const [ modalVisible, setModalVisible ] = useState(false);
     useEffect(() => updateWater('20221124', setWaterTotal), [displayWeek]); // TODO: should be refreshed when data is renewed
     const [ symSumm, setSymSumm] = useState(['', 0]);
     useEffect(() => updateSymptom('20221124', setSymSumm), [displayWeek]); // TODO: should be refreshed when data is renewed
@@ -146,7 +148,7 @@ const HomePage = ({ navigation }) => {
                         <></>
                     }
                     <View style={styles.pad}>
-                        <AddListItem onAddHandler={() => {}}/>
+                        <AddListItem onAddHandler={(e) => {setModalVisible(true)}}/>
                     </View>
                 </View>
                 {/* body data */}
@@ -196,6 +198,7 @@ const HomePage = ({ navigation }) => {
                         )}
                     </ScrollView>
                 </View>
+                <AddModal modalVisible={modalVisible} setModalVisible={setModalVisible}/>
             </ScrollView>
         </>
     )

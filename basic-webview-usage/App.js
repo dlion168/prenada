@@ -7,7 +7,7 @@ export default function App() {
   return (
     <WebView
       style={styles.container}
-      source={{ uri: 'http://192.168.88.106:19006' }}
+      source={{ uri: 'http://192.168.0.19:19006' }}
     />
   );
 }
