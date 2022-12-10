@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Text, View, Image, StyleSheet, ScrollView } from 'react-native';
 import ItemList from './ItemList';
 import WaterSummary from './WaterSummary';
+import useWater from './hooks/useWater';
 import axios from '../../api';
 
 const styles = StyleSheet.create({
@@ -34,20 +35,7 @@ const styles = StyleSheet.create({
 
 const WaterScreen = ({ displayWeek }) => {
     const [waterDetail, setWaterDetail] = useState([]);
-
-    const init = {
-        "date": [
-            "Oct 10",
-            "Oct 24",
-            "Oct 25"
-        ],
-        "capacity": [
-            500,
-            900,
-            500
-        ]
-    }
-    const [waterSummary, setWaterSummary] = useState(init);
+    const { waterSummary, getWaterSummary } = useWater(displayWeek);
     const convertToDateString = (date) => {
         const yyyy = date.getFullYear();
         const MM = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -55,12 +43,12 @@ const WaterScreen = ({ displayWeek }) => {
         return yyyy + MM + dd;
     }
 
-    const getWaterData = async () => {
-        let startDate = new Date("2022/10/24");
-        let endDate = new Date("2022/10/30");
-        startDate.setDate(startDate.getDate() + displayWeek * 7);
-        endDate.setDate(startDate.getDate() + displayWeek * 7);
+    let startDate = new Date("2022/10/24");
+    let endDate = new Date("2022/10/30");
+    startDate.setDate(startDate.getDate() + displayWeek * 7);
+    endDate.setDate(endDate.getDate() + displayWeek * 7);
 
+    const getWaterData = async () => {
         const {
             data: { data, message },
         } = await axios.get('/water', {
@@ -70,6 +58,7 @@ const WaterScreen = ({ displayWeek }) => {
             },
         });
         setWaterDetail(data);
+        getWaterSummary();
     };
 
     useEffect(() => {

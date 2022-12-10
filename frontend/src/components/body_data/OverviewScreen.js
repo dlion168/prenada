@@ -6,6 +6,7 @@ import WaterSummary from './WaterSummary';
 import SymptomSummary from './SymptomSummary';
 import AddScreen from './AddScreen';
 import axios from '../../api';
+import useWater from './hooks/useWater';
 
 const styles = StyleSheet.create({
     body: {
@@ -33,20 +34,8 @@ const styles = StyleSheet.create({
     }
 })
 
-const OverviewScreen = () => {
-    const init = {
-        "date": [
-            "Oct 10",
-            "Oct 24",
-            "Oct 25"
-        ],
-        "capacity": [
-            500,
-            900,
-            500
-        ]
-    }
-    const [waterSummary, setWaterSummary] = useState(init);
+const OverviewScreen = ({ displayWeek }) => {
+    const { waterSummary, getWaterSummary } = useWater(displayWeek);
     const [addMode, setAddMode] = useState(false);
     const [symptomSummary, setSymptomSummary] = useState([]);
     const getSymptomData = async () => {
@@ -59,6 +48,7 @@ const OverviewScreen = () => {
         setSymptomSummary(summary.data.summary);
     };
     useEffect(() => {
+        getWaterSummary();
         getSymptomData();
     }, []);
 

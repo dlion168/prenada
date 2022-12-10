@@ -56,6 +56,9 @@ const findWater = async (startDate, endDate) => {
             }
         },
         {
+            $sort: { _id: 1 }
+        },
+        {
             $addFields:
             {
                 totalCapacity: { $sum: "$itemList.capacity" }
@@ -122,7 +125,6 @@ const router = Router();
 router.delete("/", async (req, res) => {
     let date = req.query.date;
     let time = req.query.time;
-    console.log(date, time)
     let result = await deleteWater(date, time);
     res.status(200).send(result);
 });
@@ -146,6 +148,7 @@ router.get("/summary", async (req, res) => {
     const startDate = req.query.startDate;
     const endDate = req.query.endDate;
     let result = await getWaterSummary(startDate, endDate);
+    console.log(result)
     res.status(200).send(result);
 });
 

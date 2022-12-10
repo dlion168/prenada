@@ -30,16 +30,17 @@ const styles = StyleSheet.create({
 
 const WaterSummary = ({ waterSummary }) => {
     const windowWidth = Dimensions.get('window').width;
-    const data = {
-        labels: waterSummary.date,
+    let data = {
+        labels: [],
         datasets: [
             {
-                data: waterSummary.capacity,
+                data: [],
                 color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`, // optional
                 strokeWidth: 2 // optional
             },
             {
-                data: [2000, 2000, 2000],
+
+                data: [],
                 color: (opacity = 1) => `rgba(129, 140, 248, ${opacity})`, // optional
                 strokeWidth: 2 // optional
             }
@@ -47,6 +48,29 @@ const WaterSummary = ({ waterSummary }) => {
         legend: ["Capacity", "Target"] // optional
     };
 
+    if (waterSummary != undefined) {
+        let targetArray = new Array(waterSummary.capacity.length);
+        for (let i = 0; i < waterSummary.capacity.length; i++) {
+            targetArray[i] = 2000;
+        }
+        data = {
+            labels: waterSummary.date,
+            datasets: [
+                {
+                    data: waterSummary.capacity,
+                    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`, // optional
+                    strokeWidth: 2 // optional
+                },
+                {
+
+                    data: targetArray,
+                    color: (opacity = 1) => `rgba(129, 140, 248, ${opacity})`, // optional
+                    strokeWidth: 2 // optional
+                }
+            ],
+            legend: ["Capacity", "Target"] // optional
+        };
+    }
     const chartConfig = {
         backgroundColor: "#c7d2fe",
         backgroundGradientFrom: "#c7d2fe",
