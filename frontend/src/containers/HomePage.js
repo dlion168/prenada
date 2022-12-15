@@ -94,6 +94,8 @@ const HomePage = ({ navigation }) => {
     const [ modalVisible, setModalVisible ] = useState(false);
     useEffect(() => updateWater('20221124', setWaterTotal), [displayWeek]); // TODO: should be refreshed when data is renewed
     const [ symSumm, setSymSumm] = useState(['', 0]);
+    let swipeRowRef = [];
+    let prevOpenedRow;
     useEffect(() => updateSymptom('20221124', setSymSumm), [displayWeek]); // TODO: should be refreshed when data is renewed
     
     /*----themeData has been moved to database----*/

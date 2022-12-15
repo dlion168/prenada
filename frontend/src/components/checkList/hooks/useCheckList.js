@@ -312,6 +312,7 @@ const ChecklistProvider = (props) => {
         value={{ checkListData, setCheckListData, onDeleteHandler }}
         {...props}
     />
+
 };
 const useCheckList = () => useContext(CheckListContext);
 export { useCheckList, ChecklistProvider };

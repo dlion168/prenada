@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
 const MonthItem = ({text, status, week, setViewWeek}) => {
     return(
         <TouchableOpacity style={ status === 'current' ?  [styles.taskCardFlex, {backgroundColor: '#f87171'}] : styles.taskCardFlex}
-        onPress={()=>{setViewWeek(week)}}>
+            onPress={()=>{setViewWeek(week)}}>
             <Text style={status === 'future' ?  styles.label : 
             [styles.label, status === 'current' ? {color: '#ffffff'} : {color: '#f87171'}] } 
             numberOfLines={1}>{text}</Text>

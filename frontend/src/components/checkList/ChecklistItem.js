@@ -47,7 +47,7 @@ const ChecklistItem = ({ week, idx, checked, text, liked }) => {
         <Swipeable
             renderRightActions={() =>
                 <View style={styles.deleteBox}>
-                    <ActionIcon iconName={'archive-s'} size={20} padding={18} onPress={() => onDeleteHandler(week, idx)} />
+                    <ActionIcon iconName={'trash-s'} size={20} padding={18} onPress={() => onDeleteHandler(week, idx)} />
                     {/* <FontAwesome5 size={20} name='trash-alt' solid/> */}
                 </View>
             }
