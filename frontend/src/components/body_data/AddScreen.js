@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { View, Text, TextInput, StyleSheet, ScrollView, Image, Button } from 'react-native';
 import SymptomSummary from './SymptomSummary';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -101,6 +101,7 @@ const AddScreen = ({ setAddMode }) => {
         { 'symptomName': 'Cramps', 'choose': false },
         { 'symptomName': 'Tender breasts', 'choose': false },
         { 'symptomName': 'Headache', 'choose': false },
+        { 'symptomName': 'Acne', 'choose': false },
     ];
     const [date, setDate] = useState('2022/11/24');
     const [weight, setWeight] = useState(0);
@@ -112,15 +113,19 @@ const AddScreen = ({ setAddMode }) => {
     const handleSymptomClick = (symptomName) => {
         let newSymptoms = symptoms;
         newSymptoms.map((obj, idx) => {
-            if (obj['symptomName'] == symptomName)
+            if (obj['symptomName'] == symptomName) {
                 obj['choose'] = !obj['choose']
+            }
         });
         setSymptoms(newSymptoms);
     };
 
+    useEffect(()=>{
+        console.log(symptoms)
+    },[symptoms]);
+
     const saveForm = async () => {
         const dateString = date.replace('/', '').replace('/', '')
-        // console.log(date, weight, sleep, water, symptoms);
         const currentTime = new Date();
         const hour = (currentTime.getHours() % 12).toString().padStart(2, '0');
         const minute = currentTime.getMinutes().toString().padStart(2, '0');

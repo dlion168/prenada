@@ -47,6 +47,8 @@ const styles = StyleSheet.create({
         height: 60,
         width: 60,
         backgroundColor: '#6b9ab3',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     times: {
         borderRadius: 10,
@@ -75,10 +77,17 @@ const SymptomSummary = ({ addMode, handleSymptomClick, symptoms }) => {
     let data = [];
     symptomsList.forEach(element => {
         let item = { 'symptomName': element }
-        if (symptoms[element])
-            item['times'] = symptoms[element];
-        else
-            item['times'] = 0;
+        // console.log(symptoms)
+
+        if (addMode) {
+            item['choose'] = false;
+        }
+        else {
+            if (symptoms[element])
+                item['times'] = symptoms[element];
+            else
+                item['times'] = 0;
+        }
         data.push(item);
     });
 
@@ -107,6 +116,7 @@ const SymptomSummary = ({ addMode, handleSymptomClick, symptoms }) => {
             <View style={styles.symList}>
                 {
                     data.map((obj, idx) => {
+                        // console.log(obj)
                         if (addMode)
                             return (
                                 <TouchableOpacity
@@ -115,6 +125,7 @@ const SymptomSummary = ({ addMode, handleSymptomClick, symptoms }) => {
                                     onPress={() => handleSymptomClick(obj.symptomName)}
                                 >
                                     <View style={obj.choose ? styles.chosenImg : styles.img} >
+                                    {/* <View style={styles.chosenImg} > */}
                                         <Image
                                             // source={require('../../assets/image/BodyData/Symptom/Cramps.png')}
                                             source={imgPath[obj.symptomName]}
