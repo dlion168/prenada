@@ -44,10 +44,10 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     alignSelf: 'flex-start',
   },
-  bookmarkBlock: { 
-    height: 40, 
-    width: 40, 
-    borderRadius: 20, 
+  bookmarkBlock: {
+    height: 40,
+    width: 40,
+    borderRadius: 20,
     backgroundColor: '#FFFFFF',
     position: 'absolute',
     top: 5,
@@ -70,10 +70,8 @@ const bookmark_t = require('../../assets/icon/primary/bookmark.png');
 const bookmark_f = require('../../assets/icon/Interactive/bookmark-true.png');
 
 const getBookmark = async (setBookmark, setUpdateBM) => {
-  const {
-      data: { message, BM },
-  } = await axios.get('/library/bookmark', {
-      params: {}
+  const { data: { message, BM } } = await axios.get('/library/bookmark', {
+    params: {}
   });
   console.log(message, BM);
   setBookmark(BM);
@@ -85,10 +83,11 @@ const getBookmark = async (setBookmark, setUpdateBM) => {
   setUpdateBM(newUpdateBM);
 }
 
-const toggleSubview = async (bookmarkView, setBookmarkView, updateBM, setBookmark, setUpdateBM = () => {}) => {    
+const toggleSubview = async (bookmarkView, setBookmarkView, updateBM,
+  setBookmark, setUpdateBM = () => { }) => {
   // pop up animation
   let toValue = 400;
-  if(bookmarkView) {
+  if (bookmarkView) {
     toValue = 0;
   }
   Animated.spring(
@@ -105,17 +104,17 @@ const toggleSubview = async (bookmarkView, setBookmarkView, updateBM, setBookmar
   // close window: send updated bookmark list to backend
   if (updateBM.length !== 0) {
     console.log('updateBM', updateBM)
-    const {
-      data: { message },
-    } = await axios.post('/library/bookmark', {}, {
+    const { data: { message } } = await axios.post('/library/bookmark', {}, {
       params: { updateBM: updateBM }
     });
     console.log(message);
+    // refresh bookmark data
+    await getBookmark(setBookmark, setUpdateBM)
   }
-  else {  // open window: refresh bookmark data
+  /*else {  // open window: refresh bookmark data
     await getBookmark(setBookmark, setUpdateBM);
-  }
-  return { message: "empty bookmark list", BM: [] }
+  }*/
+  // return { message: "empty bookmark list", BM: [] }
 }
 
 const toggleUpdateBM = (list, setList, id, status, setStatus) => {
@@ -140,38 +139,40 @@ const saveArticle = async (id, status) => {
 
 const getArtStatus = async (id, setStatus) => {
   const {
-      data: { message, artStatus },
+    data: { message, artStatus },
   } = await axios.get('/library/bookmark/article/single', {
-      params: { id: id }
+    params: { id: id }
   });
   console.log(message, '\nartStatus', artStatus);
   setStatus(artStatus);
 }
 
-const ArticleSingle = ({ art, updateBM, setUpdateBM }) => {
+const ArticleSingle = ({ art, updateBM, setUpdateBM, bookmarkView }) => {
   const getImgSrc = (pic) => {
-    return pic.split('/').length > 1 ? 
-        require(`../../assets/image/Topic/${pic.split('/')[3].split('.')[0]}.${pic.split('/')[3].split('.')[2]}`) :
-        require(`../../assets/image/Topic/${pic}`)
+    return pic.split('/').length > 1 ?
+      require(`../../assets/image/Topic/${pic.split('/')[3].split('.')[0]}.${pic.split('/')[3].split('.')[2]}`) :
+      require(`../../assets/image/Topic/${pic}`)
   }
   const [status, setStatus] = useState(art.bookmark);
+  console.log(art.title, art.bookmark, status)
   useEffect(() => {
     setStatus(art.bookmark);
-  }, []);
-  
+  }, [bookmarkView]);
+
   return (
     <View style={styles.topic}>
       <View style={styles.bookmarkBlock}>
         <TouchableOpacity style={{ display: 'flex' }} onPress={() => {
-          toggleUpdateBM(updateBM, setUpdateBM, art.id, status, setStatus)}}>
+          toggleUpdateBM(updateBM, setUpdateBM, art.id, status, setStatus)
+        }}>
           <Image source={status ? bookmark_t : bookmark_f} style={styles.bookmark} />
         </TouchableOpacity>
       </View>
-      <ImageBackground source={getImgSrc(art.pic)} 
-                       style={{ height: 200, width: 200 }}
-                       imageStyle={{ borderRadius: 20 }}>
-          <LinearGradient colors={['#00000000', '#323333']} 
-                          style={styles.imageGradient} />
+      <ImageBackground source={getImgSrc(art.pic)}
+        style={{ height: 200, width: 200 }}
+        imageStyle={{ borderRadius: 20 }}>
+        <LinearGradient colors={['#00000000', '#323333']}
+          style={styles.imageGradient} />
       </ImageBackground>
       <Text numberOfLines={2} style={styles.artTitle}>{art.title}</Text>
     </View>
@@ -184,27 +185,30 @@ const Bookmark = ({ bookmarkView, setBookmarkView, bookmark, setBookmark }) => {
   useEffect(() => {
     getBookmark(setBookmark, setUpdateBM);
   }, [])
-  
+  console.log('bookmark', bookmark)
   return (
-    <Animated.View style={[styles.subView, {transform: [{translateY: bounceValue}]}]}>
+    <Animated.View style={[styles.subView, { transform: [{ translateY: bounceValue }] }]}>
       <View style={styles.title}>
         <View />
         <Text style={{ fontWeight: 'bold', fontSize: 20 }}> Your Saved </Text>
-        <TouchableOpacity onPress={() => {toggleSubview(bookmarkView,  
-                                                        setBookmarkView,
-                                                        updateBM,
-                                                        setBookmark,
-                                                        setUpdateBM)}}>
+        <TouchableOpacity onPress={() => {
+          toggleSubview(bookmarkView,
+            setBookmarkView,
+            updateBM,
+            setBookmark,
+            setUpdateBM)
+        }}>
           <Image source={cancelIcon} style={{ height: 20, width: 20 }} />
         </TouchableOpacity>
       </View>
       <View style={styles.blocks}>
         {bookmark.map((art, idx) => (
           <ArticleSingle key={idx}
-                         art={art}
-                         updateBM={updateBM}
-                         setUpdateBM={setUpdateBM}
-                         getBookmark={getBookmark} />
+            art={art}
+            updateBM={updateBM}
+            setUpdateBM={setUpdateBM}
+            getBookmark={getBookmark}
+            bookmarkView={bookmarkView} />
         ))}
       </View>
     </Animated.View>
