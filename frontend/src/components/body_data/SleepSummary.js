@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     }
 })
 
-const SleepSummary = ({sleepSummary}) => {
+const SleepSummary = ({ sleepSummary }) => {
     const data = {
         labels: sleepSummary.date,
         datasets: [
@@ -42,7 +42,7 @@ const SleepSummary = ({sleepSummary}) => {
         ],
         legend: ["Hours"] // optional
     };
-    
+
     const chartConfig = {
         backgroundColor: "#e9d5ff",
         backgroundGradientFrom: "#e9d5ff",
@@ -54,6 +54,9 @@ const SleepSummary = ({sleepSummary}) => {
             borderRadius: 16
         },
     };
+
+    const sum = sleepSummary.hours.reduce((a, b) => a + b, 0);
+    const avg = (sum / 7) || 0;
 
     return (
         <View style={styles.body}>
@@ -68,11 +71,8 @@ const SleepSummary = ({sleepSummary}) => {
                     <Text style={styles.text} >Average this week</Text>
                 </View>
                 <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={styles.numText} >7</Text>
+                    <Text style={styles.numText} >{avg} </Text>
                     <Text style={styles.text} > hr </Text>
-                    <Text style={styles.numText} >03</Text>
-                    <Text style={styles.text} > min</Text>
-
                 </View>
             </View>
             <View style={styles.chart}>

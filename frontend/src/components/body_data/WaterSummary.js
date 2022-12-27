@@ -49,10 +49,10 @@ const WaterSummary = ({ waterSummary }) => {
     };
 
     if (waterSummary != undefined) {
-        let targetArray = new Array(waterSummary.capacity.length);
-        for (let i = 0; i < waterSummary.capacity.length; i++) {
-            targetArray[i] = 2000;
-        }
+        // let targetArray = new Array(waterSummary.capacity.length);
+        // for (let i = 0; i < waterSummary.capacity.length; i++) {
+        //     targetArray[i] = 2000;
+        // }
         data = {
             labels: waterSummary.date,
             datasets: [
@@ -63,7 +63,7 @@ const WaterSummary = ({ waterSummary }) => {
                 },
                 {
 
-                    data: targetArray,
+                    data: [0, 0, 0, 0, 0, 0, 0],
                     color: (opacity = 1) => `rgba(129, 140, 248, ${opacity})`, // optional
                     strokeWidth: 2 // optional
                 }

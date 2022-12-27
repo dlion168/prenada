@@ -111,11 +111,20 @@ const getWaterSummary = async (startDate, endDate) => {
     let capacity = [];
     let message = "";
     try {
-        if (waterData.length > 0) {
-            waterData.map((row) => {
-                date.push(dateToAbbreviationStr(row._id));
-                capacity.push(row.totalCapacity);
-            });
+        let curDate = strToDate(startDate);
+        let curIdx = 0;
+
+        for (let idx = 0; idx < 7; idx++) {
+            if (waterData.length > curIdx && waterData[curIdx]._id.getDate() === curDate.getDate()) {
+                date.push(dateToAbbreviationStr(curDate));
+                capacity.push(waterData[curIdx].totalCapacity);
+                curIdx++;
+            }
+            else {
+                date.push(dateToAbbreviationStr(curDate));
+                capacity.push(0);
+            }
+            curDate.setDate(curDate.getDate() + 1);
         }
     } catch (e) { message = "Get water data error: " + e; }
     return { data: { date, capacity }, message };

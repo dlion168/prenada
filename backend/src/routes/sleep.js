@@ -80,7 +80,7 @@ const getSleepSummary = async (startDate, endDate) => {
         let curIdx = 0;
 
         for (let idx = 0; idx < 7; idx++) {
-            if (sleepData.length > curIdx && sleepData[curIdx].date == curDate) {
+            if (sleepData.length > curIdx && sleepData[curIdx].date.getDate() === curDate.getDate()) {
                 date.push(dateToAbbreviationStr(curDate));
                 hours.push(sleepData[curIdx].hours);
                 curIdx++;
