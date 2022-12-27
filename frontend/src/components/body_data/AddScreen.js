@@ -103,7 +103,15 @@ const AddScreen = ({ setAddMode }) => {
         { 'symptomName': 'Headache', 'choose': false },
         { 'symptomName': 'Acne', 'choose': false },
     ];
-    const [date, setDate] = useState('2022/11/24');
+
+    const today = new Date();
+    let day = today.getDate();
+    day = day < 10 ? '0' + day : day;
+    let month = today.getMonth() + 1;
+    month = month < 10 ? '0' + month : month;
+    let year = today.getFullYear();
+
+    const [date, setDate] = useState(`${year}/${month}/${day}`);
     const [weight, setWeight] = useState(0);
     const [sleep, setSleep] = useState(0);
     const [water, setWater] = useState(0);
@@ -120,9 +128,9 @@ const AddScreen = ({ setAddMode }) => {
         setSymptoms(newSymptoms);
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log(symptoms)
-    },[symptoms]);
+    }, [symptoms]);
 
     const saveForm = async () => {
         const dateString = date.replace('/', '').replace('/', '')
@@ -134,6 +142,11 @@ const AddScreen = ({ setAddMode }) => {
             date: dateString,
             time: `${hour}:${minute} ${afternoon}`,
             capacity: water
+        });
+
+        const { data: { sleepData, sleepMessage }, } = await axios.post('/sleep', {
+            date: dateString,
+            hours: sleep
         });
 
         let symptomList = []

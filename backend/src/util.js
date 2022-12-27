@@ -22,7 +22,6 @@ function dateToStr(date) {
 
 // Convert string format(eg. October 24, 2022) to mongodb date
 function fullTextToDate(str) {
-    console.log(str)
     const monthDict = {
         "January": '01',
         "February": "02",
@@ -40,7 +39,6 @@ function fullTextToDate(str) {
     let MM = monthDict[str.split(' ')[0]];
     const { dd, yyyy } = str.split(' ')[1].split(',');
     let dateObj = new Date(yyyy + MM + dd);
-    console.log(yyyy, MM, dd)
     return dateObj;
 }
 

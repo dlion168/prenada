@@ -148,7 +148,6 @@ router.get("/summary", async (req, res) => {
     const startDate = req.query.startDate;
     const endDate = req.query.endDate;
     let result = await getWaterSummary(startDate, endDate);
-    console.log(result)
     res.status(200).send(result);
 });
 

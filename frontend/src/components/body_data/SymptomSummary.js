@@ -13,8 +13,9 @@ const styles = StyleSheet.create({
         paddingTop: 8,
         paddingBottom: 8,
         justifyContent: 'space-between',
-        width: 700,
+        width: '100%',
         alignItems: 'center',
+        gap: 10
     },
     text: {
         color: '#6B7280',
@@ -77,7 +78,6 @@ const SymptomSummary = ({ addMode, handleSymptomClick, symptoms }) => {
     let data = [];
     symptomsList.forEach(element => {
         let item = { 'symptomName': element }
-        // console.log(symptoms)
 
         if (addMode) {
             item['choose'] = false;
@@ -116,7 +116,6 @@ const SymptomSummary = ({ addMode, handleSymptomClick, symptoms }) => {
             <View style={styles.symList}>
                 {
                     data.map((obj, idx) => {
-                        // console.log(obj)
                         if (addMode)
                             return (
                                 <TouchableOpacity
