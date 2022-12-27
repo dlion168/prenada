@@ -36,7 +36,9 @@ const Library = () => {
                       bookmarkView={bookmarkView}
                       setBookmarkView={setBookmarkView}
                       bookmark={bookmark}
-                      setBookmark={setBookmark} /> }
+                      setBookmark={setBookmark}
+                      article={article}
+                      articleClick={articleClick} /> }
         </>
     )
 }
