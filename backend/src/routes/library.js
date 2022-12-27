@@ -15,9 +15,9 @@ const getThemeData = async () => {
       await Theme.deleteMany({});
       await Theme.insertMany(themeData);
     }
+    ext = await Theme.find({});
 
     // const ext = await Theme.find({});
-    ext = await Theme.find({});
     if (ext === undefined || ext.length === 0)
       return { message: 'Cannot find themeData', themeData: [] }
     return { message: 'Get themeData successfully', 
