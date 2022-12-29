@@ -1,3 +1,4 @@
+import { useReducer } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -67,29 +68,24 @@ const styles = StyleSheet.create({
     },
 })
 
+const initialState = { Cramps: false, Tender_breasts: false, Headache: false, Acne: false };
+function reducer(state, action) {
+    switch (action.type) {
+        case 'Cramps':
+            return { ...state, Cramps: !state.Cramps };
+        case 'Tender breasts':
+            return { ...state, Tender_breasts: !state.Tender_breasts };
+        case 'Headache':
+            return { ...state, Headache: !state.Headache };
+        case 'Acne':
+            return { ...state, Acne: !state.Acne };
+        default:
+            throw new Error();
+    }
+}
+
 const SymptomSummary = ({ addMode, handleSymptomClick, symptoms }) => {
-    // const data = [
-    //     { 'symptomName': 'Cramps', 'times': 2 },
-    //     { 'symptomName': 'Tender breasts', 'times': 5 },
-    //     { 'symptomName': 'Headache', 'times': 1 },
-    // ];
-
-    const symptomsList = ['Cramps', 'Tender breasts', 'Headache', 'Acne'];
-    let data = [];
-    symptomsList.forEach(element => {
-        let item = { 'symptomName': element }
-
-        if (addMode) {
-            item['choose'] = false;
-        }
-        else {
-            if (symptoms[element])
-                item['times'] = symptoms[element];
-            else
-                item['times'] = 0;
-        }
-        data.push(item);
-    });
+    const [state, dispatch] = useReducer(reducer, initialState);
 
     const imgPath = {
         'Cramps': require('../../assets/image/BodyData/Symptom/Cramps.png'),
@@ -115,18 +111,20 @@ const SymptomSummary = ({ addMode, handleSymptomClick, symptoms }) => {
             </View>
             <View style={styles.symList}>
                 {
-                    data.map((obj, idx) => {
+                    symptoms.map((obj, idx) => {
                         if (addMode)
                             return (
                                 <TouchableOpacity
                                     style={styles.symItem}
                                     key={idx}
-                                    onPress={() => handleSymptomClick(obj.symptomName)}
+                                    onPress={() => {
+                                        handleSymptomClick(obj.symptomName)
+                                        dispatch({ type: obj.symptomName })
+                                    }}
                                 >
-                                    <View style={obj.choose ? styles.chosenImg : styles.img} >
-                                    {/* <View style={styles.chosenImg} > */}
+                                    <View style={state[obj.symptomName.replace(" ", "_")]
+                                        ? styles.chosenImg : styles.img} >
                                         <Image
-                                            // source={require('../../assets/image/BodyData/Symptom/Cramps.png')}
                                             source={imgPath[obj.symptomName]}
                                             style={styles.image}
                                         />
@@ -139,7 +137,6 @@ const SymptomSummary = ({ addMode, handleSymptomClick, symptoms }) => {
                                     <View style={styles.imgContainer} >
                                         <View style={styles.img}>
                                             <Image
-                                                // source={require('../../assets/image/BodyData/Symptom/Cramps.png')}
                                                 source={imgPath[obj.symptomName]}
                                                 style={styles.image}
                                             />

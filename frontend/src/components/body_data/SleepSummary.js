@@ -71,7 +71,7 @@ const SleepSummary = ({ sleepSummary }) => {
                     <Text style={styles.text} >Average this week</Text>
                 </View>
                 <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={styles.numText} >{avg} </Text>
+                    <Text style={styles.numText} >{avg.toFixed(2)} </Text>
                     <Text style={styles.text} > hr </Text>
                 </View>
             </View>

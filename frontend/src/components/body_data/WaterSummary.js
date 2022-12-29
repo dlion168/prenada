@@ -49,10 +49,6 @@ const WaterSummary = ({ waterSummary }) => {
     };
 
     if (waterSummary != undefined) {
-        // let targetArray = new Array(waterSummary.capacity.length);
-        // for (let i = 0; i < waterSummary.capacity.length; i++) {
-        //     targetArray[i] = 2000;
-        // }
         data = {
             labels: waterSummary.date,
             datasets: [

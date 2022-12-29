@@ -75,7 +75,6 @@ const WaterScreen = ({ displayWeek }) => {
     return (
         <ScrollView style={styles.body}>
             <WaterSummary waterSummary={waterSummary} />
-            {/* //TODO: fix water summary emtyp, emtpy water list  */}
             <View style={styles.detail} >
                 {
                     waterDetail.map((obj, idx) => {

@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, ScrollView, Image, Button } from 'react-native';
 import SymptomSummary from './SymptomSummary';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import useSymptoms from './hooks/useSymptoms';
 import axios from '../../api';
 
 const styles = StyleSheet.create({
@@ -97,40 +97,27 @@ const styles = StyleSheet.create({
 })
 
 const AddScreen = ({ setAddMode }) => {
-    const initSymptoms = [
-        { 'symptomName': 'Cramps', 'choose': false },
-        { 'symptomName': 'Tender breasts', 'choose': false },
-        { 'symptomName': 'Headache', 'choose': false },
-        { 'symptomName': 'Acne', 'choose': false },
-    ];
-
     const today = new Date();
-    let day = today.getDate();
-    day = day < 10 ? '0' + day : day;
-    let month = today.getMonth() + 1;
-    month = month < 10 ? '0' + month : month;
+    let day = today.getDate().toString().padStart(2, '0');
+    let month = (today.getMonth() + 1).toString().padStart(2, '0');
     let year = today.getFullYear();
 
     const [date, setDate] = useState(`${year}/${month}/${day}`);
     const [weight, setWeight] = useState(0);
     const [sleep, setSleep] = useState(0);
     const [water, setWater] = useState(0);
-    const [symptoms, setSymptoms] = useState(initSymptoms);
-    // const [open, setOpen] = useState(false);
+    const { symptomSummary, setSymptomSummary }
+        = useSymptoms(0, true);
 
     const handleSymptomClick = (symptomName) => {
-        let newSymptoms = symptoms;
+        let newSymptoms = symptomSummary;
         newSymptoms.map((obj, idx) => {
             if (obj['symptomName'] == symptomName) {
                 obj['choose'] = !obj['choose']
             }
         });
-        setSymptoms(newSymptoms);
+        setSymptomSummary(newSymptoms);
     };
-
-    useEffect(() => {
-        console.log(symptoms)
-    }, [symptoms]);
 
     const saveForm = async () => {
         const dateString = date.replace('/', '').replace('/', '')
@@ -150,7 +137,7 @@ const AddScreen = ({ setAddMode }) => {
         });
 
         let symptomList = []
-        symptoms.map((obj, idx) => {
+        symptomSummary.map((obj, idx) => {
             if (obj.choose)
                 symptomList.push(obj.symptomName);
         });
@@ -167,49 +154,6 @@ const AddScreen = ({ setAddMode }) => {
 
     return (
         <ScrollView style={styles.body}>
-            <View style={styles.item} name="datePicker" >
-                <View>
-                    <Text style={{ fontSize: 16, color: "#F87171" }} >Octobor 24, 2022</Text>
-                    <Text style={styles.text} >Week 1</Text>
-                </View>
-                <View style={{ flex: 1 }} />
-                <Text style={styles.text} >Change</Text>
-                <FontAwesome5
-                    name='chevron-right'
-                    size={12}
-                    color='#6B7280'
-                    solid
-                />
-            </View>
-            <View style={styles.buttonGroup} name='itemGroup' >
-                <View style={styles.buttonItem} >
-                    <Text style={styles.text} >Weight</Text>
-                    <View style={styles.img}>
-                        <Image
-                            source={require('../../assets/image/BodyData/Chart increasing.png')}
-                            style={styles.image}
-                        />
-                    </View>
-                </View>
-                <View style={styles.buttonItem}>
-                    <Text style={styles.text} >Sleep</Text>
-                    <View style={styles.img}>
-                        <Image
-                            source={require('../../assets/image/BodyData/Bed.png')}
-                            style={styles.image}
-                        />
-                    </View>
-                </View>
-                <View style={styles.buttonItem}>
-                    <Text style={styles.text} >Water</Text>
-                    <View style={styles.img}>
-                        <Image
-                            source={require('../../assets/image/BodyData/Potable water.png')}
-                            style={styles.image}
-                        />
-                    </View>
-                </View>
-            </View>
             <View >
                 <View style={styles.inputView}>
                     <Text>Date</Text>
@@ -255,52 +199,10 @@ const AddScreen = ({ setAddMode }) => {
                     <Text>ml</Text>
                 </View>
             </View>
-            {/* <Tooltip 
-            ModalComponent={Modal}
-                popover={
-                    <Text>Tooltip info goes here too. Find tooltip everywhere</Text>
-                }
-                containerStyle={{ width: 200, height: 60 }}
-                visible={open}
-                onOpen={() => {
-                  setOpen(true);
-                }}
-                onClose={() => {
-                  setOpen(false);
-                }} /> */}
-
-            {/* <View style={styles.container}>
-                <DatePicker
-                    style={styles.datePickerStyle}
-                    date={date} // Initial date from state
-                    mode="date" // The enum of date, datetime and time
-                    placeholder="select date"
-                    format="DD-MM-YYYY"
-                    minDate="01-01-2022"
-                    maxDate="01-01-2030"
-                    confirmBtnText="Confirm"
-                    cancelBtnText="Cancel"
-                    // customStyles={{
-                    //     dateIcon: {
-                    //         //display: 'none',
-                    //         position: 'absolute',
-                    //         left: 0,
-                    //         top: 4,
-                    //         marginLeft: 0,
-                    //     },
-                    //     dateInput: {
-                    //         marginLeft: 36,
-                    //     },
-                    // }}
-                    onDateChange={(date) => {
-                        setDate(date);
-                    }}
-                />
-            </View> */}
             <SymptomSummary
                 addMode={true}
                 handleSymptomClick={handleSymptomClick}
-                symptoms={symptoms} />
+                symptoms={symptomSummary} />
             <Button
                 style={styles.updateButton}
                 onPress={saveForm}
