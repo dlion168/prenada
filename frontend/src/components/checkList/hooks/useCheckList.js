@@ -6,6 +6,8 @@ const CheckListContext = createContext({
     setDisplayWeek: ()=>{},
     checkListData: [],
     setCheckListData: ()=>{},
+    postChecklistItem: ()=>{},
+    putChecklistItem: ()=>{},
     onDeleteHandler: ()=>{},
 });
 const ChecklistProvider = (props) => {
@@ -32,11 +34,29 @@ const ChecklistProvider = (props) => {
     const postChecklistItem = async (item) => {
         const {
             data: { message,  returnItem },
-        } = await axios.delete('/checklist/delItem', {
+        } = await axios.post('/checklist/item', {
             params: {item: item}
         });
         console.log(message, returnItem);
-        // TODO: Update returned item in local
+        let a = JSON.parse(JSON.stringify(checkListData))
+        a.data.push(returnItem)
+        setCheckListData(a)
+    }
+
+    const putChecklistItem = async (_id, item) => {
+        const {
+            data: { message, returnItem },
+        } = await axios.put('/checklist/item', {
+            params: {_id: _id, item: item}
+        });
+        let arrayId = checkListData.data.findIndex((obj) => {
+            return obj._id == _id
+        });
+
+        let a = JSON.parse(JSON.stringify(checkListData))
+        a.data[arrayId] = returnItem 
+        console.log(message, a);
+        setCheckListData(a);
     }
 
     useEffect(() => {
@@ -56,7 +76,8 @@ const ChecklistProvider = (props) => {
     };
 
     return <CheckListContext.Provider
-        value={{ displayWeek, curWeek, setDisplayWeek, checkListData, setCheckListData, onDeleteHandler }}
+        value={{ displayWeek, curWeek, setDisplayWeek, checkListData, setCheckListData,
+             postChecklistItem, putChecklistItem, onDeleteHandler }}
         {...props}
     />
 

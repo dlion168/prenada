@@ -41,25 +41,7 @@ const ChecklistItem = ({ week, _id, checked, text, liked }) => {
     //     }
     //     prevOpenedRow = row[index];
     //   };
-    const { checkListData, setCheckListData, onDeleteHandler } = useCheckList()
-    const putChecklistItem = async (_id) => {
-        const {
-            data: { message, returnItem },
-        } = await axios.put('/checklist/item', {
-            params: {id: _id}
-        });
-
-        let arrayId = checkListData.data.find(function(item, i){
-            if(item._id === _id){
-              return i
-            }
-          });
-        
-          a = JSON.parse(JSON.stringify(checkListData))
-          a.data[arrayId] = returnItem 
-          console.log(message, a);
-          setCheckListData(a);
-    }
+    const { putChecklistItem, onDeleteHandler } = useCheckList()
     return (
         <Swipeable
             renderRightActions={() =>
@@ -72,8 +54,8 @@ const ChecklistItem = ({ week, _id, checked, text, liked }) => {
             rightOpenValue={-100}>
             <View style={styles.taskCardFlex}>
                 <ActionIcon size={20} padding={18} iconName={checked ? 'checkBox-t' : 'checkBox-f'}
-                    onPress={(event) => {
-                        putChecklistItem(_id)
+                    onPress={() => {
+                        putChecklistItem(_id, {checked: !checked})
                     }
                 } />
                 <Text
@@ -85,8 +67,8 @@ const ChecklistItem = ({ week, _id, checked, text, liked }) => {
                 >{text}</Text>
                 <ActionIcon size={20} padding={18} iconName={liked ? 'heart-t' : 'heart-f'}
                     onPress={() => {
-                        putChecklistItem(_id)
-                        onDeleteHandler       }
+                        putChecklistItem(_id, {liked: !liked})
+                    }
                 } />
             </View>
         </Swipeable>
