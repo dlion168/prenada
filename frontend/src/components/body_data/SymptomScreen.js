@@ -40,7 +40,7 @@ const SymptomScreen = ({ displayWeek }) => {
     let startDate = new Date("2022/10/24");
     let endDate = new Date("2022/10/30");
     startDate.setDate(startDate.getDate() + displayWeek * 7);
-    endDate.setDate(startDate.getDate() + displayWeek * 7);
+    endDate.setDate(endDate.getDate() + displayWeek * 7);
 
     const convertToDateString = (date) => {
         const yyyy = date.getFullYear();
@@ -49,13 +49,13 @@ const SymptomScreen = ({ displayWeek }) => {
         return yyyy + MM + dd;
     }
     const getSymptomData = async () => {
-        const { data: { data: symptomData, symptomMessage }, } = await axios.get('/symptom', {
+        const { data: { data, symptomMessage }, } = await axios.get('/symptom', {
             params: {
                 startDate: convertToDateString(startDate),
                 endDate: convertToDateString(endDate),
             },
         });
-        setSymptomDetail(symptomData);
+        setSymptomDetail(data);
     };
 
     useEffect(() => {

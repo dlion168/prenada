@@ -103,7 +103,7 @@ const AddScreen = ({ setAddMode }) => {
     let year = today.getFullYear();
 
     const [date, setDate] = useState(`${year}/${month}/${day}`);
-    const [weight, setWeight] = useState(0);
+    // const [weight, setWeight] = useState(0);
     const [sleep, setSleep] = useState(0);
     const [water, setWater] = useState(0);
     const { symptomSummary, setSymptomSummary }
@@ -165,7 +165,7 @@ const AddScreen = ({ setAddMode }) => {
                         onChangeText={(value) => setDate(value)}
                     />
                 </View>
-                <View style={styles.inputView}>
+                {/* <View style={styles.inputView}>
                     <Text>Weight</Text>
                     <TextInput
                         style={styles.input}
@@ -175,7 +175,7 @@ const AddScreen = ({ setAddMode }) => {
                         onChangeText={(value) => setWeight(value)}
                     />
                     <Text>kg</Text>
-                </View>
+                </View> */}
                 <View style={styles.inputView}>
                     <Text>Sleep</Text>
                     <TextInput

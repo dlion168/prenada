@@ -42,9 +42,6 @@ const saveSymptom = async (date, time, symptomName) => {
 const findSymptom = async (startDate, endDate) => {
     const symptomData = await Symptom.aggregate([
         {
-            $sort: { date: -1, time: -1 }
-        },
-        {
             $match: {
                 "date": {
                     $gte: strToDate(startDate),
@@ -57,6 +54,9 @@ const findSymptom = async (startDate, endDate) => {
                 _id: "$date",
                 itemList: { $push: { time: "$time", symptomName: "$symptomName" } },
             }
+        },
+        {
+            $sort: { _id: 1 }
         },
     ]);
 

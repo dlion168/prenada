@@ -1,6 +1,8 @@
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { LineChart } from "react-native-chart-kit";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Dimensions } from 'react-native';
+
 
 const styles = StyleSheet.create({
     body: {
@@ -14,9 +16,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingTop: 8,
         paddingBottom: 8,
+        paddingLeft:10,
+        paddingRight:10,
         justifyContent: 'space-between',
-        width: 700,
+        width: '100%',
         alignItems: 'center',
+        gap: 10
     },
     numText: {
         fontWeight: 'bold',
@@ -31,6 +36,7 @@ const styles = StyleSheet.create({
 })
 
 const SleepSummary = ({ sleepSummary }) => {
+    const windowWidth = Dimensions.get('window').width;
     const data = {
         labels: sleepSummary.date,
         datasets: [
@@ -78,7 +84,7 @@ const SleepSummary = ({ sleepSummary }) => {
             <View style={styles.chart}>
                 <LineChart
                     data={data}
-                    width={700}
+                    width={windowWidth * 0.7}
                     height={220}
                     chartConfig={chartConfig}
                 />

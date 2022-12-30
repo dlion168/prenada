@@ -14,9 +14,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingTop: 8,
         paddingBottom: 8,
+        paddingLeft:10,
+        paddingRight:10,
         justifyContent: 'space-between',
-        width: 700,
+        width: '100%',
         alignItems: 'center',
+        gap: 10
     },
     text: {
         color: '#6B7280',
@@ -67,6 +70,7 @@ const WaterSummary = ({ waterSummary }) => {
             legend: ["Capacity", "Target"] // optional
         };
     }
+
     const chartConfig = {
         backgroundColor: "#c7d2fe",
         backgroundGradientFrom: "#c7d2fe",
