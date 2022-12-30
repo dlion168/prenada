@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, ScrollView, Image, Button } from 'react-native';
 import SymptomSummary from './SymptomSummary';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import useSymptoms from './hooks/useSymptoms';
 import axios from '../../api';
 
 const styles = StyleSheet.create({
@@ -97,42 +97,52 @@ const styles = StyleSheet.create({
 })
 
 const AddScreen = ({ setAddMode }) => {
-    const initSymptoms = [
-        { 'symptomName': 'Cramps', 'choose': false },
-        { 'symptomName': 'Tender breasts', 'choose': false },
-        { 'symptomName': 'Headache', 'choose': false },
-    ];
-    const [date, setDate] = useState('2022/11/24');
-    const [weight, setWeight] = useState(0);
+    const today = new Date();
+    let day = today.getDate().toString().padStart(2, '0');
+    let month = (today.getMonth() + 1).toString().padStart(2, '0');
+    let year = today.getFullYear();
+
+    const [date, setDate] = useState(`${year}/${month}/${day}`);
+    // const [weight, setWeight] = useState(0);
     const [sleep, setSleep] = useState(0);
     const [water, setWater] = useState(0);
-    const [symptoms, setSymptoms] = useState(initSymptoms);
-    // const [open, setOpen] = useState(false);
+    const { symptomSummary, setSymptomSummary }
+        = useSymptoms(0, true);
 
     const handleSymptomClick = (symptomName) => {
-        let newSymptoms = symptoms;
+        let newSymptoms = symptomSummary;
         newSymptoms.map((obj, idx) => {
-            if (obj['symptomName'] == symptomName)
+            if (obj['symptomName'] == symptomName) {
                 obj['choose'] = !obj['choose']
+            }
         });
-        setSymptoms(newSymptoms);
+        setSymptomSummary(newSymptoms);
     };
 
     const saveForm = async () => {
         const dateString = date.replace('/', '').replace('/', '')
-        // console.log(date, weight, sleep, water, symptoms);
         const currentTime = new Date();
         const hour = (currentTime.getHours() % 12).toString().padStart(2, '0');
         const minute = currentTime.getMinutes().toString().padStart(2, '0');
         const afternoon = currentTime.getHours() > 12 ? "PM" : "AM";
-        const { data: { waterData, waterMessage }, } = await axios.post('/water', {
-            date: dateString,
-            time: `${hour}:${minute} ${afternoon}`,
-            capacity: water
-        });
+
+        if (water > 0) {
+            const { data: { waterData, waterMessage }, } = await axios.post('/water', {
+                date: dateString,
+                time: `${hour}:${minute} ${afternoon}`,
+                capacity: water
+            });
+        }
+
+        if (sleep > 0) {
+            const { data: { sleepData, sleepMessage }, } = await axios.post('/sleep', {
+                date: dateString,
+                hours: sleep
+            });
+        }
 
         let symptomList = []
-        symptoms.map((obj, idx) => {
+        symptomSummary.map((obj, idx) => {
             if (obj.choose)
                 symptomList.push(obj.symptomName);
         });
@@ -140,7 +150,7 @@ const AddScreen = ({ setAddMode }) => {
         if (symptomList.length > 0) {
             const { data: { symptomData, symptomMessage }, } = await axios.post('/symptom', {
                 date: dateString,
-                time: "9:00 PM",
+                time: `${hour}:${minute} ${afternoon}`,
                 symptomName: symptomList.sort().join(',')
             });
         }
@@ -149,49 +159,6 @@ const AddScreen = ({ setAddMode }) => {
 
     return (
         <ScrollView style={styles.body}>
-            <View style={styles.item} name="datePicker" >
-                <View>
-                    <Text style={{ fontSize: 16, color: "#F87171" }} >Octobor 24, 2022</Text>
-                    <Text style={styles.text} >Week 1</Text>
-                </View>
-                <View style={{ flex: 1 }} />
-                <Text style={styles.text} >Change</Text>
-                <FontAwesome5
-                    name='chevron-right'
-                    size={12}
-                    color='#6B7280'
-                    solid
-                />
-            </View>
-            <View style={styles.buttonGroup} name='itemGroup' >
-                <View style={styles.buttonItem} >
-                    <Text style={styles.text} >Weight</Text>
-                    <View style={styles.img}>
-                        <Image
-                            source={require('../../assets/image/BodyData/Chart increasing.png')}
-                            style={styles.image}
-                        />
-                    </View>
-                </View>
-                <View style={styles.buttonItem}>
-                    <Text style={styles.text} >Sleep</Text>
-                    <View style={styles.img}>
-                        <Image
-                            source={require('../../assets/image/BodyData/Bed.png')}
-                            style={styles.image}
-                        />
-                    </View>
-                </View>
-                <View style={styles.buttonItem}>
-                    <Text style={styles.text} >Water</Text>
-                    <View style={styles.img}>
-                        <Image
-                            source={require('../../assets/image/BodyData/Potable water.png')}
-                            style={styles.image}
-                        />
-                    </View>
-                </View>
-            </View>
             <View >
                 <View style={styles.inputView}>
                     <Text>Date</Text>
@@ -203,7 +170,7 @@ const AddScreen = ({ setAddMode }) => {
                         onChangeText={(value) => setDate(value)}
                     />
                 </View>
-                <View style={styles.inputView}>
+                {/* <View style={styles.inputView}>
                     <Text>Weight</Text>
                     <TextInput
                         style={styles.input}
@@ -213,7 +180,7 @@ const AddScreen = ({ setAddMode }) => {
                         onChangeText={(value) => setWeight(value)}
                     />
                     <Text>kg</Text>
-                </View>
+                </View> */}
                 <View style={styles.inputView}>
                     <Text>Sleep</Text>
                     <TextInput
@@ -237,52 +204,10 @@ const AddScreen = ({ setAddMode }) => {
                     <Text>ml</Text>
                 </View>
             </View>
-            {/* <Tooltip 
-            ModalComponent={Modal}
-                popover={
-                    <Text>Tooltip info goes here too. Find tooltip everywhere</Text>
-                }
-                containerStyle={{ width: 200, height: 60 }}
-                visible={open}
-                onOpen={() => {
-                  setOpen(true);
-                }}
-                onClose={() => {
-                  setOpen(false);
-                }} /> */}
-
-            {/* <View style={styles.container}>
-                <DatePicker
-                    style={styles.datePickerStyle}
-                    date={date} // Initial date from state
-                    mode="date" // The enum of date, datetime and time
-                    placeholder="select date"
-                    format="DD-MM-YYYY"
-                    minDate="01-01-2022"
-                    maxDate="01-01-2030"
-                    confirmBtnText="Confirm"
-                    cancelBtnText="Cancel"
-                    // customStyles={{
-                    //     dateIcon: {
-                    //         //display: 'none',
-                    //         position: 'absolute',
-                    //         left: 0,
-                    //         top: 4,
-                    //         marginLeft: 0,
-                    //     },
-                    //     dateInput: {
-                    //         marginLeft: 36,
-                    //     },
-                    // }}
-                    onDateChange={(date) => {
-                        setDate(date);
-                    }}
-                />
-            </View> */}
             <SymptomSummary
                 addMode={true}
                 handleSymptomClick={handleSymptomClick}
-                symptoms={symptoms} />
+                symptoms={symptomSummary} />
             <Button
                 style={styles.updateButton}
                 onPress={saveForm}

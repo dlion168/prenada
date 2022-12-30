@@ -25,14 +25,15 @@ const deleteWater = async (date, time) => {
 };
 
 const saveWater = async (date, time, capacity) => {
-    const oldWater = await Water.findOne({ date, time });
+    const dbDate = strToDate(date);
+    const oldWater = await Water.findOne({ date: dbDate, time });
     try {
         if (oldWater) {
             oldWater.capacity = capacity;
             oldWater.save();
             return { message: `Updating`, water: oldWater };
         } else {
-            const newWater = new Water({ date: strToDate(date), time, capacity });
+            const newWater = new Water({ date: dbDate, time, capacity });
             newWater.save();
             return { message: `Adding `, water: newWater };
         }
@@ -111,11 +112,20 @@ const getWaterSummary = async (startDate, endDate) => {
     let capacity = [];
     let message = "";
     try {
-        if (waterData.length > 0) {
-            waterData.map((row) => {
-                date.push(dateToAbbreviationStr(row._id));
-                capacity.push(row.totalCapacity);
-            });
+        let curDate = strToDate(startDate);
+        let curIdx = 0;
+
+        for (let idx = 0; idx < 7; idx++) {
+            if (waterData.length > curIdx && waterData[curIdx]._id.getDate() === curDate.getDate()) {
+                date.push(dateToAbbreviationStr(curDate));
+                capacity.push(waterData[curIdx].totalCapacity);
+                curIdx++;
+            }
+            else {
+                date.push(dateToAbbreviationStr(curDate));
+                capacity.push(0);
+            }
+            curDate.setDate(curDate.getDate() + 1);
         }
     } catch (e) { message = "Get water data error: " + e; }
     return { data: { date, capacity }, message };
@@ -148,7 +158,6 @@ router.get("/summary", async (req, res) => {
     const startDate = req.query.startDate;
     const endDate = req.query.endDate;
     let result = await getWaterSummary(startDate, endDate);
-    console.log(result)
     res.status(200).send(result);
 });
 

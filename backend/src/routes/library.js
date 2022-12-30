@@ -15,9 +15,9 @@ const getThemeData = async () => {
       await Theme.deleteMany({});
       await Theme.insertMany(themeData);
     }
+    ext = await Theme.find({});
 
     // const ext = await Theme.find({});
-    ext = await Theme.find({});
     if (ext === undefined || ext.length === 0)
       return { message: 'Cannot find themeData', themeData: [] }
     return { message: 'Get themeData successfully', 
@@ -94,9 +94,31 @@ const getArtStatus = async (id) => {
   } catch(err) {throw new Error("Get article Status error: " + err);}
 }
 
+const getSearch = async (search) => {
+  try {
+    const data = await Article.find({});
+    let art = {};
+    data.forEach(data => {
+      // console.log(data.title)
+      // console.log(data.title.includes(search))
+      if (data.title.includes(search)) {
+        art = data;
+      }
+    })
+    if (Object.keys(art).length > 0)
+      return { message: 'Get search result successfully', artData: art }
+    else
+      return { message: 'Cannot find the result of search', artData: {} }
+  } catch(err) {throw new Error("Get search error: " + err);}
+}
+
 const router = Router();
 router.get('/', async (req, res) => {
   let result = await getThemeData();
+  res.status(200).send(result);
+})
+router.get('/search', async (req, res) => {
+  let result = await getSearch(req.query.search);
   res.status(200).send(result);
 })
 router.get('/topic', async (req, res) => {

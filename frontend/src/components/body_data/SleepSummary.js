@@ -1,6 +1,8 @@
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { LineChart } from "react-native-chart-kit";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Dimensions } from 'react-native';
+
 
 const styles = StyleSheet.create({
     body: {
@@ -14,9 +16,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingTop: 8,
         paddingBottom: 8,
+        paddingLeft:10,
+        paddingRight:10,
         justifyContent: 'space-between',
-        width: 700,
+        width: '100%',
         alignItems: 'center',
+        gap: 10
     },
     numText: {
         fontWeight: 'bold',
@@ -30,31 +35,35 @@ const styles = StyleSheet.create({
     }
 })
 
-const data = {
-    labels: ["Oct 21", "Oct 22", "Oct 23", "Oct 24", "Oct 25", "Oct 26"],
-    datasets: [
-        {
-            data: [7.5, 8, 8, 9, 6, 6.5],
-            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`, // optional
-            strokeWidth: 2 // optional
+const SleepSummary = ({ sleepSummary }) => {
+    const windowWidth = Dimensions.get('window').width;
+    const data = {
+        labels: sleepSummary.date,
+        datasets: [
+            {
+                data: sleepSummary.hours,
+                color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`, // optional
+                strokeWidth: 2 // optional
+            },
+        ],
+        legend: ["Hours"] // optional
+    };
+
+    const chartConfig = {
+        backgroundColor: "#e9d5ff",
+        backgroundGradientFrom: "#e9d5ff",
+        backgroundGradientTo: "#e9d5ff",
+        decimalPlaces: 1, // optional, defaults to 2dp
+        color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+        labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+        style: {
+            borderRadius: 16
         },
-    ],
-    legend: ["Hours"] // optional
-};
+    };
 
-const chartConfig = {
-    backgroundColor: "#e9d5ff",
-    backgroundGradientFrom: "#e9d5ff",
-    backgroundGradientTo: "#e9d5ff",
-    decimalPlaces: 1, // optional, defaults to 2dp
-    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-    labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-    style: {
-        borderRadius: 16
-    },
-};
+    const sum = sleepSummary.hours.reduce((a, b) => a + b, 0);
+    const avg = (sum / 7) || 0;
 
-const SleepSummary = () => {
     return (
         <View style={styles.body}>
             <View style={styles.title}>
@@ -68,17 +77,14 @@ const SleepSummary = () => {
                     <Text style={styles.text} >Average this week</Text>
                 </View>
                 <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={styles.numText} >7</Text>
+                    <Text style={styles.numText} >{avg.toFixed(2)} </Text>
                     <Text style={styles.text} > hr </Text>
-                    <Text style={styles.numText} >03</Text>
-                    <Text style={styles.text} > min</Text>
-
                 </View>
             </View>
             <View style={styles.chart}>
                 <LineChart
                     data={data}
-                    width={700}
+                    width={windowWidth * 0.7}
                     height={220}
                     chartConfig={chartConfig}
                 />

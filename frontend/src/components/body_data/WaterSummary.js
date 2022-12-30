@@ -14,9 +14,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingTop: 8,
         paddingBottom: 8,
+        paddingLeft:10,
+        paddingRight:10,
         justifyContent: 'space-between',
-        width: 700,
+        width: '100%',
         alignItems: 'center',
+        gap: 10
     },
     text: {
         color: '#6B7280',
@@ -49,10 +52,6 @@ const WaterSummary = ({ waterSummary }) => {
     };
 
     if (waterSummary != undefined) {
-        let targetArray = new Array(waterSummary.capacity.length);
-        for (let i = 0; i < waterSummary.capacity.length; i++) {
-            targetArray[i] = 2000;
-        }
         data = {
             labels: waterSummary.date,
             datasets: [
@@ -63,7 +62,7 @@ const WaterSummary = ({ waterSummary }) => {
                 },
                 {
 
-                    data: targetArray,
+                    data: [0, 0, 0, 0, 0, 0, 0],
                     color: (opacity = 1) => `rgba(129, 140, 248, ${opacity})`, // optional
                     strokeWidth: 2 // optional
                 }
@@ -71,6 +70,7 @@ const WaterSummary = ({ waterSummary }) => {
             legend: ["Capacity", "Target"] // optional
         };
     }
+
     const chartConfig = {
         backgroundColor: "#c7d2fe",
         backgroundGradientFrom: "#c7d2fe",

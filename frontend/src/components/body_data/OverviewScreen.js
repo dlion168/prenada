@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, TouchableOpacity, View, Text } from 'react-native';
 // import { FAB } from 'react-native-elements';
-// import SleepSummary from './SleepSummary';
+import SleepSummary from './SleepSummary';
 import WaterSummary from './WaterSummary';
 import SymptomSummary from './SymptomSummary';
 import AddScreen from './AddScreen';
-import axios from '../../api';
 import useWater from './hooks/useWater';
+import useSleep from './hooks/useSleep';
+import useSymptoms from './hooks/useSymptoms';
+
 
 const styles = StyleSheet.create({
     body: {
@@ -36,20 +38,14 @@ const styles = StyleSheet.create({
 
 const OverviewScreen = ({ displayWeek }) => {
     const { waterSummary, getWaterSummary } = useWater(displayWeek);
+    const { sleepSummary, getSleepSummary } = useSleep(displayWeek);
+    const { symptomSummary, getSymptomSummary } = useSymptoms(displayWeek, false);
     const [addMode, setAddMode] = useState(false);
-    const [symptomSummary, setSymptomSummary] = useState([]);
-    const getSymptomData = async () => {
-        const summary = await axios.get('/symptom/summary', {
-            params: {
-                startDate: "20221005",
-                endDate: "20221130",
-            },
-        });
-        setSymptomSummary(summary.data.summary);
-    };
+
     useEffect(() => {
         getWaterSummary();
-        getSymptomData();
+        getSleepSummary();
+        getSymptomSummary();
     }, []);
 
 
@@ -59,8 +55,8 @@ const OverviewScreen = ({ displayWeek }) => {
         return (
             <>
                 <ScrollView style={styles.body}>
-                    {/* <SleepSummary /> */}
                     <WaterSummary waterSummary={waterSummary} />
+                    <SleepSummary sleepSummary={sleepSummary} />
                     <SymptomSummary
                         addMode={false}
                         handleSymptomClick={null}

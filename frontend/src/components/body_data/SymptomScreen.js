@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import ItemList from './ItemList';
 import SymptomSummary from './SymptomSummary';
+import useSymptoms from './hooks/useSymptoms';
 import axios from '../../api';
 
 const styles = StyleSheet.create({
@@ -34,11 +35,12 @@ const styles = StyleSheet.create({
 
 const SymptomScreen = ({ displayWeek }) => {
     const [symptomDetail, setSymptomDetail] = useState([]);
-    const [symptomSummary, setSymptomSummary] = useState([]);
+    const { symptomSummary, getSymptomSummary } = useSymptoms(displayWeek, false);
+
     let startDate = new Date("2022/10/24");
     let endDate = new Date("2022/10/30");
     startDate.setDate(startDate.getDate() + displayWeek * 7);
-    endDate.setDate(startDate.getDate() + displayWeek * 7);
+    endDate.setDate(endDate.getDate() + displayWeek * 7);
 
     const convertToDateString = (date) => {
         const yyyy = date.getFullYear();
@@ -47,26 +49,18 @@ const SymptomScreen = ({ displayWeek }) => {
         return yyyy + MM + dd;
     }
     const getSymptomData = async () => {
-        //detail
-        const { data: { data: symptomData, symptomMessage }, } = await axios.get('/symptom', {
+        const { data: { data, symptomMessage }, } = await axios.get('/symptom', {
             params: {
                 startDate: convertToDateString(startDate),
                 endDate: convertToDateString(endDate),
             },
         });
-        setSymptomDetail(symptomData);
-        //summary
-        const summary = await axios.get('/symptom/summary', {
-            params: {
-                startDate: convertToDateString(startDate),
-                endDate: convertToDateString(endDate),
-            },
-        });
-        setSymptomSummary(summary.data.summary);
+        setSymptomDetail(data);
     };
 
     useEffect(() => {
         getSymptomData();
+        getSymptomSummary();
     }, []);
 
     const deleteSymptomData = async (date, time) => {
@@ -81,8 +75,6 @@ const SymptomScreen = ({ displayWeek }) => {
     //     { 'date': 'October 25, 2022', 'itemList': [{ 'time': '09:00 AM', 'symptomName': 'Acne' }, { 'time': '09:00 PM', 'symptomName': 'Cramps' }] },
     //     { 'date': 'October 24, 2022', 'itemList': [{ 'time': '09:00 AM', 'symptomName': 'Tender breasts' }] },
     // ];
-
-    // const symptomSummary = { 'Cramps': 2, 'Tender breasts': 5 };
 
     return (
         <ScrollView style={styles.body}>
