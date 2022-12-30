@@ -97,18 +97,18 @@ const getArtStatus = async (id) => {
 const getSearch = async (search) => {
   try {
     const data = await Article.find({});
-    let art = {};
+    let art = [];
     data.forEach(data => {
       // console.log(data.title)
       // console.log(data.title.includes(search))
       if (data.title.includes(search)) {
-        art = data;
+        art.push(data);
       }
     })
     if (Object.keys(art).length > 0)
       return { message: 'Get search result successfully', artData: art }
     else
-      return { message: 'Cannot find the result of search', artData: {} }
+      return { message: 'Cannot find the result of search', artData: [] }
   } catch(err) {throw new Error("Get search error: " + err);}
 }
 
