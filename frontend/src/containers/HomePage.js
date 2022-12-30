@@ -88,8 +88,7 @@ const updateSymptom = async (date, callback) => {
 };
 
 const HomePage = ({ navigation }) => {
-    const [ displayWeek, setDisplayWeek ] = useState(0);
-    const { checkListData, setCheckListData } = useCheckList()
+    const { displayWeek, setDisplayWeek, checkListData, setCheckListData } = useCheckList()
     const [ waterTotal, setWaterTotal] = useState(0);
     const [ modalVisible, setModalVisible ] = useState(false);
     useEffect(() => updateWater('20221124', setWaterTotal), [displayWeek]); // TODO: should be refreshed when data is renewed
@@ -97,7 +96,6 @@ const HomePage = ({ navigation }) => {
     let swipeRowRef = [];
     let prevOpenedRow;
     useEffect(() => updateSymptom('20221124', setSymSumm), [displayWeek]); // TODO: should be refreshed when data is renewed
-    
     /*----themeData has been moved to database----*/
     const [theme, setTheme] = useState([]);
     const getThemeData = async () => {
@@ -132,18 +130,18 @@ const HomePage = ({ navigation }) => {
                             <Text style={styles.titleMore} >See All</Text>
                         </TouchableOpacity>
                     </View>
-                    {checkListData[displayWeek].data.slice(0, 4).map((obj, idx) =>
+                    {checkListData.data.slice(0, 4).map((obj, idx) =>
                         <View style={styles.pad} key={idx}>
                             <ChecklistItem
                                 week={displayWeek}
-                                idx={idx}
+                                _id={obj._id}
                                 checked={obj.checked}
                                 text={obj.text}
                                 liked={obj.liked}
                             />
                         </View>
                     )}
-                    {checkListData[displayWeek].data.length > 4 ?
+                    {checkListData.data.length > 4 ?
                         <View style={styles.padCenter}>
                             <FontAwesome5 name ="ellipsis-v" size={18} color='#E5E7EB' /* gray/200 */ solid />
                         </View> :

@@ -1,13 +1,13 @@
+import { useState } from 'react';
 import { View, StyleSheet, Pressable,  ScrollView, Text, FlatList} from 'react-native';
 import { NavBar } from '../NavBar';
 import ChecklistItem from './ChecklistItem'
 import { useCheckList } from './hooks/useCheckList';
+import AddPage from './AddPage'
 const styles = StyleSheet.create({
     bg:{
         backgroundColor: '#FFFFFF',
     },
-
-    
     title: {
         fontWeight: 'bold',
         fontSize: 18,
@@ -45,32 +45,37 @@ const styles = StyleSheet.create({
     }
 })
 
-const ChecklistPerWeek = (week) =>{
-    const { checkListData } = useCheckList()
-    week = week.week > -1 ? week.week : 0;
-    const { intro, title, data } = checkListData[week]
+const ChecklistPerWeek = ({setViewMonth}) =>{
+    const { displayWeek, checkListData } = useCheckList()
+    const [ detailID, setDetailID ] = useState(undefined)
+    const { intro, title, data } = checkListData
     return(
-    <>
-        <View style = {styles.bg}>
-            <NavBar centerText='Checklist'/>
-            <View style = {styles.block}>
-            <Text style = {styles.intro}> { intro } </Text>
-            <Text style = {styles.title}> { title } </Text>
-            <FlatList 
-            data = {data}
-            renderItem = { (e) => {
-                return (
-                <View style={styles.pad} key={e.index}>
-                    <ChecklistItem idx={e.index} week={week} checked={e.item.checked} text={e.item.text} liked={e.item.liked}></ChecklistItem>
-                </View>)}}
-            keyExtractor={(item) => item.text}>
-            </FlatList>
+        <>
+        { (detailID) ?
+        <AddPage editable={false} onAddHandler={()=>{}}/> : 
+        <View> 
+            <View style = {styles.bg}>
+                <NavBar centerText='Checklist' leftIcon='cheveron-left-s' leftIconOnPress={()=>{setViewMonth(true)}}/>
+                <View style = {styles.block}>
+                <Text style = {styles.intro}> { intro } </Text>
+                <Text style = {styles.title}> { title } </Text>
+                <FlatList 
+                data = {data}
+                renderItem = { (e) => {
+                    return (
+                    <View style={styles.pad} key={e.item._id}>
+                        <ChecklistItem _id={e.item._id} week={displayWeek} checked={e.item.checked} text={e.item.text} liked={e.item.liked}></ChecklistItem>
+                    </View>)}}
+                keyExtractor={(item) => item.text}>
+                </FlatList>
+                </View>
             </View>
-        </View>
-        <Pressable style={styles.addButton}>
-            <Text style={styles.text} >+</Text>
-        </Pressable>
-    </>
+            <Pressable style={styles.addButton} onClick={()=>{setDetailID("NEW ITEM")}}>
+                <Text style={styles.text} >+</Text>
+            </Pressable> 
+        </View> 
+        }
+        </>
     )
 }
 export default ChecklistPerWeek
