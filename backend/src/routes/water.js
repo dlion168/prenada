@@ -25,14 +25,15 @@ const deleteWater = async (date, time) => {
 };
 
 const saveWater = async (date, time, capacity) => {
-    const oldWater = await Water.findOne({ date, time });
+    const dbDate = strToDate(date);
+    const oldWater = await Water.findOne({ date: dbDate, time });
     try {
         if (oldWater) {
             oldWater.capacity = capacity;
             oldWater.save();
             return { message: `Updating`, water: oldWater };
         } else {
-            const newWater = new Water({ date: strToDate(date), time, capacity });
+            const newWater = new Water({ date: dbDate, time, capacity });
             newWater.save();
             return { message: `Adding `, water: newWater };
         }

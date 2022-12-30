@@ -25,14 +25,15 @@ const deleteSymptom = async (date, time) => {
 };
 
 const saveSymptom = async (date, time, symptomName) => {
-    const oldSymptom = await Symptom.findOne({ date, time });
+    const dbDate = strToDate(date);
+    const oldSymptom = await Symptom.findOne({ date: dbDate, time });
     try {
         if (oldSymptom) {
             oldSymptom.symptomName = symptomName;
             oldSymptom.save();
             return { message: `Updating`, symptom: oldSymptom };
         } else {
-            const newSymptom = new Symptom({ date: strToDate(date), time, symptomName });
+            const newSymptom = new Symptom({ date: dbDate, time, symptomName });
             newSymptom.save();
             return { message: `Adding `, symptom: newSymptom };
         }

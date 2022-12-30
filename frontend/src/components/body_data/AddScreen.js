@@ -125,16 +125,21 @@ const AddScreen = ({ setAddMode }) => {
         const hour = (currentTime.getHours() % 12).toString().padStart(2, '0');
         const minute = currentTime.getMinutes().toString().padStart(2, '0');
         const afternoon = currentTime.getHours() > 12 ? "PM" : "AM";
-        const { data: { waterData, waterMessage }, } = await axios.post('/water', {
-            date: dateString,
-            time: `${hour}:${minute} ${afternoon}`,
-            capacity: water
-        });
 
-        const { data: { sleepData, sleepMessage }, } = await axios.post('/sleep', {
-            date: dateString,
-            hours: sleep
-        });
+        if (water > 0) {
+            const { data: { waterData, waterMessage }, } = await axios.post('/water', {
+                date: dateString,
+                time: `${hour}:${minute} ${afternoon}`,
+                capacity: water
+            });
+        }
+
+        if (sleep > 0) {
+            const { data: { sleepData, sleepMessage }, } = await axios.post('/sleep', {
+                date: dateString,
+                hours: sleep
+            });
+        }
 
         let symptomList = []
         symptomSummary.map((obj, idx) => {
@@ -145,7 +150,7 @@ const AddScreen = ({ setAddMode }) => {
         if (symptomList.length > 0) {
             const { data: { symptomData, symptomMessage }, } = await axios.post('/symptom', {
                 date: dateString,
-                time: "9:00 PM",
+                time: `${hour}:${minute} ${afternoon}`,
                 symptomName: symptomList.sort().join(',')
             });
         }

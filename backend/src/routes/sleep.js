@@ -25,14 +25,15 @@ const deleteSleep = async (date, time) => {
 };
 
 const saveSleep = async (date, hours) => {
-    const oldSleep = await Sleep.findOne({ date });
+    const dbDate = strToDate(date);
+    const oldSleep = await Sleep.findOne({ date: dbDate });
     try {
         if (oldSleep) {
             oldSleep.hours = hours;
             oldSleep.save();
             return { message: `Updating`, sleep: oldSleep };
         } else {
-            const newSleep = new Sleep({ date: strToDate(date), hours });
+            const newSleep = new Sleep({ date: dbDate, hours });
             newSleep.save();
             return { message: `Adding `, sleep: newSleep };
         }
@@ -57,7 +58,6 @@ const findSleep = async (startDate, endDate) => {
                     hours: row.hours
                 }
                 data.push(item);
-                console.log(item)
             });
         }
     } catch (e) { message = "Find Sleep Data error: " + e; }
