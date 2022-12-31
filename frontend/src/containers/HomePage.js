@@ -192,7 +192,7 @@ const HomePage = ({ navigation }) => {
                             <TopicCardSingle
                                 key={idx}
                                 top={group.topic[0]}
-                                onPress={() => navigation.jumpTo('Library')} // TODO: goto topicMenu
+                                onPress={() => navigation.jumpTo('Library', { topicData: group.topic[0] })} // TODO: goto topicMenu
                             />
                         )}
                     </ScrollView>
