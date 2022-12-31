@@ -9,15 +9,15 @@ db.connect();
 
 const getThemeData = async () => {
   try {
-    let ext = []; // reset data everytime, this will be removed after all done
+    /*let ext = []; // reset data everytime, this will be removed after all done
     if (ext.length === 0) {
       console.log('Reset themeData');
       await Theme.deleteMany({});
       await Theme.insertMany(themeData);
     }
-    ext = await Theme.find({});
+    ext = await Theme.find({});*/
 
-    // const ext = await Theme.find({});
+    const ext = await Theme.find({});
     if (ext === undefined || ext.length === 0)
       return { message: 'Cannot find themeData', themeData: [] }
     return { message: 'Get themeData successfully', 
@@ -27,15 +27,15 @@ const getThemeData = async () => {
 
 const getArticleData = async (topicName) => {
   try {
-    let ext = []; // reset data everytime, this will be removed after all done
+    /*let ext = []; // reset data everytime, this will be removed after all done
     if (ext.length === 0) {
       console.log('Reset articleData');
       await Article.deleteMany({});
       await Article.insertMany(articleData);
     }
-
-    // const ext = await Article.find({ topic: topicName });
-    ext = await Article.find({ topic: topicName });
+    ext = await Article.find({ topic: topicName });*/
+    
+    const ext = await Article.find({ topic: topicName });
     if (ext === undefined || ext.length === 0)
       return { message: 'Cannot find target articleData', ArticleData: [] }
     return { message: 'Get articleData successfully', 

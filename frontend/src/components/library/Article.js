@@ -52,6 +52,13 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         alignSelf: 'center',
     },
+    content: {
+        fontSize: 16,
+        paddingLeft: 150,
+        paddingRight: 150,
+        paddingTop: 25,
+        paddingBottom: 25
+    }
 })
 
 
@@ -61,7 +68,7 @@ const Article = ({ article, articleClick }) => {
     useEffect(() => {
         getArtStatus(article.id, setStatus);
     }, [])
-
+    
     return (
         <>
             <NavBar centerText=''
@@ -86,7 +93,7 @@ const Article = ({ article, articleClick }) => {
                     </View>
                 </View>
                 <Image source={require(`../../assets/image/Topic/${article.pic}`)} style={styles.articleImg} />
-                <Text> article content... </Text>
+                <Text style={styles.content}> {article.content} </Text>
             </ScrollView>
         </>
     )
