@@ -106,7 +106,7 @@ const Topic = ({ topic, topicClick, article, articleClick, bookmarkView, setBook
 
     useEffect(() => {
         getArticleData();
-    }, [])
+    }, [topic])
     // console.log('topic', topic)
     // console.log('article', article)
     // console.log('articleData', articleData)
