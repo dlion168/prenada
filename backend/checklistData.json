@@ -308,14 +308,19 @@
         "intro": "intro text",
         "title": "week 39 of Pregnancy",
         "data": [
-            { "checked": false, "text": "something to do", "liked": false }
+            { "checked": false, "text": "Buy nursing underwear", "liked": false },
+            { "checked": false, "text": "Know your postpartum body", "liked": false },
+            { "checked": false, "text": "Make a list of things to help you relax", "liked": false },
+            { "checked": false, "text": "If you're worrying about being noisy in the same room with others, prepare anti-noise headphones, relaxing music and eye masks", "liked": false }
         ]
     },
     {
-        "intro": "intro text",
+        "intro": "Dear, how are you today? What are you going through, what are you feeling?\nFrom the first week of pregnancy, the second week, the tenth week, the twentieth week, the thirtieth week... until now.\nBabies at this age, whether they are fetuses still in our womb or newborns who have already been born, are quite mature and ready to meet and fall in love with their mothers at any time.",
         "title": "week 40 of Pregnancy",
         "data": [
-            { "checked": false, "text": "something to do", "liked": false }
+            { "checked": false, "text": "If you're passed your due date, take it easy", "liked": false },
+            { "checked": false, "text": "Give yourself a rest", "liked": false },
+            { "checked": false, "text": "Make an ultimate list of baby names", "liked": false }
         ]
     }
 ]
