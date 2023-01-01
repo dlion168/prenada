@@ -100,14 +100,19 @@
         "intro": "intro text",
         "title": "Week 10 of Pregnancy",
         "data": [
-            { "checked": false, "text": "something to do", "liked": false }
+            { "checked": false, "text": "Involve your partner in the pregenency process", "liked": false },
+            { "checked": false, "text": "Avoid urinary tract infections (UTIs) during pregnency", "liked": false },
+            { "checked": false, "text": "Consider non-invasive prenatal chromosomal testing (NIPT)", "liked": false },
+            { "checked": false, "text": "Read the health education manual for pregnant women", "liked": false }
         ]
     },
     {
         "intro": "intro text",
         "title": "Week 11 of Pregnancy",
         "data": [
-            { "checked": false, "text": "something to do", "liked": false }
+            { "checked": false, "text": "Build your support network", "liked": false },
+            { "checked": false, "text": "Reduce waiting time for prenatal checkups", "liked": false },
+            { "checked": false, "text": "Discuss how to tell your friends about the pregnency with your partner.", "liked": false }
         ]
     },
     {
