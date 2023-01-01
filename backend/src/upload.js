@@ -4,7 +4,7 @@ import checklistData from "../checklistData.json";
 const dataInit = async ()=>{
     const checkItem = await ChecklistItem.find();
     const checkPerWeek = await ChecklistPerWeek.find();
-    if (checkPerWeek.length != 41 || checkItem.length != 49){
+    if (checkPerWeek.length != 41 || checkItem.length != 68){
         console.log("Total checklist items are not equal to default ", checkItem.length)
         console.log('Reset checklist Data');
         await ChecklistItem.deleteMany({});
