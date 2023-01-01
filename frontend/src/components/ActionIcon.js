@@ -22,6 +22,8 @@ const icons = {
     'cog-s': require('../assets/icon/secondary/cog.png'),
     'trash-s': require('../assets/icon/secondary/trash.png'),
     'x-s': require('../assets/icon/secondary/x.png'),
+    'pencil-s': require('../assets/icon/secondary/pencil.png'),
+    'save-s': require('../assets/icon/secondary/save.png'),
 };
 
 const ActionIcon = ({ iconName, onPress, size=20, padding=6, opacity=1.0 }) => {

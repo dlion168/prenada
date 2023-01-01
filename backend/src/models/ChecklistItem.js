@@ -5,7 +5,11 @@ const Schema = mongoose.Schema;
 const ChecklistItemSchema = new Schema({
   checked: Boolean, 
   text: String,
-  liked: Boolean
+  liked: Boolean,
+  date: String,
+  location: String,
+  repeat: Number,
+  Note: String
 });
 
 const ChecklistItem = mongoose.model('ChecklistItem', ChecklistItemSchema);

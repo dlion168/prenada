@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     },
 });
 
-const ChecklistItem = ({ week, _id, checked, text, liked }) => {
+const ChecklistItem = ({ _id, checked, text, liked, onPress }) => {
     // let row= [];
     // let prevOpenedRow = null;
     // const closeRow = (index) => {
@@ -52,7 +52,7 @@ const ChecklistItem = ({ week, _id, checked, text, liked }) => {
             // onSwipeableOpen={() => closeRow(idx)}
             // ref={(ref) => (row[idx] = ref)}
             rightOpenValue={-100}>
-            <View style={styles.taskCardFlex}>
+            <TouchableOpacity onPress={onPress} style={styles.taskCardFlex}>
                 <ActionIcon size={20} padding={18} iconName={checked ? 'checkBox-t' : 'checkBox-f'}
                     onPress={() => {
                         putChecklistItem(_id, {checked: !checked})
@@ -70,7 +70,7 @@ const ChecklistItem = ({ week, _id, checked, text, liked }) => {
                         putChecklistItem(_id, {liked: !liked})
                     }
                 } />
-            </View>
+            </TouchableOpacity>
         </Swipeable>
     );
 };
