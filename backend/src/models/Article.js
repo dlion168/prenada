@@ -8,6 +8,7 @@ const ArticleSchema = new Schema({
   id: String,
   pic: String,
   tag: String,
+  content: String,
   bookmark: Boolean
 });
 

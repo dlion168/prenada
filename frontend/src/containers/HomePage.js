@@ -6,7 +6,6 @@ import AddListItem from '../components/homePage/addListItem';
 import { NavBar } from '../components/NavBar.js';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { TopicCardSingle } from '../components/library/TopicCard';
-// import { themeData } from '../components/library/libraryData.js';
 import axios from '../api';
 import SymptomSummary from '../components/body_data/SymptomSummary'
 import { BodyDataCard } from '../components/homePage/BodyDataCard.js';
@@ -193,7 +192,7 @@ const HomePage = ({ navigation }) => {
                             <TopicCardSingle
                                 key={idx}
                                 top={group.topic[0]}
-                                onPress={() => navigation.jumpTo('Library')} // TODO: goto topicMenu
+                                onPress={() => navigation.jumpTo('Library', { topicData: group.topic[0] })} // TODO: goto topicMenu
                             />
                         )}
                     </ScrollView>

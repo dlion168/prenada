@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, Animated, TouchableOpacity, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, Image, Animated, TouchableOpacity, ImageBackground, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useState, useEffect } from 'react';
 import axios from '../../api';
@@ -39,10 +39,11 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
     position: 'absolute',
-    bottom: 20,
+    bottom: 130,
     left: 20,
     color: '#FFFFFF',
     alignSelf: 'flex-start',
+    zIndex: 1
   },
   bookmarkBlock: {
     height: 40,
@@ -83,8 +84,8 @@ const getBookmark = async (setBookmark, setUpdateBM) => {
   setUpdateBM(newUpdateBM);
 }
 
-const toggleSubview = async (bookmarkView, setBookmarkView, updateBM,
-  setBookmark, setUpdateBM = () => { }) => {
+const toggleSubview = async (refresh, bookmarkView, setBookmarkView, updateBM,
+  setBookmark, setUpdateBM = () => {}) => {
   // pop up animation
   let toValue = 400;
   if (bookmarkView) {
@@ -102,7 +103,7 @@ const toggleSubview = async (bookmarkView, setBookmarkView, updateBM,
   setBookmarkView(!bookmarkView);
 
   // close window: send updated bookmark list to backend
-  if (updateBM.length !== 0) {
+  if (refresh && updateBM.length !== 0) {
     console.log('updateBM', updateBM)
     const { data: { message } } = await axios.post('/library/bookmark', {}, {
       params: { updateBM: updateBM }
@@ -192,7 +193,8 @@ const Bookmark = ({ bookmarkView, setBookmarkView, bookmark, setBookmark }) => {
         <View />
         <Text style={{ fontWeight: 'bold', fontSize: 20 }}> Your Saved </Text>
         <TouchableOpacity onPress={() => {
-          toggleSubview(bookmarkView,
+          toggleSubview(true, 
+            bookmarkView,
             setBookmarkView,
             updateBM,
             setBookmark,
@@ -201,7 +203,7 @@ const Bookmark = ({ bookmarkView, setBookmarkView, bookmark, setBookmark }) => {
           <Image source={cancelIcon} style={{ height: 20, width: 20 }} />
         </TouchableOpacity>
       </View>
-      <View style={styles.blocks}>
+      <ScrollView horizontal={true} style={styles.blocks}>
         {bookmark.map((art, idx) => (
           <ArticleSingle key={idx}
             art={art}
@@ -210,7 +212,7 @@ const Bookmark = ({ bookmarkView, setBookmarkView, bookmark, setBookmark }) => {
             getBookmark={getBookmark}
             bookmarkView={bookmarkView} />
         ))}
-      </View>
+      </ScrollView>
     </Animated.View>
   )
 }
