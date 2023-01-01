@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     },
 })
 
-const TopicMenu = ({ refresh, setRefresh, articleData, topic, topicClick, articleClick, bookmarkView, setBookmarkView, bookmark, setBookmark }) => {
+const TopicMenu = ({ articleData, topic, topicClick, articleClick, bookmarkView, setBookmarkView, bookmark, setBookmark }) => {
     const cheveronRight = require('../../assets/icon/primary/cheveron-right.png');
 
     const getImgSrc = (pic) => {
@@ -64,9 +64,8 @@ const TopicMenu = ({ refresh, setRefresh, articleData, topic, topicClick, articl
         <>
             <NavBar centerText=''
                 leftText='Back' leftIcon='cheveron-left-s' leftIconOnPress={(event) => {topicClick('')}}
-                rightText='Saved Articles' rightIcon='bookmark-s' rightIconOnPress={(event) => {
-                    toggleSubview(bookmarkView, setBookmarkView, [], setBookmark);
-                    setRefresh(!refresh);}}
+                rightText='Saved Articles' rightIcon='bookmark-s' rightIconOnPress={(event) => 
+                    bookmarkView ? {} : toggleSubview(bookmarkView, setBookmarkView, [], setBookmark)}
             />
             <ScrollView style={styles.body}>
                 <Image source={getImgSrc(topic.pic)} style={styles.topImg} />
@@ -92,7 +91,7 @@ const TopicMenu = ({ refresh, setRefresh, articleData, topic, topicClick, articl
     )
 }
 
-const Topic = ({ refresh, setRefresh, topic, topicClick, article, articleClick, bookmarkView, setBookmarkView, bookmark, setBookmark }) => {
+const Topic = ({ topic, topicClick, article, articleClick, bookmarkView, setBookmarkView, bookmark, setBookmark }) => {
     const [articleData, setArticleData] = useState([]);
     
     const getArticleData = async () => {
@@ -125,9 +124,7 @@ const Topic = ({ refresh, setRefresh, topic, topicClick, article, articleClick, 
                             <Text style={{ padding: 50, fontSize: 20, alignSelf: 'center' }}> Loading... </Text>
                         </View>
                     </> :
-                    <TopicMenu refresh={refresh} 
-                               setRefresh={setRefresh}
-                               articleData={articleData}
+                    <TopicMenu articleData={articleData}
                                topic={topic}
                                topicClick={topicClick}
                                articleClick={articleClick}

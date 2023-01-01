@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     },
 })
 
-const Menu = ({ refresh, setRefresh, search, setSearch, topicClick, bookmarkView, setBookmarkView, 
+const Menu = ({ search, setSearch, topicClick, bookmarkView, setBookmarkView, 
                 bookmark, setBookmark, article, articleClick }) => {
     const [dosearch, setDosearch] = useState(false);
     const [searchRes, setSearchRes] = useState([]); // [title1, ...]
@@ -48,9 +48,8 @@ const Menu = ({ refresh, setRefresh, search, setSearch, topicClick, bookmarkView
                 <>
                     <NavBar centerText='Library'
                             rightIcon='bookmark-s'
-                            rightIconOnPress={(event) => {
-                                toggleSubview(refresh, bookmarkView, setBookmarkView, [], setBookmark);
-                                setRefresh(!refresh);}} />
+                            rightIconOnPress={(event) => 
+                                bookmarkView ? {} : toggleSubview(bookmarkView, setBookmarkView, [], setBookmark)} />
                     <ScrollView style={styles.body}>
                         <SearchBar value={search}
                                 onChangeText={(search) => {setSearch(search)}}

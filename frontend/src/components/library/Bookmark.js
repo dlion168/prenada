@@ -84,11 +84,11 @@ const getBookmark = async (setBookmark, setUpdateBM) => {
   setUpdateBM(newUpdateBM);
 }
 
-const toggleSubview = async (refresh, bookmarkView, setBookmarkView, updateBM,
+const toggleSubview = async (bookmarkView, setBookmarkView, updateBM,
   setBookmark, setUpdateBM = () => {}) => {
   // pop up animation
   let toValue = 400;
-  if (bookmarkView) {
+  if (!bookmarkView) {
     toValue = 0;
   }
   Animated.spring(
@@ -103,7 +103,7 @@ const toggleSubview = async (refresh, bookmarkView, setBookmarkView, updateBM,
   setBookmarkView(!bookmarkView);
 
   // close window: send updated bookmark list to backend
-  if (refresh && updateBM.length !== 0) {
+  if (updateBM.length !== 0) {
     console.log('updateBM', updateBM)
     const { data: { message } } = await axios.post('/library/bookmark', {}, {
       params: { updateBM: updateBM }
@@ -193,12 +193,11 @@ const Bookmark = ({ bookmarkView, setBookmarkView, bookmark, setBookmark }) => {
         <View />
         <Text style={{ fontWeight: 'bold', fontSize: 20 }}> Your Saved </Text>
         <TouchableOpacity onPress={() => {
-          toggleSubview(true, 
-            bookmarkView,
-            setBookmarkView,
-            updateBM,
-            setBookmark,
-            setUpdateBM)
+          toggleSubview(bookmarkView,
+                        setBookmarkView,
+                        updateBM,
+                        setBookmark,
+                        setUpdateBM)
         }}>
           <Image source={cancelIcon} style={{ height: 20, width: 20 }} />
         </TouchableOpacity>

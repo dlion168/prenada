@@ -7,9 +7,8 @@ const Library = ({ route }) => {
     const [topic, setTopic] = useState({}); // { pic: , title:, ... }
     const [article, setArticle] = useState({}); // { topic: , title:, ...}
     
-    const [bookmarkView, setBookmarkView] = useState(true);
+    const [bookmarkView, setBookmarkView] = useState(false);
     const [bookmark, setBookmark] = useState([]); // [...article]
-    const [refresh, setRefresh] = useState(false);
 
     const topicClick = (top) => {
         setTopic(top);
@@ -28,9 +27,7 @@ const Library = ({ route }) => {
     return(
         <>
             { Object.keys(topic).length > 0 ? 
-                <Topic refresh={refresh} 
-                       setRefresh={setRefresh}
-                       topic={topic}
+                <Topic topic={topic}
                        topicClick={topicClick}
                        article={article}
                        articleClick={articleClick}
@@ -38,9 +35,7 @@ const Library = ({ route }) => {
                        setBookmarkView={setBookmarkView}
                        bookmark={bookmark}
                        setBookmark={setBookmark} /> : 
-                <Menu refresh={refresh} 
-                      setRefresh={setRefresh}
-                      search={search} 
+                <Menu search={search} 
                       setSearch={setSearch}
                       topicClick={topicClick}
                       bookmarkView={bookmarkView}
