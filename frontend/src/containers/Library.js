@@ -9,6 +9,7 @@ const Library = ({ route }) => {
     
     const [bookmarkView, setBookmarkView] = useState(true);
     const [bookmark, setBookmark] = useState([]); // [...article]
+    const [refresh, setRefresh] = useState(false);
 
     const topicClick = (top) => {
         setTopic(top);
@@ -17,17 +18,19 @@ const Library = ({ route }) => {
     const articleClick = (article) => {
         setArticle(article);
     }
-
-    useEffect(() => {
-        if (route.params.topicData)
+    
+    if (route?.params?.topicData !== undefined)
+        useEffect(() => {
             setTopic(route.params.topicData);
-    }, [route.params.topicData])
+        }, [route.params.topicData])
 
     // console.log('nav', route.params.topicData)
     return(
         <>
             { Object.keys(topic).length > 0 ? 
-                <Topic topic={topic}
+                <Topic refresh={refresh} 
+                       setRefresh={setRefresh}
+                       topic={topic}
                        topicClick={topicClick}
                        article={article}
                        articleClick={articleClick}
@@ -35,7 +38,9 @@ const Library = ({ route }) => {
                        setBookmarkView={setBookmarkView}
                        bookmark={bookmark}
                        setBookmark={setBookmark} /> : 
-                <Menu search={search} 
+                <Menu refresh={refresh} 
+                      setRefresh={setRefresh}
+                      search={search} 
                       setSearch={setSearch}
                       topicClick={topicClick}
                       bookmarkView={bookmarkView}
