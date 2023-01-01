@@ -1,5 +1,6 @@
 import { StyleSheet, View, Text } from 'react-native';
 import { ActionIcon } from "./ActionIcon"
+import { useCheckList } from './checkList/hooks/useCheckList';
 import { useState } from 'react';
 
 const styles = StyleSheet.create({
@@ -39,25 +40,25 @@ const NavBar = ({
     rightIcon='empty', rightIconOnPress=()=>{}, rightText='',
     centerText='w0', weekOnChange=(week) => {},
  }) => {
+    const { displayWeek, setDisplayWeek, curWeek } = useCheckList()
     let centerBox;
     if (centerText.startsWith('w') && !isNaN(centerText.slice(1))) {
-        let currentWeek = Number(centerText.slice(1));
-        const [week, setWeek] = useState(currentWeek);
-        weekOnChange(week);
-        centerText = (week === 0) ? 'TTC' : 'Week ' + week;
+        // const [week, setWeek] = useState(curWeek);
+        weekOnChange(displayWeek);
+        centerText = (displayWeek === 0) ? 'TTC' : 'Week ' + displayWeek;
         centerBox = <View style={styles.box}>
             <ActionIcon iconName={'cheveron-left-s'} onPress={() => {
-                if (week === 0) return;
-                setWeek(week - 1);
+                if (displayWeek === 0) return;
+                setDisplayWeek(displayWeek - 1);
             }} size={24} padding={10} opacity={0.6} />
             <Text style={styles.title}>{centerText}</Text>
             <ActionIcon iconName={'cheveron-right-s'} onPress={() => {
-                if (week === 40) return;
-                setWeek(week + 1);
+                if (displayWeek === 40) return;
+                setDisplayWeek(displayWeek + 1);
             }} size={24} padding={10} opacity={0.6} />
         </View>;
-        leftIcon = week === currentWeek ? 'empty' : 'reply-s';
-        leftIconOnPress = () => {setWeek(currentWeek)};
+        leftIcon = displayWeek === curWeek ? 'empty' : 'reply-s';
+        leftIconOnPress = () => {setDisplayWeek(curWeek)};
     } else {
         centerBox = <View style={styles.box}>
             <Text style={styles.title}>{centerText}</Text>

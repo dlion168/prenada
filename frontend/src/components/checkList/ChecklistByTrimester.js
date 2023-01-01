@@ -4,7 +4,7 @@ import { NavBar } from '../NavBar';
 import MonthItem from './MonthItem'
 import { useRef } from 'react';
 
-import useCheckList from './hooks/useCheckList';
+import { useCheckList } from './hooks/useCheckList';
 
 const styles = StyleSheet.create({
     body:{
@@ -76,7 +76,7 @@ const checkByMonth=[
     {'title': 'Month 9', 'elements': [36,37,38,39,40],}
     ]
 let scrollY = []
-const ChecklistByTrimester = ({ search, setSearch, trimester, setTrimester, setViewWeek, navigation}) => {
+const ChecklistByTrimester = ({ search, setSearch, trimester, setTrimester, setViewWeek, setViewMonth, navigation}) => {
     const scrollRef = useRef(null)
     const renderOneMonth = ({item})=>{
         return(
@@ -88,7 +88,7 @@ const ChecklistByTrimester = ({ search, setSearch, trimester, setTrimester, setV
             data = {item.elements}
             renderItem = {(e) => {
                 return <MonthItem text={e.item > 0 ? `Week ${e.item} of pregnency`: 'TTC Checklist'} 
-                status={'past'} week={e.item} setViewWeek={setViewWeek}></MonthItem>
+                week={e.item} setViewWeek={setViewWeek} setViewMonth={setViewMonth}></MonthItem>
             }}
             keyExtractor={(item) => item}>
             </FlatList>

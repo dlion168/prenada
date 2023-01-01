@@ -28,13 +28,7 @@
       { "pic": "Capture (3).png", 
         "title": "Diseases" },
       { "pic": "Capture (4).png", 
-        "title": "Symptoms" },
-      { "pic": "Capture (5).png", 
-        "title": "Lifestyle" },
-      { "pic": "Capture (6).png", 
-        "title": "Beauty" },
-      { "pic": "Capture (7).png", 
-        "title": "Mental health" }
+        "title": "Symptoms" }
     ]
   },
   { "theme": "Pregnancy",

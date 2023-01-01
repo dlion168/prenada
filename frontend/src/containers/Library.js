@@ -1,15 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Menu } from '../components/library/Menu';
 import { Topic } from '../components/library/Topic';
 
-const Library = () => {
+const Library = ({ route }) => {
     const [search, setSearch] = useState('');
     const [topic, setTopic] = useState({}); // { pic: , title:, ... }
     const [article, setArticle] = useState({}); // { topic: , title:, ...}
     
     const [bookmarkView, setBookmarkView] = useState(true);
     const [bookmark, setBookmark] = useState([]); // [...article]
-    
 
     const topicClick = (top) => {
         setTopic(top);
@@ -19,6 +18,12 @@ const Library = () => {
         setArticle(article);
     }
 
+    useEffect(() => {
+        if (route.params.topicData)
+            setTopic(route.params.topicData);
+    }, [route.params.topicData])
+
+    // console.log('nav', route.params.topicData)
     return(
         <>
             { Object.keys(topic).length > 0 ? 

@@ -6,11 +6,15 @@ import { Bookmark, toggleSubview } from './Bookmark';
 import axios from '../../api';
 
 const styles = StyleSheet.create({
+    body: {
+        backgroundColor: '#FFFFFF',
+    },
     block: {
-        margin: 20,
-        marginTop: 30,
+        margin: 20
     },
     topImg: {
+        marginTop: 20,
+        marginEnd: 20,
         height: 245, 
         width: 327,
         borderRadius: 20,
@@ -21,12 +25,16 @@ const styles = StyleSheet.create({
         fontSize: 20,
     },
     article: {
-        margin: 20,
+        margin: 10,
+        padding: 10,
+        backgroundColor: "#F9FAFB",
+        borderRadius: 20,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
     artDescribe: {
+        width: 500,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-around',
@@ -59,7 +67,7 @@ const TopicMenu = ({ articleData, topic, topicClick, articleClick, bookmarkView,
                 rightText='Saved Articles' rightIcon='bookmark-s' rightIconOnPress={(event) => {
                     toggleSubview(bookmarkView, setBookmarkView, [], setBookmark);}}
             />
-            <ScrollView >
+            <ScrollView style={styles.body}>
                 <Image source={getImgSrc(topic.pic)} style={styles.topImg} />
                 <View style={styles.block}>
                     <Text style={styles.title}> {topic.title} </Text>
@@ -98,7 +106,7 @@ const Topic = ({ topic, topicClick, article, articleClick, bookmarkView, setBook
 
     useEffect(() => {
         getArticleData();
-    }, [])
+    }, [topic])
     // console.log('topic', topic)
     // console.log('article', article)
     // console.log('articleData', articleData)

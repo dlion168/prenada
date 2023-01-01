@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     },
 });
 
-const ChecklistItem = ({ week, idx, checked, text, liked }) => {
+const ChecklistItem = ({ week, _id, checked, text, liked }) => {
     // let row= [];
     // let prevOpenedRow = null;
     // const closeRow = (index) => {
@@ -41,14 +41,12 @@ const ChecklistItem = ({ week, idx, checked, text, liked }) => {
     //     }
     //     prevOpenedRow = row[index];
     //   };
-    const { checkListData, setCheckListData, onDeleteHandler } = useCheckList()
-
+    const { putChecklistItem, onDeleteHandler } = useCheckList()
     return (
         <Swipeable
             renderRightActions={() =>
                 <View style={styles.deleteBox}>
-                    <ActionIcon iconName={'trash-s'} size={20} padding={18} onPress={() => onDeleteHandler(week, idx)} />
-                    {/* <FontAwesome5 size={20} name='trash-alt' solid/> */}
+                    <ActionIcon iconName={'trash-s'} size={20} padding={18} onPress={() => onDeleteHandler(_id)} />
                 </View>
             }
             // onSwipeableOpen={() => closeRow(idx)}
@@ -56,10 +54,8 @@ const ChecklistItem = ({ week, idx, checked, text, liked }) => {
             rightOpenValue={-100}>
             <View style={styles.taskCardFlex}>
                 <ActionIcon size={20} padding={18} iconName={checked ? 'checkBox-t' : 'checkBox-f'}
-                    onPress={(event) => {
-                        const newData = [...checkListData]
-                        newData[week].data[idx].checked ^= true;
-                        setCheckListData(newData);
+                    onPress={() => {
+                        putChecklistItem(_id, {checked: !checked})
                     }
                 } />
                 <Text
@@ -71,9 +67,7 @@ const ChecklistItem = ({ week, idx, checked, text, liked }) => {
                 >{text}</Text>
                 <ActionIcon size={20} padding={18} iconName={liked ? 'heart-t' : 'heart-f'}
                     onPress={() => {
-                        const newData = [...checkListData]
-                        newData[week].data[idx].liked ^= true;
-                        setCheckListData(newData);
+                        putChecklistItem(_id, {liked: !liked})
                     }
                 } />
             </View>

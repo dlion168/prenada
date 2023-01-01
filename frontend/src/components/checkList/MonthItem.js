@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
 import { StyleSheet, TouchableOpacity, Text, View } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { useCheckList } from './hooks/useCheckList';
 
 const styles = StyleSheet.create({
     taskCard: {
@@ -32,10 +34,15 @@ const styles = StyleSheet.create({
 });
 // @param text: str, text to display in item
 // @param status: enum(['complete', 'past', 'current', 'future'])  
-const MonthItem = ({text, status, week, setViewWeek}) => {
+const MonthItem = ({text, week, setViewWeek, setViewMonth}) => {
+    const {curWeek} = useCheckList();
+    let status = curWeek === week ? "current" : curWeek > week ? "past" : "future"
+    // if ()
     return(
         <TouchableOpacity style={ status === 'current' ?  [styles.taskCardFlex, {backgroundColor: '#f87171'}] : styles.taskCardFlex}
-            onPress={()=>{setViewWeek(week)}}>
+            onPress={()=>{
+                setViewWeek(week)
+                setViewMonth(false)}}>
             <Text style={status === 'future' ?  styles.label : 
             [styles.label, status === 'current' ? {color: '#ffffff'} : {color: '#f87171'}] } 
             numberOfLines={1}>{text}</Text>

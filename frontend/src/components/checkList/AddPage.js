@@ -38,71 +38,72 @@ const styles = StyleSheet.create({
       },
 });
 
-const AddPage = ({editable, onAddHandler}) => {
+const AddPage = ({week, editable, onAddHandler}) => {
     return (
-        <>
-        <Text>Week 1 of Pregnency</Text>
-        <ChecklistItem/>
-        <View style={styles.taskCardFlex}>
-            <Text >Description</Text>
-            <Text>Take a pregnency test if you've missed your period.</Text>
-        </View>
-        <View style={styles.taskCardFlex} onPress={onAddHandler}>
-            <View style={styles.iconContainer} >
-                <FontAwesome5 name='calendar' color='#f87171' size={18}/>
-            </View>
-            <TextInput
-                style={styles.input}
-                onChangeText={onChangeText}
-                value={text}
-                placeholder="Add due date"
-            />
-        </View>
-        <View style={styles.taskCardFlex} onPress={onAddHandler}>
-            <View style={styles.iconContainer} >
-                <FontAwesome5 name='map-marker-alt' color='#f87171' size={18}/>
-            </View>
-            <TextInput
-                style={styles.input}
-                onChangeText={onChangeText}
-                value={locationText}
-                placeholder="Add Location"
-            />
-        </View>
-        <View style={styles.taskCardFlex} onPress={onAddHandler}>
-            <View style={styles.iconContainer} >
-                <FontAwesome5 name='sync-alt' color='#f87171' size={18}/>
-            </View>
-            <TextInput
-                style={styles.input}
-                onChangeText={onChangeText}
-                value={text}
-                placeholder="Repeat"
-            />
-        </View>
-        <View style={styles.taskCardFlex} onPress={onAddHandler}>
-            <TextInput
-                style={styles.input}
-                onChangeText={onChangeText}
-                value={noteText}
-                placeholder="Add note"
-            />
-        </View>
-        <View style={styles.block} >
-            <View style={styles.titleRow} >
-                <Text style={styles.title} >Related Articles</Text>
-            </View>
-            <ScrollView style={styles.pad} horizontal >
-                {theme.map((group, idx) =>
-                    <TopicCardSingle
-                        key={idx}
-                        top={group.topic[0]}
-                        onPress={() => navigation.jumpTo('Library')} // TODO: goto topicMenu
-                    />
-                )}
-            </ScrollView>
-        </View>
-        </>
+    //     <>
+    //     <Text>Week {`${week}`} of Pregnency</Text>
+    //     <ChecklistItem/>
+    //     <View style={styles.taskCardFlex}>
+    //         <Text >Description</Text>
+    //         <Text>Take a pregnency test if you've missed your period.</Text>
+    //     </View>
+    //     <View style={styles.taskCardFlex} onPress={onAddHandler}>
+    //         <View style={styles.iconContainer} >
+    //             <FontAwesome5 name='calendar' color='#f87171' size={18}/>
+    //         </View>
+    //         <TextInput
+    //             style={styles.input}
+    //             onChangeText={onChangeText}
+    //             value={text}
+    //             placeholder="Add due date"
+    //         />
+    //     </View>
+    //     <View style={styles.taskCardFlex} onPress={onAddHandler}>
+    //         <View style={styles.iconContainer} >
+    //             <FontAwesome5 name='map-marker-alt' color='#f87171' size={18}/>
+    //         </View>
+    //         <TextInput
+    //             style={styles.input}
+    //             onChangeText={onChangeText}
+    //             value={locationText}
+    //             placeholder="Add Location"
+    //         />
+    //     </View>
+    //     <View style={styles.taskCardFlex} onPress={onAddHandler}>
+    //         <View style={styles.iconContainer} >
+    //             <FontAwesome5 name='sync-alt' color='#f87171' size={18}/>
+    //         </View>
+    //         <TextInput
+    //             style={styles.input}
+    //             onChangeText={onChangeText}
+    //             value={text}
+    //             placeholder="Repeat"
+    //         />
+    //     </View>
+    //     <View style={styles.taskCardFlex} onPress={onAddHandler}>
+    //         <TextInput
+    //             style={styles.input}
+    //             onChangeText={onChangeText}
+    //             value={noteText}
+    //             placeholder="Add note"
+    //         />
+    //     </View>
+    //     <View style={styles.block} >
+    //         <View style={styles.titleRow} >
+    //             <Text style={styles.title} >Related Articles</Text>
+    //         </View>
+    //         <ScrollView style={styles.pad} horizontal >
+    //             {theme.map((group, idx) =>
+    //                 <TopicCardSingle
+    //                     key={idx}
+    //                     top={group.topic[0]}
+    //                     onPress={() => navigation.jumpTo('Library')} // TODO: goto topicMenu
+    //                 />
+    //             )}
+    //         </ScrollView>
+    //     </View>
+    //     </>
+    <></>
     );
 };
 

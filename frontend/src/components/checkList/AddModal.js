@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {TextInput, Modal, StyleSheet, Text, Pressable, View } from "react-native";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { ActionIcon } from '../ActionIcon';
+import { useCheckList } from "./hooks/useCheckList";
 const styles = StyleSheet.create({
     centeredView: {
       flex: 1,
@@ -28,12 +29,6 @@ const styles = StyleSheet.create({
       borderRadius: 20,
       padding: 10,
       elevation: 2
-    },
-    buttonOpen: {
-      backgroundColor: "#F194FF",
-    },
-    buttonClose: {
-      backgroundColor: "#2196F3",
     },
     textStyle: {
       color: "white",
@@ -76,6 +71,7 @@ const styles = StyleSheet.create({
 const AddModal = ({modalVisible, setModalVisible}) => {
   const [text, onChangeText] = useState("");
   const [checked , setChecked] = useState(false);
+  const { displayWeek, checkListData, setCheckListData, postChecklistItem } = useCheckList();
   return (
     <Modal
     animationType = "slide"
@@ -87,6 +83,12 @@ const AddModal = ({modalVisible, setModalVisible}) => {
   >
     <View style={styles.centeredView}>
       <View style={styles.modalView}>
+        <Pressable
+                style={[styles.button,]}
+                onPress={() => setModalVisible(!modalVisible)}
+              >
+          <FontAwesome5 name ="times" size={18} color='#f87171' /* gray/200 */ solid />
+        </Pressable>
         <View style={styles.taskCardFlex}> 
           <ActionIcon size={20} padding={18} iconName={checked ? 'checkBox-t' : 'checkBox-f'}
                       onPress={(event) => {
@@ -101,7 +103,11 @@ const AddModal = ({modalVisible, setModalVisible}) => {
           />
           <Pressable
             style={[styles.button]}
-            onPress={() => setModalVisible(false)}
+            onPress={() => {
+              setModalVisible(false)
+              if(text.trim.length != 0)
+                postChecklistItem({week: displayWeek, checked: checked, text:text, liked:false})
+            }}
           >
             <FontAwesome5 name ="check" size={18} color='#E5E7EB' /* gray/200 */ solid />
           </Pressable>
