@@ -15,6 +15,8 @@ const icons = {
     'bell-s': require('../assets/icon/secondary/bell.png'),
     'cheveron-left-s': require('../assets/icon/secondary/cheveron-left.png'),
     'cheveron-right-s': require('../assets/icon/secondary/cheveron-right.png'),
+    'cheveron-up-s': require('../assets/icon/secondary/cheveron-up.png'),
+    'cheveron-down-s': require('../assets/icon/secondary/cheveron-down.png'),
     'reply-s': require('../assets/icon/secondary/reply.png'),
     'bookmark-s': require('../assets/icon/secondary/bookmark.png'),
     'dots-horizontal-s': require('../assets/icon/secondary/dots-horizontal.png'),
@@ -23,6 +25,7 @@ const icons = {
     'trash-s': require('../assets/icon/secondary/trash.png'),
     'x-s': require('../assets/icon/secondary/x.png'),
     'pencil-s': require('../assets/icon/secondary/pencil.png'),
+    'pencil-p': require('../assets/icon/primary/pencil.png'),
     'save-s': require('../assets/icon/secondary/save.png'),
 };
 

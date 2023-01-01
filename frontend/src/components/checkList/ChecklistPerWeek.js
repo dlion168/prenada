@@ -54,6 +54,7 @@ const ChecklistPerWeek = ({setViewMonth}) =>{
     const [ detailID, setDetailID ] = useState(undefined)
     const { intro, title, data } = checkListData
     const [isNew, setIsNew] = useState(false)
+    
     return(
         <>
         { (detailID !== undefined) ?
@@ -91,7 +92,7 @@ const ChecklistPerWeek = ({setViewMonth}) =>{
                         setIsNew(true)
                         let item = await postChecklistItem({week:displayWeek, checked: false, liked: false, text:"",
                             date:new Date().toLocaleDateString("en", {year:"numeric", day:"2-digit", month:"2-digit"}),
-                            location:"", repeat:0, note:""})
+                            location:"", repeat:'', note:""})
                         setDetailID(item._id)
                         }}>
                 <Text style={styles.text} >+</Text>

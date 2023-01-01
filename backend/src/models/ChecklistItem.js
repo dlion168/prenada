@@ -8,7 +8,7 @@ const ChecklistItemSchema = new Schema({
   liked: Boolean,
   date: String,
   location: String,
-  repeat: Number,
+  repeat: String,
   Note: String
 });
 

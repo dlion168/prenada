@@ -4,6 +4,8 @@ import ChecklistItem from './ChecklistItem';
 import { useCheckList } from './hooks/useCheckList';
 import { useState, useEffect } from 'react';
 import { NavBar } from '../NavBar';
+import { ActionIcon } from '../ActionIcon';
+import { SelectList } from 'react-native-dropdown-select-list';
 
 const styles = StyleSheet.create({
     body: {
@@ -46,6 +48,19 @@ const styles = StyleSheet.create({
         paddingTop: 4,
         paddingBottom: 4,
     },
+    taskCardCloseFlex: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#F9FAFB', // gray/50
+        borderRadius: 10,
+        overflow: 'hidden',
+        justifyContent: 'flex-start',
+        paddingLeft: "5%",
+        paddingRight: "5%",
+        paddingTop: 4,
+        paddingBottom: 4,
+    },
     checkBoxContainer: {
         padding: 12,
     },
@@ -77,7 +92,8 @@ const AddPage =  ({isNew, editable, detailID, setDetailID}) => {
     const [repeat, setRepeat] = useState(item.repeat)
     const [note, setNote] = useState(item.note)
     const [edit, setEdit] = useState(editable)
-
+    const [dateOpen, setDateOpen] = useState(false)
+    const repeatOption = [{"key":1, "value":'daily'} ,{"key":2, "value":'weekly'}, {"key":3, "value":'biweekly'}, {"key":4, "value":'monthly'}]
     return (
         <>
             <NavBar 
@@ -139,17 +155,25 @@ const AddPage =  ({isNew, editable, detailID, setDetailID}) => {
                         <View style={styles.iconContainer} >
                             <FontAwesome5 name='calendar' color='#f87171' size={18}/>
                         </View>
-                        {edit?
+                        {edit ? 
                         <TextInput
                             style={styles.input}
-                            onChangeText={(v)=>setDate(v)}
+                            onChangeText={(v)=>{setLocation(v)}}
                             value={date}
-                            placeholder="Add due date"
-                        /> :
-                        <Text style={styles.input}> 
+                            placeholder="Add Date"
+                        />:
+                        <Text style={styles.input}>
                             {date}
-                        </Text>    
-                        }
+                        </Text>}
+                        {/* <Text style={styles.input}> 
+                            {date}
+                        </Text> 
+                        {edit?
+                        <Pressable style={styles.iconContainer}>
+                            <ActionIcon iconName={'pencil-p'} onPress={()=>{setDateOpen(true)}} size={16}/>
+                        </Pressable> :
+                        <></> 
+                        } */}
                     </View>
                 </View>
                 <View style={styles.pad}>
@@ -170,17 +194,22 @@ const AddPage =  ({isNew, editable, detailID, setDetailID}) => {
                     </View>
                 </View>
                 <View style={styles.pad}>
-                    <View style={styles.taskCardFlex}>
-                        <View style={styles.iconContainer} >
+                    <View style={styles.taskCardCloseFlex}>
+                        <View style={[styles.iconContainer, {marginRight: 18}]} >
                             <FontAwesome5 name='sync-alt' color='#f87171' size={18}/>
                         </View>
                         {edit?
-                        <TextInput
-                            style={styles.input}
-                            onChangeText={(v)=>setRepeat(v)}
-                            value={repeat}
-                            placeholder="Repeat times"
+                        <SelectList 
+                            setSelected={(val) => setRepeat(val)} 
+                            data={repeatOption} 
+                            save="value"
                         />:
+                        // <TextInput
+                        //     style={styles.input}
+                        //     onChangeText={(v)=>setRepeat(v)}
+                        //     value={repeat}
+                        //     placeholder="Repeat times"
+                        // />:
                         <Text style={styles.input}>
                             {repeat}
                         </Text>}
