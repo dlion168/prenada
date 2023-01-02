@@ -30,6 +30,7 @@ const ChecklistProvider = (props) => {
             params: {id: _id}
         });
         console.log(message, returnID);
+        return returnID
     }
     const postChecklistItem = async (item) => {
         const {
@@ -41,6 +42,7 @@ const ChecklistProvider = (props) => {
         let a = JSON.parse(JSON.stringify(checkListData))
         a.data.push(returnItem)
         setCheckListData(a)
+        return await returnItem
     }
 
     const putChecklistItem = async (_id, item) => {
@@ -63,15 +65,16 @@ const ChecklistProvider = (props) => {
         getChecklistByWeek(displayWeek, setCheckListData);
     }, [displayWeek])
 
-    const onDeleteHandler = (_id) => {
-        let deletedId = deleteChecklistItem(_id);
-        let arrayId = checkListData.data.find(function(item, i){
-            if(item._id === deletedId){
-              return i
-            }
+    const onDeleteHandler = async (_id) => {
+        let deletedId = await deleteChecklistItem(_id);
+        console.log("deletedId = ", deletedId)
+        let arrayId = checkListData.data.findIndex(function(item, i){
+            return item._id === deletedId
           }); 
+        console.log("deleted array ID = ", arrayId)
         let a = JSON.parse(JSON.stringify(checkListData))
         a.data.splice(arrayId, 1);
+        console.log()
         setCheckListData(a);
     };
 

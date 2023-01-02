@@ -22,6 +22,7 @@ const Menu = ({ search, setSearch, topicClick, bookmarkView, setBookmarkView,
                 bookmark, setBookmark, article, articleClick }) => {
     const [dosearch, setDosearch] = useState(false);
     const [searchRes, setSearchRes] = useState([]); // [title1, ...]
+    
 
     const handleSearch = async (search) => {
         const { data: { message, artData } } = await axios.get('/library/search', {
@@ -47,7 +48,8 @@ const Menu = ({ search, setSearch, topicClick, bookmarkView, setBookmarkView,
                 <>
                     <NavBar centerText='Library'
                             rightIcon='bookmark-s'
-                            rightIconOnPress={(event) => {toggleSubview(bookmarkView, setBookmarkView, [], setBookmark)}} />
+                            rightIconOnPress={(event) => 
+                                bookmarkView ? {} : toggleSubview(bookmarkView, setBookmarkView, [], setBookmark)} />
                     <ScrollView style={styles.body}>
                         <SearchBar value={search}
                                 onChangeText={(search) => {setSearch(search)}}

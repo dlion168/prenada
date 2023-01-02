@@ -85,10 +85,10 @@ const getBookmark = async (setBookmark, setUpdateBM) => {
 }
 
 const toggleSubview = async (bookmarkView, setBookmarkView, updateBM,
-  setBookmark, setUpdateBM = () => { }) => {
+  setBookmark, setUpdateBM = () => {}) => {
   // pop up animation
   let toValue = 400;
-  if (bookmarkView) {
+  if (!bookmarkView) {
     toValue = 0;
   }
   Animated.spring(
@@ -194,10 +194,10 @@ const Bookmark = ({ bookmarkView, setBookmarkView, bookmark, setBookmark }) => {
         <Text style={{ fontWeight: 'bold', fontSize: 20 }}> Your Saved </Text>
         <TouchableOpacity onPress={() => {
           toggleSubview(bookmarkView,
-            setBookmarkView,
-            updateBM,
-            setBookmark,
-            setUpdateBM)
+                        setBookmarkView,
+                        updateBM,
+                        setBookmark,
+                        setUpdateBM)
         }}>
           <Image source={cancelIcon} style={{ height: 20, width: 20 }} />
         </TouchableOpacity>

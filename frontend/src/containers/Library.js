@@ -7,7 +7,7 @@ const Library = ({ route }) => {
     const [topic, setTopic] = useState({}); // { pic: , title:, ... }
     const [article, setArticle] = useState({}); // { topic: , title:, ...}
     
-    const [bookmarkView, setBookmarkView] = useState(true);
+    const [bookmarkView, setBookmarkView] = useState(false);
     const [bookmark, setBookmark] = useState([]); // [...article]
 
     const topicClick = (top) => {
@@ -17,11 +17,11 @@ const Library = ({ route }) => {
     const articleClick = (article) => {
         setArticle(article);
     }
-
-    useEffect(() => {
-        if (route.params.topicData)
+    
+    if (route?.params?.topicData !== undefined)
+        useEffect(() => {
             setTopic(route.params.topicData);
-    }, [route.params.topicData])
+        }, [route.params.topicData])
 
     // console.log('nav', route.params.topicData)
     return(

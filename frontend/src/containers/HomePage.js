@@ -13,7 +13,7 @@ import AddModal from '../components/checkList/AddModal.js';
 
 const styles = StyleSheet.create({
     body: {
-        backgroundColor: '#F9FAFB', // gray/50
+        backgroundColor: '#FFFFFF', // gray/50
         paddingTop: 8,
         paddingBottom: 8,
         paddingLeft: 24,
@@ -132,11 +132,11 @@ const HomePage = ({ navigation }) => {
                     {checkListData.data.slice(0, 4).map((obj, idx) =>
                         <View style={styles.pad} key={idx}>
                             <ChecklistItem
-                                week={displayWeek}
                                 _id={obj._id}
                                 checked={obj.checked}
                                 text={obj.text}
                                 liked={obj.liked}
+                                onPress={()=>{}}
                             />
                         </View>
                     )}

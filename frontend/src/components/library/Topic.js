@@ -64,8 +64,8 @@ const TopicMenu = ({ articleData, topic, topicClick, articleClick, bookmarkView,
         <>
             <NavBar centerText=''
                 leftText='Back' leftIcon='cheveron-left-s' leftIconOnPress={(event) => {topicClick('')}}
-                rightText='Saved Articles' rightIcon='bookmark-s' rightIconOnPress={(event) => {
-                    toggleSubview(bookmarkView, setBookmarkView, [], setBookmark);}}
+                rightText='Saved Articles' rightIcon='bookmark-s' rightIconOnPress={(event) => 
+                    bookmarkView ? {} : toggleSubview(bookmarkView, setBookmarkView, [], setBookmark)}
             />
             <ScrollView style={styles.body}>
                 <Image source={getImgSrc(topic.pic)} style={styles.topImg} />
