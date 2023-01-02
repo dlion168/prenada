@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { View, TextInput, StyleSheet, Image, Button } from 'react-native';
 import axios from '../api';
+import Alert from '../components/Alert';
 
 const styles = StyleSheet.create({
     container: {
@@ -31,17 +32,26 @@ const styles = StyleSheet.create({
     },
 });
 
-const Login = () => {
+const Login = ({ setLoginUser, storeData }) => {
     const [accountId, setAccountId] = useState("");
     const [pwd, setPwd] = useState("");
-    const login = async () => {
-        const { data: { message }, } = await axios.post('/login', {
-            accountId,
-            pwd
-        });
+    const [msg, setMsg] = useState("");
+    const [modalVisible, setModalVisible] = useState(false);
 
-        console.log(message)
-        //set localstorage
+    const login = async () => {
+        try {
+            const { data: { message }, } = await axios.post('/login', {
+                accountId,
+                pwd
+            });
+            storeData(accountId);//jwt?
+            setLoginUser(accountId);
+        } catch (e) {
+            if (e.response.data.message) {
+                setMsg(e.response.data.message);
+                setModalVisible(true);
+            }
+        }
     };
 
     return (
@@ -75,6 +85,10 @@ const Login = () => {
                     accessibilityLabel="LOGIN"
                 />
             </View>
+            <Alert
+                description={msg}
+                modalVisible={modalVisible}
+                setModalVisible={setModalVisible} />
         </View>
     );
 }

@@ -1,5 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native';
-// import { AsyncStorage } from '@react-native-community/async-storage';
+import { useEffect, useState } from 'react';
+import { StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import BottomTab from './src/components/BottomTabNavigator.js'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -10,42 +11,47 @@ import Login from './src/containers/Login.js';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const [loginUser, setLoginUser] = useState("");
 
-  // const storeData = async () => {
-  //   try {
-  //     await AsyncStorage.setItem(
-  //       '@MySuperStore:key',
-  //       'I like to save it.',
-  //     );
-  //   } catch (error) {
-  //     // Error saving data
-  //   }
-  // };
+  const storeData = async (value) => {
+    try {
+      await AsyncStorage.setItem('loginUser', value)
+    } catch (e) {
+      // saving error
+    }
+  }
 
-  // const retrieveData = async () => {
-  //   let id = "";
-  //   try {
-  //     const value = await AsyncStorage.getItem('TASKS');
-  //     if (value !== null) {
-  //       // We have data!!
-  //       console.log(value);
-  //       id = "ok"
-  //     }
-  //   } catch (error) {
-  //     // Error retrieving data
-  //   }
-  //   return id;
-  // };
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('loginUser')
+      if(value !== null || value !=="") {
+        setLoginUser(value)
+      }
+    } catch(e) {
+      // error reading value
+    }
+  }
 
-  return (
-    <Login />
-    // <ChecklistProvider>
-    //   <NavigationContainer>
-    //     <Stack.Navigator screenOptions={{ headerShown: false }}>
-    //       <Stack.Screen name="Tabs" component={BottomTab} />
-    //     </Stack.Navigator>
-    //   </NavigationContainer>
-    // </ChecklistProvider>
+  useEffect(()=>{
+    getData();
+  },[]);
+
+  return (<>
+    {
+      loginUser == "" ?
+        <Login
+          setLoginUser={setLoginUser}
+          storeData={storeData} />
+        :
+        <ChecklistProvider>
+          <NavigationContainer>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="Tabs" component={BottomTab} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </ChecklistProvider>
+    }
+  </>
   );
 }
 
