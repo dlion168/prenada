@@ -1,7 +1,7 @@
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Pressable } from 'react-native';
 import { ActionIcon } from "./ActionIcon"
 import { useCheckList } from './checkList/hooks/useCheckList';
-import { useState } from 'react';
+import useUserState from '../containers/hooks/useUserState';
 
 const styles = StyleSheet.create({
     topSpace: {
@@ -36,11 +36,12 @@ const styles = StyleSheet.create({
 })
 
 const NavBar = ({
-    leftIcon='empty', leftIconOnPress=()=>{}, leftText='',
-    rightIcon='empty', rightIconOnPress=()=>{}, rightText='',
-    centerText='w0', weekOnChange=(week) => {},
- }) => {
-    const { displayWeek, setDisplayWeek, curWeek } = useCheckList()
+    leftIcon = 'empty', leftIconOnPress = () => { }, leftText = '',
+    rightIcon = 'empty', rightIconOnPress = () => { }, rightText = '',
+    centerText = 'w0', weekOnChange = (week) => { },
+}) => {
+    const { displayWeek, setDisplayWeek, curWeek } = useCheckList();
+    const { storeData } = useUserState();
     let centerBox;
     if (centerText.startsWith('w') && !isNaN(centerText.slice(1))) {
         // const [week, setWeek] = useState(curWeek);
@@ -58,7 +59,7 @@ const NavBar = ({
             }} size={24} padding={10} opacity={0.6} />
         </View>;
         leftIcon = displayWeek === curWeek ? 'empty' : 'reply-s';
-        leftIconOnPress = () => {setDisplayWeek(curWeek)};
+        leftIconOnPress = () => { setDisplayWeek(curWeek) };
     } else {
         centerBox = <View style={styles.box}>
             <Text style={styles.title}>{centerText}</Text>
@@ -76,6 +77,14 @@ const NavBar = ({
                 <View style={styles.box}>
                     <Text style={styles.auxText}>{rightText}</Text>
                     <ActionIcon iconName={rightIcon} onPress={rightIconOnPress} size={24} padding={10} opacity={0.6} />
+                    <Pressable
+                        onPress={() => {
+                            storeData("")
+                        }}>
+                        <Text style={{ color: 'white', fontWeight: 'bold' }}>
+                            Log Out
+                        </Text>
+                    </Pressable>
                 </View>
             </View>
         </View>

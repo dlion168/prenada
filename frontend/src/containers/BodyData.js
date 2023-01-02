@@ -18,7 +18,6 @@ const BodyData = () => {
                 weekOnChange={(week) => {
                     useEffect(() => { setDisplayWeek(week) })
                 }}
-                rightIcon='cog-s'
             />
             <Tab.Navigator
                 screenOptions={{

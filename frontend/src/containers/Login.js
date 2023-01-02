@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     },
 });
 
-const Login = ({ setLoginUser, storeData }) => {
+const Login = ({ storeData }) => {
     const [accountId, setAccountId] = useState("");
     const [pwd, setPwd] = useState("");
     const [msg, setMsg] = useState("");
@@ -45,7 +45,6 @@ const Login = ({ setLoginUser, storeData }) => {
                 pwd
             });
             storeData(accountId);//jwt?
-            setLoginUser(accountId);
         } catch (e) {
             if (e.response.data.message) {
                 setMsg(e.response.data.message);
