@@ -5,6 +5,9 @@ import { saveArticle } from './Bookmark';
 import { getArtStatus } from './Bookmark';
 
 const styles = StyleSheet.create({
+    body: {
+        backgroundColor: '#FFFFFF',
+    },
     title: {
         margin: 20,
         display: 'flex',
@@ -77,7 +80,7 @@ const Article = ({ article, articleClick }) => {
                     saveArticle(article.id, !status);
                     setStatus(!status);}}
             />
-            <ScrollView >
+            <ScrollView style={styles.body}>
                 <View style={styles.title}>
                     <Text style={styles.summary}> {article.title} </Text>
                     <View style={styles.tag}>
