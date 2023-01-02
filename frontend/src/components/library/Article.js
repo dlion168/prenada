@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
     reviewer: {
-        height: 70,
         width: 500,
         borderTopWidth: 1,
         borderBottomWidth: 1,
@@ -40,8 +39,8 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
     reviewerImg: {
-        height: 50,
-        width: 50,
+        height: 60,
+        width: 60,
         margin: 10,
     },
     reviewerSummary: {
