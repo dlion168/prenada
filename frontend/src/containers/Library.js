@@ -17,11 +17,11 @@ const Library = ({ route }) => {
     const articleClick = (article) => {
         setArticle(article);
     }
-    
-    if (route?.params?.topicData !== undefined)
-        useEffect(() => {
+
+    useEffect(() => {
+        if (route?.params?.topicData)
             setTopic(route.params.topicData);
-        }, [route.params.topicData])
+    }, [route?.params?.topicData])
 
     // console.log('nav', route.params.topicData)
     return(

@@ -5,6 +5,9 @@ import { saveArticle } from './Bookmark';
 import { getArtStatus } from './Bookmark';
 
 const styles = StyleSheet.create({
+    body: {
+        backgroundColor: '#FFFFFF',
+    },
     title: {
         margin: 20,
         display: 'flex',
@@ -28,7 +31,6 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
     reviewer: {
-        height: 70,
         width: 500,
         borderTopWidth: 1,
         borderBottomWidth: 1,
@@ -37,8 +39,8 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
     reviewerImg: {
-        height: 50,
-        width: 50,
+        height: 60,
+        width: 60,
         margin: 10,
     },
     reviewerSummary: {
@@ -77,7 +79,7 @@ const Article = ({ article, articleClick }) => {
                     saveArticle(article.id, !status);
                     setStatus(!status);}}
             />
-            <ScrollView >
+            <ScrollView style={styles.body}>
                 <View style={styles.title}>
                     <Text style={styles.summary}> {article.title} </Text>
                     <View style={styles.tag}>
