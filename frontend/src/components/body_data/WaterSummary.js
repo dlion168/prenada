@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
 
 
 const WaterSummary = ({ waterSummary }) => {
+    const windowWidth = Dimensions.get('window').width;
     let data = {
         labels: [],
         datasets: [
@@ -61,7 +62,7 @@ const WaterSummary = ({ waterSummary }) => {
                 },
                 {
 
-                    data: [2000, 2000, 2000, 2000, 2000, 2000, 2000],
+                    data: [0, 0, 0, 0, 0, 0, 0],
                     color: (opacity = 1) => `rgba(129, 140, 248, ${opacity})`, // optional
                     strokeWidth: 2 // optional
                 }
