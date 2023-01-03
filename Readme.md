@@ -14,9 +14,16 @@ cd frontend
 yarn install
 ```
 ### 資料庫串接
-同作業新增.env檔案，檔案內需包含 `MONGO_URL=` 的連線字串
+同hack2新增.env檔案，檔案內需包含：
+```
+MONGO_URL=
+MODE=
+```
 
 ### 資料匯入方式
+.env檔案設定為`MODE=Reset`會初始化checkList及Library
+**!! 請助教第一次使用時要 reset !!**
+
 
 ### 登入之帳密
 帳號：testuser
@@ -28,7 +35,7 @@ yarn install
 ![](https://i.imgur.com/orOSAuS.png)
 * 最上面的部分顯示checklist的內容
 * Body Data 有當周的簡單統計，點選"See All"可以轉導至Body Data頁籤
-* Tips to you 顯示孕婦相關知識文章，可以從捷徑點選文章
+* Tips to you 顯示孕婦相關知識文章，可以從捷徑點選文章主題
 
 ### Checklist
 ![](https://i.imgur.com/ppJ9Ue2.png)
@@ -37,8 +44,12 @@ yarn install
 
 ### Library
 ![](https://i.imgur.com/gCLiwvb.png)
-* 最上方的搜尋可以依標題搜尋文章
+![](https://i.imgur.com/La17nPJ.png)
+![](https://i.imgur.com/hQZOx7e.png)
+* 最上方可以輸入關鍵字搜尋文章，文章的標題有含該關鍵字的都會被列出
 * 點選下面的block可以進入該分類，並列出該類別的所有文章
+* 在文章的頁面，點選右上角的書籤可以儲存文章到書籤頁
+* 在書籤頁可以刪除釘選的文章
 
 ### Body Data
 ![](https://i.imgur.com/Dtjy3Fi.png)

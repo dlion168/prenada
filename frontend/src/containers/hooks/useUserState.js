@@ -7,7 +7,7 @@ export default () => {
     const storeData = async (value) => {
         try {
             await AsyncStorage.setItem('loginUser', value)
-            console.log('test'+value)
+            console.log('test' + value)
             setLoginUser(value)
         } catch (e) {
             // saving error
@@ -25,9 +25,18 @@ export default () => {
         }
     }
 
-    useEffect(() => {
-        getData();
-    }, [loginUser]);
+    // const removeValue = async () => {
+    //     try {
+    //         await AsyncStorage.removeItem('loginUser')
+    //         setLoginUser("")
+    //     } catch (e) {
+    //         // remove error
+    //     }
+    // }
+
+    // useEffect(() => {
+    //     getData();
+    // }, [loginUser]);
 
     return { loginUser, setLoginUser, storeData, getData };
 }

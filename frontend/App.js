@@ -1,4 +1,3 @@
-// import { StyleSheet } from 'react-native';
 import { useEffect } from "react";
 import BottomTab from './src/components/BottomTabNavigator.js'
 import { NavigationContainer } from '@react-navigation/native';
@@ -11,31 +10,29 @@ import useUserState from './src/containers/hooks/useUserState.js';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const { loginUser, storeData } = useUserState();
-  console.log('loginUser'+loginUser)
+
+  const { loginUser, storeData, getData } = useUserState();
+  console.log(loginUser);
+
+  // useEffect(() => {
+  //   getData();
+  // }, []);
 
   return (
-    <ChecklistProvider>
+    <>
       {
         loginUser == "" ?
           <Login
             storeData={storeData} />
           :
-          <NavigationContainer>
-            <Stack.Navigator screenOptions={{ headerShown: false }}>
-              <Stack.Screen name="Tabs" component={BottomTab} />
-            </Stack.Navigator>
-          </NavigationContainer>
+          <ChecklistProvider>
+            <NavigationContainer>
+              <Stack.Navigator screenOptions={{ headerShown: false }}>
+                <Stack.Screen name="Tabs" component={BottomTab} />
+              </Stack.Navigator>
+            </NavigationContainer>
+          </ChecklistProvider>
       }
-    </ChecklistProvider>
+    </>
   );
 }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });
