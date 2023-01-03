@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
 })
 
 const SleepSummary = ({ sleepSummary }) => {
+    console.log(sleepSummary)
     const windowWidth = Dimensions.get('window').width;
     const data = {
         labels: sleepSummary.date,

@@ -10,6 +10,7 @@ import axios from '../api';
 import SymptomSummary from '../components/body_data/SymptomSummary'
 import { BodyDataCard } from '../components/homePage/BodyDataCard.js';
 import AddModal from '../components/checkList/AddModal.js';
+import useWater from '../components/body_data/hooks/useWater.js';
 
 const styles = StyleSheet.create({
     body: {
@@ -88,10 +89,12 @@ const updateSymptom = async (date, callback) => {
 
 const HomePage = ({ navigation }) => {
     const { displayWeek, setDisplayWeek, checkListData, setCheckListData } = useCheckList()
-    const [ waterTotal, setWaterTotal] = useState(0);
-    const [ modalVisible, setModalVisible ] = useState(false);
-    useEffect(() => updateWater('20221124', setWaterTotal), [displayWeek]); // TODO: should be refreshed when data is renewed
-    const [ symSumm, setSymSumm] = useState(['', 0]);
+    const { waterTotal, getTotalWater } = useWater(displayWeek);
+    const [modalVisible, setModalVisible] = useState(false);
+    useEffect(() => {
+        getTotalWater(displayWeek)
+    }, [displayWeek]); 
+    const [symSumm, setSymSumm] = useState(['', 0]);
     let swipeRowRef = [];
     let prevOpenedRow;
     useEffect(() => updateSymptom('20221124', setSymSumm), [displayWeek]); // TODO: should be refreshed when data is renewed
@@ -136,18 +139,18 @@ const HomePage = ({ navigation }) => {
                                 checked={obj.checked}
                                 text={obj.text}
                                 liked={obj.liked}
-                                onPress={()=>{}}
+                                onPress={() => { }}
                             />
                         </View>
                     )}
                     {checkListData.data.length > 4 ?
                         <View style={styles.padCenter}>
-                            <FontAwesome5 name ="ellipsis-v" size={18} color='#E5E7EB' /* gray/200 */ solid />
+                            <FontAwesome5 name="ellipsis-v" size={18} color='#E5E7EB' /* gray/200 */ solid />
                         </View> :
                         <></>
                     }
                     <View style={styles.pad}>
-                        <AddListItem onAddHandler={(e) => {setModalVisible(true)}}/>
+                        <AddListItem onAddHandler={(e) => { setModalVisible(true) }} />
                     </View>
                 </View>
                 {/* body data */}
@@ -197,7 +200,7 @@ const HomePage = ({ navigation }) => {
                         )}
                     </ScrollView>
                 </View>
-                <AddModal modalVisible={modalVisible} setModalVisible={setModalVisible}/>
+                <AddModal modalVisible={modalVisible} setModalVisible={setModalVisible} />
             </ScrollView>
         </>
     )
