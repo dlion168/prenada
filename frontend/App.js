@@ -14,9 +14,9 @@ export default function App() {
   const { loginUser, storeData, getData } = useUserState();
   console.log(loginUser);
 
-  // useEffect(() => {
-  //   getData();
-  // }, []);
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <>

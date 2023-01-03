@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default () => {
@@ -24,19 +24,6 @@ export default () => {
             // error reading value
         }
     }
-
-    // const removeValue = async () => {
-    //     try {
-    //         await AsyncStorage.removeItem('loginUser')
-    //         setLoginUser("")
-    //     } catch (e) {
-    //         // remove error
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     getData();
-    // }, [loginUser]);
 
     return { loginUser, setLoginUser, storeData, getData };
 }
