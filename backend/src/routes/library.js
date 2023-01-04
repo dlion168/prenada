@@ -9,13 +9,11 @@ db.connect();
 
 const getThemeData = async () => {
   try {
-    /*let ext = []; // reset data everytime, this will be removed after all done
-    if (ext.length === 0) {
+    if (process.env.MODE === 'Reset') {
       console.log('Reset themeData');
       await Theme.deleteMany({});
       await Theme.insertMany(themeData);
     }
-    ext = await Theme.find({});*/
 
     const ext = await Theme.find({});
     if (ext === undefined || ext.length === 0)
@@ -27,14 +25,12 @@ const getThemeData = async () => {
 
 const getArticleData = async (topicName) => {
   try {
-    /*let ext = []; // reset data everytime, this will be removed after all done
-    if (ext.length === 0) {
+    if (process.env.MODE === 'Reset') {
       console.log('Reset articleData');
       await Article.deleteMany({});
       await Article.insertMany(articleData);
     }
-    ext = await Article.find({ topic: topicName });*/
-    
+
     const ext = await Article.find({ topic: topicName });
     if (ext === undefined || ext.length === 0)
       return { message: 'Cannot find target articleData', ArticleData: [] }
@@ -65,7 +61,6 @@ const postBookmark = async (updateBM) => {
         }
       });
     });
-    // const bookmark = await Article.find({ bookmark: true });
     return { message: 'Post the bookmark list successfully' };
   } catch(err) {throw new Error("Post bookmarks error: " + err);}
 }
@@ -99,8 +94,6 @@ const getSearch = async (search) => {
     const data = await Article.find({});
     let art = [];
     data.forEach(data => {
-      // console.log(data.title)
-      // console.log(data.title.includes(search))
       if (data.title.includes(search)) {
         art.push(data);
       }
