@@ -25,7 +25,7 @@ export default function App() {
           <Login
             storeData={storeData} />
           :
-          <ChecklistProvider>
+          <ChecklistProvider storeData={storeData}>
             <NavigationContainer>
               <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="Tabs" component={BottomTab} />
