@@ -4,14 +4,12 @@
 ### 安裝指令
 ```
 cd prenada
-cd backend
-yarn install
+yarn install:all
 ```
-
+安裝完後開啟前後端進行測試：
 ```
-cd prenada
-cd frontend
-yarn install
+yarn start
+yarn server
 ```
 ### 資料庫串接
 同hack2新增.env檔案，檔案內需包含：
@@ -45,12 +43,17 @@ MODE=
 
 ### Library
 ![](https://i.imgur.com/gCLiwvb.png)
-![](https://i.imgur.com/La17nPJ.png)
-![](https://i.imgur.com/hQZOx7e.png)
-* 最上方可以輸入關鍵字搜尋文章，文章的標題有含該關鍵字的都會被列出
+* 最上方可以輸入關鍵字搜尋文章，文章的標題有含該關鍵字的都會被列出，搜尋到的文章可點選進入文章頁面
+* 點選右上角的書籤圖示可以檢視目前的書籤頁內容
 * 點選下面的block可以進入該分類，並列出該類別的所有文章
-* 在文章的頁面，點選右上角的書籤可以儲存文章到書籤頁
-* 在書籤頁可以刪除釘選的文章
+
+![](https://i.imgur.com/hQZOx7e.png)
+* 在分類頁面，下方列出該分頁所包含的文章，點選後進入文章頁面
+* 同上一張圖，點選右上角的書籤圖示可以檢視目前的書籤頁內容
+* 在書籤頁可以將文章從書籤頁中刪除
+
+![](https://i.imgur.com/La17nPJ.png)
+* 在文章的頁面，點選右上角的書籤圖示可以新增或刪除文章到書籤頁
 
 ### Body Data
 ![](https://i.imgur.com/Dtjy3Fi.png)
@@ -66,7 +69,7 @@ MODE=
 |修課同學|貢獻|
 | -------- | -------- |
 |電機四 b07401024 林羿成|BottomTab、Checklist、前期發想、UI/UX設計、訪談執行、系統說明文件|
-|電機三 b09901078 葉軒易||
+|電機三 b09901078 葉軒易|Library, deployment|
 |資管碩二 r10725045 蔡祐琳|Body Data、資料庫建置、影片製作|
 
 |外掛組員||

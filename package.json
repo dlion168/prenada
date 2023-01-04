@@ -9,7 +9,8 @@
   "private": null,
   "scripts": {
     "start": "cd frontend && yarn start",
-    "server": "cd backend && yarn server"
+    "server": "cd backend && yarn server",
+    "install:all": "cd frontend && yarn install --frozen-lockfile && cd ../backend && yarn install --frozen-lockfile"
   },
   "dependencies": {}
 }
