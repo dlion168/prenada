@@ -54,11 +54,11 @@ const putChecklistItem = async (_id, item) => {
 }
 
 const postChecklistItem = async (item) => {
-  
   try {
     item = await new ChecklistItem(item).save();
-    let weekdata = ChecklistPerWeek.findOne({ week: item.week })
-    // data.push(item._id).save())
+    let weekdata = await ChecklistPerWeek.findOne({ week: item.week })
+    weekdata.data.push(item._id)
+    await ChecklistPerWeek.updateOne({ week: item.week }, weekdata)
     return { message: 'Post ChecklistItem successfully', returnItem: item };
   } catch(err) {throw new Error("Post ChecklistItem error: " + err);}
 }
@@ -92,8 +92,8 @@ router.put('/item', async (req, res) => {
   res.status(200).send(result);
 })
 router.post('/item', async (req, res) => {
-  console.log('add new checklist item', req.body.params.item)
   let result = await postChecklistItem(req.body.params.item);
+  console.log('add new checklist item', result)
   res.status(200).send(result);
 })
 // router.post('/bookmark/article', async (req, res) => {

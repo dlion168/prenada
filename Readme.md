@@ -36,11 +36,12 @@ MODE=
 * 最上面的部分顯示checklist的內容
 * Body Data 有當周的簡單統計，點選"See All"可以轉導至Body Data頁籤
 * Tips to you 顯示孕婦相關知識文章，可以從捷徑點選文章主題
-
+* 將Checklist 的項目向左滑，可以顯示刪除按鈕，點擊可刪除該項checklist222222222222222
 ### Checklist
 ![](https://i.imgur.com/ppJ9Ue2.png)
 ![](https://i.imgur.com/8FI3qeD.png)
 * 點選某一周進入，右下角的"+"可以新增Checklist
+
 
 ### Library
 ![](https://i.imgur.com/gCLiwvb.png)

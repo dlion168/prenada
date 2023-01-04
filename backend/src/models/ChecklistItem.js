@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 const Schema = mongoose.Schema;
 
 const ChecklistItemSchema = new Schema({
+  week: !Number,
   checked: Boolean, 
   text: String,
   liked: Boolean,

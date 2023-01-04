@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {TextInput, Modal, StyleSheet, Text, Pressable, View } from "react-native";
+import {TextInput, Modal, StyleSheet, Text, Pressable, TouchableOpacity, View } from "react-native";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { ActionIcon } from '../ActionIcon';
 import { useCheckList } from "./hooks/useCheckList";
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
 const AddModal = ({modalVisible, setModalVisible}) => {
   const [text, onChangeText] = useState("");
   const [checked , setChecked] = useState(false);
-  const { displayWeek, checkListData, setCheckListData, postChecklistItem } = useCheckList();
+  const { displayWeek, postChecklistItem } = useCheckList();
   return (
     <Modal
     animationType = "slide"
@@ -84,7 +84,7 @@ const AddModal = ({modalVisible, setModalVisible}) => {
     <View style={styles.centeredView}>
       <View style={styles.modalView}>
         <Pressable
-                style={[styles.button,]}
+                style={[styles.button,{alignSelf:"flex-end"}]}
                 onPress={() => setModalVisible(!modalVisible)}
               >
           <FontAwesome5 name ="times" size={18} color='#f87171' /* gray/200 */ solid />
@@ -105,18 +105,19 @@ const AddModal = ({modalVisible, setModalVisible}) => {
             style={[styles.button]}
             onPress={() => {
               setModalVisible(false)
-              if(text.trim.length != 0)
+              if(text.trim().length != 0)
                 postChecklistItem({week: displayWeek, checked: checked, text:text, liked:false})
+                onChangeText('')
             }}
           >
             <FontAwesome5 name ="check" size={18} color='#E5E7EB' /* gray/200 */ solid />
           </Pressable>
         </View>
         <View style={styles.iconalign}>
-          <View style={styles.iconContainer}><FontAwesome5 name ="calendar" size={18} color='#F87171' /* red/50 */ solid /></View>
-          <View style={styles.iconContainer}><FontAwesome5 name ="map-marker-alt" size={18} color='#F87171' /* red/50 */ solid /></View>
-          <View style={styles.iconContainer}><FontAwesome5 name ="sync-alt" size={18} color='#F87171' /* red/50 */ solid /></View>
-          <View style={styles.iconContainer}><FontAwesome5 name ="pen" size={18} color='#F87171' /* red/50 */ solid /></View>
+          <TouchableOpacity style={styles.iconContainer}><FontAwesome5 name ="calendar" size={18} color='#F87171' /* red/50 */ solid /></TouchableOpacity>
+          <TouchableOpacity style={styles.iconContainer}><FontAwesome5 name ="map-marker-alt" size={18} color='#F87171' /* red/50 */ solid /></TouchableOpacity>
+          <TouchableOpacity style={styles.iconContainer}><FontAwesome5 name ="sync-alt" size={18} color='#F87171' /* red/50 */ solid /></TouchableOpacity>
+          <TouchableOpacity style={styles.iconContainer}><FontAwesome5 name ="pen" size={18} color='#F87171' /* red/50 */ solid /></TouchableOpacity>
         </View>
       </View>
     </View>
