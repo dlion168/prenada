@@ -32,7 +32,7 @@ MODE=
 
 ## 重點測試
 ### Home Page
-![](https://i.imgur.com/Ehzcpu8.png =40%x)![](https://i.imgur.com/bOV29tF.png =40%x)
+![](https://i.imgur.com/Ehzcpu8.png)![](https://i.imgur.com/bOV29tF.png)
 
 * Checklist 
     * 最上面的部分顯示checklist的內容
@@ -42,7 +42,7 @@ MODE=
 * Tips to you 顯示孕婦相關知識文章，可以從捷徑點選文章主題
 
 ### Checklist
-![](https://i.imgur.com/w7g4U6Z.png =40%x)![](https://i.imgur.com/TCKsm0Q.png =40%x)![](https://i.imgur.com/i8HPxSX.png =40%x)![](https://i.imgur.com/1ncYCLn.png =40%x)
+![](https://i.imgur.com/w7g4U6Z.png)![](https://i.imgur.com/TCKsm0Q.png)![](https://i.imgur.com/i8HPxSX.png)![](https://i.imgur.com/1ncYCLn.png)
 
 
 * 點選某一周進入，右下角的"+"可以新增Checklist
