@@ -11,6 +11,7 @@ const CheckListContext = createContext({
     onDeleteHandler: ()=>{},
 });
 const ChecklistProvider = (props) => {
+    const { children, storeData } = props; // parse storeData and add storeData to value
     const [checkListData, setCheckListData] = useState({intro:"", title:"", data:[]})
     const [curWeek, setCurWeek] = useState(2)
     const [displayWeek, setDisplayWeek] = useState(curWeek)
@@ -83,8 +84,16 @@ const ChecklistProvider = (props) => {
     };
 
     return <CheckListContext.Provider
-        value={{ displayWeek, curWeek, setDisplayWeek, checkListData, setCheckListData,
-             postChecklistItem, putChecklistItem, onDeleteHandler }}
+        value={{ 
+            displayWeek, 
+            curWeek, 
+            setDisplayWeek, 
+            checkListData, 
+            setCheckListData,
+            postChecklistItem, 
+            putChecklistItem, 
+            onDeleteHandler, 
+            storeData }}
         {...props}
     />
 

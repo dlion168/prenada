@@ -1,7 +1,6 @@
 import { StyleSheet, View, Text, Pressable } from 'react-native';
 import { ActionIcon } from "./ActionIcon"
 import { useCheckList } from './checkList/hooks/useCheckList';
-import useUserState from '../containers/hooks/useUserState';
 
 const styles = StyleSheet.create({
     topSpace: {
@@ -40,8 +39,7 @@ const NavBar = ({
     rightIcon = 'empty', rightIconOnPress = () => { }, rightText = '',
     centerText = 'w0', weekOnChange = (week) => { },
 }) => {
-    const { displayWeek, setDisplayWeek, curWeek } = useCheckList();
-    const { storeData } = useUserState();
+    const { displayWeek, setDisplayWeek, curWeek, storeData } = useCheckList();
     let centerBox;
     if (centerText.startsWith('w') && !isNaN(centerText.slice(1))) {
         // const [week, setWeek] = useState(curWeek);
