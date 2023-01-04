@@ -6,7 +6,9 @@
 cd prenada
 yarn install:all
 ```
-安裝完後開啟前後端進行測試：
+安裝完後請在 /prenada/backend目錄下放入.env檔
+
+然後在 /prenada 目錄下開啟前後端進行測試：
 ```
 yarn start
 yarn server
