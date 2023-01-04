@@ -114,6 +114,7 @@ const AddPage =  ({isNew, editable, detailID, setDetailID}) => {
                             setLocation(item.location)
                             setRepeat(item.repeat)
                             setNote(item.note)
+                            setEdit(()=>!edit)
                         }
                         }
                     } 

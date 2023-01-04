@@ -22,6 +22,8 @@ MODE=
 .env檔案設定為`MODE=Reset`會初始化checkList及Library
 **!! 請助教第一次使用時要 reset !!**
 
+### 瀏覽方式
+本服務最佳的瀏覽方式是用**手機**觀看，主要以Web App的UI/UX原則進行設計，但若在電腦上點開服務的頁面使用也可以。
 
 ### 登入之帳密
 帳號：testuser
@@ -30,15 +32,23 @@ MODE=
 
 ## 重點測試
 ### Home Page
-![](https://i.imgur.com/orOSAuS.png)
-* 最上面的部分顯示checklist的內容
+![](https://i.imgur.com/Ehzcpu8.png =40%x)![](https://i.imgur.com/bOV29tF.png =40%x)
+
+* Checklist 
+    * 最上面的部分顯示checklist的內容
+    * 將Checklist 的項目向左滑，可以顯示刪除按鈕，點擊可刪除該項checklist
+    * 點擊"Create your own Checklist"後會跳出新增Checklist的modal，並disable其他按鈕。點擊modal右側的灰色勾勾可以儲存新的Checklist到資料庫，點擊右上角的x會關閉Modal並不儲存。
 * Body Data 有當周的簡單統計，點選"See All"可以轉導至Body Data頁籤
 * Tips to you 顯示孕婦相關知識文章，可以從捷徑點選文章主題
-* 將Checklist 的項目向左滑，可以顯示刪除按鈕，點擊可刪除該項checklist222222222222222
+
 ### Checklist
-![](https://i.imgur.com/ppJ9Ue2.png)
-![](https://i.imgur.com/8FI3qeD.png)
+![](https://i.imgur.com/w7g4U6Z.png =40%x)![](https://i.imgur.com/TCKsm0Q.png =40%x)![](https://i.imgur.com/i8HPxSX.png =40%x)![](https://i.imgur.com/1ncYCLn.png =40%x)
+
+
 * 點選某一周進入，右下角的"+"可以新增Checklist
+* 點擊Checklist的項目，會進入細節檢視頁面。點擊細節檢視頁面的右上角，可進入編輯模式修改細節，再點擊save可儲存修改；點擊discard可以放棄修改。
+* 點擊打勾可確認checklist已完成
+* 點擊愛心代表"喜歡這個項目"，有愛心的項目會排序在較上方。
 
 
 ### Library
@@ -46,6 +56,7 @@ MODE=
 * 最上方可以輸入關鍵字搜尋文章，文章的標題有含該關鍵字的都會被列出，搜尋到的文章可點選進入文章頁面
 * 點選右上角的書籤圖示可以檢視目前的書籤頁內容
 * 點選下面的block可以進入該分類，並列出該類別的所有文章
+* 點選文章標題可閱讀內容、也可在文章頁面把
 
 ![](https://i.imgur.com/hQZOx7e.png)
 * 在分類頁面，下方列出該分頁所包含的文章，點選後進入文章頁面

@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
     reviewer: {
-        width: 500,
+        width: "85%",
         borderTopWidth: 1,
         borderBottomWidth: 1,
         display: 'flex',
@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
     reviewerSummary: {
         margin: 10,
         display: 'flex',
+        width: "85%"
     },
     articleImg: {
         margin: 20,
@@ -56,8 +57,8 @@ const styles = StyleSheet.create({
     },
     content: {
         fontSize: 16,
-        paddingLeft: 150,
-        paddingRight: 150,
+        paddingLeft: "15%",
+        paddingRight: "15%",
         paddingTop: 25,
         paddingBottom: 25
     }

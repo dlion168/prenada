@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     artDescribe: {
-        width: 500,
+        width: "60%",
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-around',
